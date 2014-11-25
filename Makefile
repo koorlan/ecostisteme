@@ -3,7 +3,7 @@ CC = gcc -std=c99 -o
 
 
 prog: main.o mob.o grille.o liste.o $(HEADER_FILES)
-	$(CC) prog.exe main.o mob.o grille.o liste.o
+	$(CC) prog main.o mob.o grille.o liste.o
 
 main.o: main.c $(HEADER_FILES)
 	$(CC) main.o -c main.c 
