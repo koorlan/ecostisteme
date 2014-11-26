@@ -1,3 +1,4 @@
+
 #include "main.h"
 
 int rand_a_b(int a, int b){
@@ -12,28 +13,26 @@ int main(int argc, char const *argv[])
     initialiser_grille(plateau_de_jeu);
     int i = 0 ;
 
-    Liste * liste_thon = malloc(sizeof(Liste));
-    liste_thon->nxt=NULL; 
+    Liste * liste_plancton = init_mobs(0, 10);
+    Liste * liste_corail = init_mobs(1, 5);
+    Liste * liste_bar = init_mobs(2, 5);
     
-    Mob * thon = malloc(sizeof(Mob));
+	place_liste_animal_random(plateau_de_jeu,liste_plancton);
+	place_liste_animal_random(plateau_de_jeu,liste_corail);
+	place_liste_animal_random(plateau_de_jeu,liste_bar);
 
-    thon = create_mob(0);
-    for (int i = 0; i < (10 * (TAILLE_PLATEAU * TAILLE_PLATEAU) / 100 ); ++i)
-    {
-     liste_thon = ajouterEnTete(liste_thon, *thon );     // modif le 20 pour le % age de poop
-    }
-   
-	place_liste_animal_random(plateau_de_jeu,liste_thon);
 
-	spawn_list_of_mobs(plateau_de_jeu, liste_thon);
+	spawn_list_of_mobs(plateau_de_jeu, liste_plancton);
+	spawn_list_of_mobs(plateau_de_jeu, liste_corail);
+	spawn_list_of_mobs(plateau_de_jeu, liste_bar);
 
 
 	afficher_grille(plateau_de_jeu);
-    int tailleliste = nombre_elts_liste(liste_thon);
+    int tailleliste = nombre_elts_liste(liste_plancton);
 
 
-   printf("taille liste : %d\n", tailleliste);
-   printf("Population de X = %d %% \n", (tailleliste *  100)/(TAILLE_PLATEAU * TAILLE_PLATEAU) );
+   //printf("taille liste : %d\n", tailleliste);
+   //printf("Population de X = %d %% \n", (tailleliste *  100)/(TAILLE_PLATEAU * TAILLE_PLATEAU) );
 
 	return 0;
 }

@@ -1,6 +1,6 @@
 #ifndef __MAIN__H
 #define __MAIN__H 
-#define TAILLE_PLATEAU 20
+#define TAILLE_PLATEAU 30
 #define WORLD_TIME 0
 #include <stdio.h>
 #include <stdlib.h>	

@@ -42,3 +42,17 @@ int nombre_elts_listeCase( ListeCase * liste){
 		return 0;
 	return 1+ nombre_elts_listeCase( liste->nxt);	
 }
+
+Liste * init_mobs(int id, int percentage) {   
+	Liste * list_of_mobs = malloc(sizeof(Liste));
+	list_of_mobs->nxt = NULL ;
+
+	
+    for (int i = 0; i < (percentage * (TAILLE_PLATEAU * TAILLE_PLATEAU) / 100 ); ++i)
+    {
+     list_of_mobs = ajouterEnTete(list_of_mobs, *(create_mob(id)) );     
+    }
+ 
+return list_of_mobs;
+
+}

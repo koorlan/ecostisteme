@@ -21,7 +21,7 @@ typedef struct
 	Mob * mob;
 } Map;
 
-#include "liste.h"
+
 
 void afficher_grille(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) ;
 
@@ -31,7 +31,7 @@ void place_liste_animal_random(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], List
 
 int isPlaceFree (Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b);
 
-int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob);
+int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste);
 
 void spawn_list_of_mobs(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste );
 

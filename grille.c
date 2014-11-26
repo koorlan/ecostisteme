@@ -1,5 +1,8 @@
 #include "main.h"
 
+char * mobs_draw[20]={"X ","O ","$ "};
+
+
 void initialiser_grille(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
 	int i=0;
 	int j=0;
@@ -46,7 +49,7 @@ void place_liste_animal_random(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Liste
 		listeMob->mob.y = j;
 
 		plateau[i][j].mob = &(listeMob->mob);
-		plateau[i][j].content = "X " ;
+		plateau[i][j].content = mobs_draw[listeMob->mob.id] ;
     	
     	
     	listeMob = listeMob->nxt;
@@ -58,9 +61,9 @@ int isPlaceFree (Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b){
 	return (plateau[a][b].mob == NULL);
 }
 
-int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob){
+int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste ){
 	ListeCase *  free_place_list = malloc(sizeof(Liste));
-	free_place_list = free_neighboor_case_list(plateau, mob);
+	free_place_list = free_neighboor_case_list(plateau, liste->mob);
 	if (free_place_list->nxt == NULL)
 	{
 		
@@ -75,24 +78,25 @@ int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob){
 		free_place_list = free_place_list->nxt;
 		i++;
 	}
-	
-	plateau[free_place_list->x][free_place_list->y].content = "X " ;
+	liste = ajouterEnTete(liste, *(create_mob(liste->mob.id))) ;
+	plateau[free_place_list->x][free_place_list->y].content = mobs_draw[liste->mob.id] ;
 	free(free_place_list);
     return 1;
 }
 
 
 void spawn_list_of_mobs(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste ){
+	
 	while (liste->nxt != NULL)
 	{	
 		
-		spawn_mob(plateau, liste->mob);
+		spawn_mob(plateau, liste);
 		liste = liste->nxt;
 	}
 
 	
 	
-	return;
+	return ;
 
 }
 
