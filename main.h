@@ -9,6 +9,7 @@
 #include "mob.h"
 #include "liste.h"
 #include "grille.h"
+
 int rand_a_b(int a, int b);
 
 #endif

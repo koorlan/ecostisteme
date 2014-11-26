@@ -21,15 +21,24 @@ int nombre_elts_liste( Liste * liste){
 	return 1+ nombre_elts_liste( liste->nxt);
 }
 
-int spawn_list_of_mobs(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste ){
+ListeCase * ajouterEnTeteCase(ListeCase * liste, int a , int b){
+
+    /* On crée un nouvel élément */
+    ListeCase * nouvelElement = malloc(sizeof(Liste));
+ 
+    /* On assigne la valeur au nouvel élément */
+    nouvelElement->x = a;
+    nouvelElement->y = b;
+ 
+    /* On assigne l'adresse de l'élément suivant au nouvel élément */
+    nouvelElement->nxt = liste;
+ 
+    /* On retourne la nouvelle liste, i.e. le pointeur sur le premier élément */
+    return nouvelElement;
+}
+
+int nombre_elts_listeCase( ListeCase * liste){
 	if (liste->nxt == NULL)
-	{	
-		printf("Je vais spawn l'enfant de X : %d Y: %d \n", liste->mob.x, liste->mob.y);
-		return 1;
-	}
-
-	
-	//printf("J'ai spawn l'enfant de X : %d Y: %d \n", liste->mob.x, liste->mob.y);
-	return spawn_list_of_mobs(plateau,liste->nxt) & spawn_mob(plateau, liste->mob)  ;
-
+		return 0;
+	return 1+ nombre_elts_listeCase( liste->nxt);	
 }

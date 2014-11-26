@@ -11,21 +11,29 @@ typedef struct
 typedef struct 
 {
 	Case cases[25];
-	char * content;
+	 char * content;
 
 } Grille;
 
+typedef struct 
+{
+	 char * content;
+	Mob * mob;
+} Map;
 
 #include "liste.h"
 
-void afficher_grille(char *plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) ;
+void afficher_grille(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) ;
 
-void initialiser_grille(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
+void initialiser_grille(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
 
-void place_liste_animal_random(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * listeAnimal );
+void place_liste_animal_random(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * listeAnimal );
 
-int isPlaceFree (char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b);
+int isPlaceFree (Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b);
 
-int spawn_mob(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob);
+int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob);
 
+void spawn_list_of_mobs(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste );
+
+ListeCase * free_neighboor_case_list(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob);
 #endif

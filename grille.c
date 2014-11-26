@@ -1,14 +1,14 @@
 #include "main.h"
 
-void initialiser_grille(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
+void initialiser_grille(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
 	int i=0;
 	int j=0;
 	for (int i = 0; i < TAILLE_PLATEAU ; i++)
 	{
 		for (int j = 0; j < TAILLE_PLATEAU ; j++)
 		{	
-			
-			plateau[i][j] = ". " ;
+			plateau[i][j].mob = NULL;
+			plateau[i][j].content = ". " ;
 		}
 
 	}
@@ -16,14 +16,14 @@ void initialiser_grille(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
 return;
 }
 
-void afficher_grille(char *plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) {
-   int i=0;
+void afficher_grille(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) {
+    int i=0;
 	int j=0;
 	for (int i = 0; i < TAILLE_PLATEAU; ++i)
 	{
 		for (int j = 0; j < TAILLE_PLATEAU; ++j)
 		{
-			printf("%s",plateau[i][j]); 
+			printf("%s",plateau[i][j].content); 
 		}
 		printf("\n");
 	}
@@ -31,7 +31,7 @@ void afficher_grille(char *plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) {
 return;
 }
 
-void place_liste_animal_random(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Liste * listeMob){
+void place_liste_animal_random(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Liste * listeMob){
     int i = 0;
     int j = 0;
     int tailleliste = nombre_elts_liste(listeMob);
@@ -45,7 +45,8 @@ void place_liste_animal_random(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Li
 		listeMob->mob.x = i;
 		listeMob->mob.y = j;
 
-		plateau[i][j] = "X " ;
+		plateau[i][j].mob = &(listeMob->mob);
+		plateau[i][j].content = "X " ;
     	
     	
     	listeMob = listeMob->nxt;
@@ -53,29 +54,65 @@ void place_liste_animal_random(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Li
 	return;
 }
 
-int isPlaceFree (char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b){
-	return (!strcmp(plateau[a][b],". ") );
+int isPlaceFree (Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b){
+	return (plateau[a][b].mob == NULL);
 }
 
-int spawn_mob(char * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob){
-	int i = 0 ;
-	int j = 0 ;
-
-	for (int i = -1; i < 1; ++i)
+int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob){
+	ListeCase *  free_place_list = malloc(sizeof(Liste));
+	free_place_list = free_neighboor_case_list(plateau, mob);
+	if (free_place_list->nxt == NULL)
 	{
-		for (int j = -1; j < 1; ++j)
-			{
-				if ((mob.x + i >0 && mob.y + j >0) && (mob.x < TAILLE_PLATEAU && mob.y < TAILLE_PLATEAU) && isPlaceFree(plateau,(mob.x + i ),(mob.y + j))){
-					printf("Jefais sa %d  %d  %d %d\n",i , j , mob.x +i , mob.y +j);
-					plateau[mob.x +i][mob.y +j] = "X " ;
+		
+		free(free_place_list);
+		return -1;
+	}
+	
+	int randomPick = rand_a_b(0,nombre_elts_listeCase(free_place_list));
+	
+	int i = 0;
+	while(i != randomPick){
+		free_place_list = free_place_list->nxt;
+		i++;
+	}
+	
+	plateau[free_place_list->x][free_place_list->y].content = "X " ;
+	free(free_place_list);
+    return 1;
+}
 
+
+void spawn_list_of_mobs(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste ){
+	while (liste->nxt != NULL)
+	{	
+		
+		spawn_mob(plateau, liste->mob);
+		liste = liste->nxt;
+	}
+
+	
+	
+	return;
+
+}
+
+ListeCase * free_neighboor_case_list(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob) {
+	ListeCase * free_place_list = malloc(sizeof(Liste));
+	free_place_list->nxt = NULL;
+	//printf("Mon Mob est en %d %d \n", mob.x, mob.y );
+	for (int i = -1 ; i <= 1; ++i)
+	{
+		
+		for (int j = -1 ; j <= 1; ++j)
+			{
+
+				if ((mob.x + i >= 0 && mob.y + j >= 0) && (mob.x <= TAILLE_PLATEAU && mob.y <= TAILLE_PLATEAU) && isPlaceFree(plateau,(mob.x + i ),(mob.y + j))){
+					//printf("J'ajoute en tete ! %d %d \n",i,j);
+					free_place_list = ajouterEnTeteCase(free_place_list,mob.x + i,mob.y + j);
 					
 				}
 
 			}	
 	}
-
-	return -1;
-
-
+return free_place_list;
 }
