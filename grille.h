@@ -1,6 +1,6 @@
 #ifndef __GRILLE__H
 #define __GRILLE__H 
-
+#include "libgraphique.h"
 
 typedef struct 
 {	
@@ -8,16 +8,19 @@ typedef struct
 	int y ;
 } Case;
 
+
+
 typedef struct 
 {
 	Case cases[25];
-	 char * content;
+	couleurs content;
 
 } Grille;
 
+//modif content = couleur
 typedef struct 
 {
-	 char * content;
+	couleurs coul;
 	Mob * mob;
 } Map;
 

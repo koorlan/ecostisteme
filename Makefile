@@ -1,19 +1,25 @@
-HEADER_FILES = mob.h grille.h liste.h
+HEADER_FILES = mob.h grille.h liste.h eco.h libgraphique.h
 CC = gcc -std=c99 -o
+LIB = -lglut -lGLU -lGL -lm
 
-
-prog: main.o mob.o grille.o liste.o $(HEADER_FILES)
-	$(CC) prog.exe main.o mob.o grille.o liste.o
+prog: main.o mob.o grille.o liste.o eco.o libgraphique.o $(HEADER_FILES)
+	$(CC) prog main.o mob.o grille.o liste.o eco.o libgraphique.o $(LIB)
 
 main.o: main.c $(HEADER_FILES)
-	$(CC) main.o -c main.c 
+	$(CC) main.o -c main.c $(LIB)
 
 mob.o: mob.c $(HEADER_FILES)
-	$(CC) mob.o -c mob.c
+	$(CC) mob.o -c mob.c $(LIB)
 
 grille.o: grille.c $(HEADER_FILES)
-	$(CC) grille.o -c grille.c
+	$(CC) grille.o -c grille.c $(LIB)
+
 
 liste.o: liste.c $(HEADER_FILES)
-	$(CC) liste.o -c liste.c
+	$(CC) liste.o -c liste.c $(LIB)
 
+eco.o : eco.c $(HEADER_FILES)
+	$(CC) eco.o -c eco.c $(LIB)
+
+libgraphique.o : libgraphique.c $(HEADER_FILES)
+		$(CC) libgraphique.o -c libgraphique.c $(LIB)
