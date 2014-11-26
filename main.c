@@ -20,9 +20,9 @@ int main(int argc, char const *argv[])
 	{
 	clear_screen();
 	initialiser_grille(plateau_de_jeu);
-    	Liste * liste_plancton = init_mobs(0, 10);
-    	Liste * liste_corail = init_mobs(1, 5);
-    	Liste * liste_bar = init_mobs(2, 5);
+    	Liste * liste_plancton = init_mobs(1, 5);
+    	Liste * liste_corail = init_mobs(2, 5);
+    	Liste * liste_bar = init_mobs(3, 5);
     
 	place_liste_animal_random(plateau_de_jeu,liste_plancton);
 	place_liste_animal_random(plateau_de_jeu,liste_corail);

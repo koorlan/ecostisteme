@@ -17,7 +17,7 @@ Mob * create_mob(int id_mob)
 	** pont 10  // a pas mettre dans mob
 	***********************/
  {
- 	Mob mobs_specs[11];
+ 	Mob mobs_specs[12];
 
  	/**********************
 	**ID 0 -> Plancton

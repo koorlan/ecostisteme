@@ -8,21 +8,11 @@ struct elt_liste_mob
 	Mob  mob;
 	Liste *nxt;
 };
-typedef struct listeCase ListeCase;
-struct listeCase
-{
-	int x;
-	int y;
-	ListeCase *nxt;
-};
+
 
 Liste * ajouterEnTete(Liste * liste, Mob newMob);
 
-ListeCase * ajouterEnTeteCase(ListeCase * liste, int a , int b);
-
 int nombre_elts_liste( Liste * liste);
-
-int nombre_elts_listeCase( ListeCase * liste);
 
 Liste * init_mobs(int id, int percentage);
 #endif

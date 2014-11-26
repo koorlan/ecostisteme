@@ -2,20 +2,6 @@
 #define __GRILLE__H 
 #include "libgraphique.h"
 
-typedef struct 
-{	
-	int x ;
-	int y ;
-} Case;
-
-
-
-typedef struct 
-{
-	Case cases[25];
-	couleurs content;
-
-} Grille;
 
 //modif content = couleur
 typedef struct 
@@ -38,5 +24,5 @@ int spawn_mob(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste);
 
 void spawn_list_of_mobs(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste );
 
-ListeCase * free_neighboor_case_list(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob);
+Liste * free_neighboor_case_list(Map plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob);
 #endif
