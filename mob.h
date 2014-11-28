@@ -8,17 +8,18 @@ typedef struct
 	/**********************
 	**
 	** Correspondance ID - NOM
-	** plancton : 0
-	** corail : 1
-	** bar : 2
-	** thon : 3
-	** pollution : 4
-	** pyranha : 5
-	** requin : 6
-	** orque : 7
-	** baleine : 8
-	** pêcheur : 9
-	** pont 10
+	** espece vide....0
+	** plancton :.....1
+	** corail :.......2
+	** bar :..........3
+	** thon :.........4
+	** pollution :....5
+	** pyranha :......6
+	** requin :.......7
+	** orque :........8
+	** baleine :......9
+	** pêcheur :......10 
+	** pont :.........11
 	***********************/
 	int id;
 	int x;
@@ -26,13 +27,13 @@ typedef struct
 	int dernier_repas;
 	int satiete;
 	int derniere_reproduction;
-	int duree_survie;
+	/*int duree_survie;
 	int taille;
 	int taille_du_bide;
 	int saut_max;
 	int metabolisme;
 	int gestation;
-	int frequence_reproduction;
+	int frequence_reproduction;*/
 } Mob;
 
 
