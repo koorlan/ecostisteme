@@ -28,10 +28,11 @@ int nombre_elts_liste(Liste * liste){
 Liste * init_mobs(int id, int percentage) 
 {   
 	Liste * list_of_mobs = malloc(sizeof(Liste));
+//	list_of_mobs->mob=*(create_mob(id));
 	list_of_mobs->nxt = NULL ;
 
 	
-    for (int i=0; i < (percentage * (TAILLE_PLATEAU * TAILLE_PLATEAU) / 100 ); ++i)
+    for (int i=0; i < ((percentage) * (TAILLE_PLATEAU * TAILLE_PLATEAU) / 100 ); ++i)
     {     
 	list_of_mobs = ajouterEnTete(list_of_mobs, *(create_mob(id)) );     
     }

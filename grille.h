@@ -25,4 +25,5 @@ int spawn_mob(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste);
 void spawn_list_of_mobs(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste );
 
 Liste * free_neighboor_case_list(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob);
+
 #endif

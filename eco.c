@@ -11,7 +11,7 @@ void affiche_grille()
 	{	draw_line(M1+i*(639-2*M1)/N, M2, M1+i*(639-2*M1)/N, 479-M2);
 		draw_line(M1, M2+i*(479-2*M2)/N, 639-M1, M2+i*(479-2*M2)/N);
 	}		
-	
+	update_graphics();	
 }
 
 void afficher_point(int x, int y, couleurs coul)

@@ -1,9 +1,6 @@
 #include "main.h"
 #include "eco.h"
 
-//Idée : static const couleurs mob_draw[]={bla bla}; à mettre dans le main.h avec les autres tableaux de constantes ...? 
-//couleurs mobs_draw[20]={color_WHITE, color_LIGHTGREEN, color_LIGHTRED, color_CYAN, color_BLUE, color_LIGHTMAGENTA, color_BLACK};
-
 
 //Initialisation de la map vide
 void initialiser_grille(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
@@ -46,7 +43,7 @@ void place_liste_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Lis
     int i = 0;
     int j = 0;
     int tailleliste = nombre_elts_liste(listeMob);
-    while(listeMob->nxt != NULL) {
+	    while(listeMob->nxt != NULL) {
 		do {
 		i = rand_a_b(0,TAILLE_PLATEAU);
 		j = rand_a_b(0,TAILLE_PLATEAU);
@@ -57,19 +54,20 @@ void place_liste_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Lis
 		listeMob->mob.y = j;
 		free(plateau[i][j]);
 		plateau[i][j] = &(listeMob->mob);
-		//plateau[i][j].coul = mobs_draw[(listeMob->mob).id] ;  L'id est déjà changée, normalement 
-    	
-    	
-    	listeMob = listeMob->nxt;
+    		listeMob = listeMob->nxt;
     }
 	return;
 }
 
-int isPlaceFree (Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b){
+
+int isPlaceFree (Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b)
+{
 	return (plateau[a][b]->id == 0);
 }
 
-int spawn_mob(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste ){
+
+int spawn_mob(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste )
+{
 	Liste * free_place_list = malloc(sizeof(Liste));
 	free_place_list = free_neighboor_case_list(plateau, liste->mob);
 	if (free_place_list->nxt == NULL)
