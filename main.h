@@ -1,7 +1,7 @@
 #ifndef __MAIN__H
 #define __MAIN__H 
 #define TAILLE_PLATEAU 30
-
+#define NB_SPECIES 5
 #include <stdio.h>
 #include <stdlib.h>	
 #include <string.h>

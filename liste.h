@@ -9,7 +9,6 @@ struct elt_liste_mob
 	Liste *nxt;
 };
 
-
 Liste * ajouterEnTete(Liste * liste, Mob newMob);
 
 int nombre_elts_liste( Liste * liste);

@@ -28,7 +28,8 @@ int nombre_elts_liste(Liste * liste){
 Liste * init_mobs(int id, int percentage) 
 {   
 	Liste * list_of_mobs = malloc(sizeof(Liste));
-//	list_of_mobs->mob=*(create_mob(id));
+	list_of_mobs->mob.x = 666;
+	list_of_mobs->mob.y = 666;
 	list_of_mobs->nxt = NULL ;
 
 	

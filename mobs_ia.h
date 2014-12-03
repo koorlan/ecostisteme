@@ -9,13 +9,14 @@
 #include "mob.h"
 #include "liste.h"
 
-void destroy_mob (Mob mob, Liste * liste_plancton, Liste * liste_corail, Liste * liste_bar, Liste * liste_thon);
+Liste * destroy_mob (Mob mob, Liste * list_of_specific_species );
 
-int survie(Mob mob, Liste * liste_plancton, Liste * liste_corail, Liste * liste_bar, Liste * liste_thon);
+int survie(Mob mob, Liste * species[NB_SPECIES]);
 
 int reproduction(Mob mob);
 
-void predation(Mob mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste_plancton, Liste * liste_corail, Liste * liste_bar, Liste * liste_thon);
+void predation(Mob mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES]);
+
 
 int deplacement(Mob mob);
 

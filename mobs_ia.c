@@ -1,82 +1,41 @@
 #include "main.h"
 
-// problème, on passe à 12 ou 13 paramètres quand on considèrera toutes les espèces ...
-void destroy_mob (Mob mob, Liste * liste_plancton, Liste * liste_corail, Liste * liste_bar, Liste * liste_thon )
 
-{       Liste * liste_voulue=malloc(sizeof(Liste));              
+Liste * destroy_mob (Mob mob, Liste * list_of_specific_species )
 
-        //On trouve la liste qui correspond à l'espece du mob à éliminer 
-	
-        if(mob.id==liste_plancton->mob.id)
-                liste_voulue=liste_plancton;
-        
-        else if(mob.id==liste_corail->mob.id)
-        {       liste_voulue= liste_corail;
-        } 		       
-        else if(mob.id=liste_thon->mob.id)
-        {       liste_voulue= liste_thon;
-        }																																																																																																																																																																																																																																																																																																																																																																																		
-        else if(mob.id=liste_bar->mob.id)
-        {       liste_voulue= liste_bar;
-        }
-        /*else if(mob.id=liste_pyranha->mob.id)
-        {       liste_voulue= liste_pyranha;
-        }
-        else if(mob.id=liste_requin->mob.id)
-        {       liste_voulue= liste_requin;
-        }
-        else if(mob.id=liste_baleine->mob.id)
-        {       liste_voulue= liste_baleine;
-        }
-        else if(mob.id=liste_pont->mob.id)
-        {       liste_voulue= liste_pont;
-        }*/
-        else return ;
-	
-	//On retire le mob de sa liste	
-        if (liste_voulue==NULL||liste_voulue->nxt==NULL)
-        {       liste_voulue==NULL;
-                return ;
-        }
-        else
-        {       Liste * elt=malloc(sizeof(Liste));
-                elt=liste_voulue;      
-                while(elt->nxt!=NULL)
-                {
-                       
-                        if(elt->mob.x==mob.x && elt->mob.y==mob.y)
-                        {       liste_voulue->nxt=liste_voulue->nxt->nxt;
-                                return;                        
-                        }
-                        
- 			else{	                      
-                               liste_voulue=elt;       
-                                elt=elt->nxt;
-                        }
-                        
-                }
-        }
-              
+{      
+    if(list_of_specific_species ->nxt == NULL){
+        return list_of_specific_species;
+    }
+    if(list_of_specific_species->mob.x == mob.x && list_of_specific_species->mob.y == mob.y) {
+
+        Liste * tmp = list_of_specific_species->nxt;
+        //free(list_of_specific_species);
+        return tmp;
+    } else {
+        list_of_specific_species->nxt = destroy_mob (mob,list_of_specific_species->nxt);
+        return list_of_specific_species;
+    }    
+
 }
 
-	
-int survie(Mob mob, Liste * liste_plancton, Liste * liste_corail, Liste * liste_bar, Liste * liste_thon )
+/* Determine si un mob survie ou non*/
+int survie(Mob mob, Liste * species[NB_SPECIES])
 {
-	if(mob.satiete == 0 && (WORLD_TIME-mob.dernier_repas)>duree_survie[mob.id])
-	{	printf("RIP petit mob\n");
-		destroy_mob(mob, liste_plancton, liste_corail, liste_bar, liste_thon);
-				
-		return 0;
-	} 
-	return 1;
- 
-}
 
+  ///  if(mob.satiete == 0 && (WORLD_TIME-mob.dernier_repas)>duree_survie[mob.id]) 
+    {		
+        printf("Je regarde le mob d'id %d de coo %d,%d \n", mob.id, mob.x , mob.y );
+		species[mob.id] = destroy_mob(mob, species[mob.id]);  //On passe la liste de l'espece a la fonction destroy pour le supprimer de la liste
+        return 0;
+	} 
+//	return 1;
+}
 
 int reproduction(Mob mob);
 
 
-void predation(Mob mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste_plancton, Liste * liste_corail, Liste * liste_bar, Liste * liste_thon)
+void predation(Mob mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES])
 {	
 	//problème: génération de la matrice à chaque appel de "prédation"
 	//idée : mettre cette matrice en variable globale et l'initialiser qu'UNE seule fois au début du main, ou bien en faire un tableau constant 
@@ -141,7 +100,7 @@ void predation(Mob mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 		mob.satiete=plateau_de_jeu[proie->x][proie->y]->satiete;                
                 	
 		//On retire la proie de la liste correspondant à son espèce
-           	destroy_mob(*proie, liste_plancton, liste_corail, liste_bar, liste_thon);	 
+           	destroy_mob(*proie, species[proie->id]);	 
                       
         }       	        	
 	
@@ -152,3 +111,4 @@ void predation(Mob mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 int deplacement(Mob mob);
 
 int tour();
+

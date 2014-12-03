@@ -3,7 +3,7 @@
 
 
 //Initialisation de la map vide
-void initialiser_grille(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
+void init_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 {
 	int i=0;
 	int j=0;
@@ -21,7 +21,7 @@ void initialiser_grille(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 }
 
 /* Affichage de la Map dans une fenêtre graphique */
-void afficher_grille(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
+void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 {
 	int i=0;
 	int j=0;
@@ -38,7 +38,7 @@ void afficher_grille(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 }
 
 /* Reçoit une liste de Mobs déjà générés et leur attribue une place sur la Map */
-void place_liste_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Liste * listeMob)
+void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Liste * listeMob)
 {
     int i = 0;
     int j = 0;
@@ -53,6 +53,7 @@ void place_liste_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Lis
 		listeMob->mob.x = i;	
 		listeMob->mob.y = j;
 		free(plateau[i][j]);
+		//printf("Spaw: ID : %d " liste->mob.id);
 		plateau[i][j] = &(listeMob->mob);
     		listeMob = listeMob->nxt;
     }

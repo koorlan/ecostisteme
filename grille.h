@@ -12,11 +12,11 @@ typedef struct
 */
 
 
-void afficher_grille(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) ;
+void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) ;
 
-void initialiser_grille(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
+void init_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
 
-void place_liste_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * listeAnimal );
+void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * listeAnimal );
 
 int isPlaceFree (Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b);
 
