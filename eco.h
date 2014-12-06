@@ -15,4 +15,6 @@ void affiche_grille();
 
 void afficher_point(int x, int y, couleurs coul);
 
+void espece_consideree(int i, couleurs coul);
+
 #endif

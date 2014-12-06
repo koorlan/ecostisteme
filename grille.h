@@ -3,13 +3,6 @@
 #include "libgraphique.h"
 
 
-/*modif content = couleur
-typedef struct 
-{
-	couleurs coul;
-	Mob * mob;
-} Map;
-*/
 
 
 void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) ;

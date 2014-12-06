@@ -14,7 +14,7 @@ void init_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 			plateau[i][j] = create_mob(0); //Mob d'id=0 -> espece vide
 			plateau[i][j]->x = i ;
 			plateau[i][j]->y = j ;
-		//	plateau[i][j].coul=mobs_draw[0] ; 
+		
 		}
 	}
 	return;

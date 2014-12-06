@@ -15,8 +15,7 @@ int survie(Mob mob, Liste * species[NB_SPECIES]);
 
 int reproduction(Mob mob);
 
-void predation(Mob mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES]);
-
+int predation(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES]);
 
 int deplacement(Mob mob);
 

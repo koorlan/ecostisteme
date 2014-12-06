@@ -2,22 +2,8 @@
 
 /* Retourne un pointeur sur Mob avec en fonction de l'espèce voule (id) avec ses variables caracrtéristiques initiales*/
 Mob * create_mob(int id_mob)
-	/**********************
-	**
-	** Correspondance ID - NOM
-	** plancton : 0
-	** corail : 1
-	** bar : 2
-	** thon : 3
-	** pollution : 4
-	** pyranha : 5
-	** requin : 6
-	** orque : 7
-	** baleine : 8
-	** pêcheur : 9 // a pas mettre dans mob
-	** pont 10  // a pas mettre dans mob
-	***********************/
- {
+	
+{
  	Mob mobs_specs[12];
 
 	/**********************
@@ -59,39 +45,39 @@ Mob * create_mob(int id_mob)
 	**ID 5 -> Pollution
 	*********************/
     mobs_specs[5].dernier_repas = 0;
-    mobs_specs[5].satiete = 5;
+    mobs_specs[5].satiete = 0;
     mobs_specs[5].derniere_reproduction = 0;  
 
     /**********************
 	**ID 6 -> Pyranah
 	*********************/
-    mobs_specs[6].dernier_repas = 5;
-    mobs_specs[6].satiete = 5;
+    mobs_specs[6].dernier_repas = 0;
+    mobs_specs[6].satiete = 0;
     mobs_specs[6].derniere_reproduction = 0;
 
     /**********************
 	**ID 7 -> Requin
 	*********************/
-    mobs_specs[7].dernier_repas = 6;
-    mobs_specs[7].satiete = 6;
+    mobs_specs[7].dernier_repas = 0;
+    mobs_specs[7].satiete = 0;
     mobs_specs[7].derniere_reproduction = 0;
 
     /**********************
 	**ID 8 -> Orque
 	*********************/
-    mobs_specs[8].dernier_repas = 7;
-    mobs_specs[8].satiete = 7;
+    mobs_specs[8].dernier_repas = 0;
+    mobs_specs[8].satiete = 0;
     mobs_specs[8].derniere_reproduction = 0;
 
     /**********************
 	**ID 9 -> Baleine
 	*********************/
-    mobs_specs[9].dernier_repas = 8;
-    mobs_specs[9].satiete = 8;
+    mobs_specs[9].dernier_repas = 0;
+    mobs_specs[9].satiete = 0;
     mobs_specs[9].derniere_reproduction = 0;
 
   
-    // A FOUTRE DANS AUTRE STRUCTURE
+    // A FOUTRE (METTRE...) DANS AUTRE STRUCTURE
    /**********************
 	**ID 10 -> Pont
 	*********************/
@@ -115,7 +101,7 @@ Mob * create_mob(int id_mob)
 	mob->derniere_reproduction =  mobs_specs[id_mob].derniere_reproduction;
 
 	return mob;
- }
+}
 
 /* Affichage des caractèristiques d'un Mob*/
 void print_mob_spec(Mob  mob){
@@ -133,6 +119,6 @@ void print_mob_spec(Mob  mob){
  	printf("frequence_reproduction : %d\n", frequence_reproduction[mob.id]);
 
  	return;
- }
+}
 
  

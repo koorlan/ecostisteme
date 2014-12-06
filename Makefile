@@ -1,4 +1,4 @@
-HEADER_FILES = mob.h grille.h liste.h eco.h libgraphique.h mobs_ia.h
+HEADER_FILES = main.h mob.h grille.h liste.h eco.h libgraphique.h mobs_ia.h
 CC = gcc -std=c99 -o
 LIB = -lglut -lGLU -lGL -lm
 
