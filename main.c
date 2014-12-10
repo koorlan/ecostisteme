@@ -10,8 +10,6 @@ int rand_a_b(int a, int b)
 
 int main(int argc, char const *argv[])
 {
-
-	WORLD_TIME=2;
 	start_graphics();
 	//Variable d'arrêt de la simulation 
 	int stop=key_F1;
@@ -24,6 +22,11 @@ int main(int argc, char const *argv[])
 	int y=0;
 	//Variable d'action du pêcheur
 	int a;
+	Mob pecheur;
+	//représente les "munitions" du pecheur
+	pecheur.satiete=0;	
+	//représente le fait que le pecheur ait pêché quelque chose au tour précédent  
+	pecheur.dernier_repas=0;
 	init_grid(plateau_de_jeu);
 
 
@@ -49,21 +52,26 @@ int main(int argc, char const *argv[])
 	do
 	{	
 
-	/***Jeu de l'IA***/		
+	/***Jeu du pêcheur***/		
 	//Action du pêcheur.................................................................................................. 
-			
+		afficher_munitions(&pecheur);
 		deplacement_pecheur(&x, &y, color_RED, plateau_de_jeu);
 		a=choix_action();
-		if(a=='o')
-		{	printf("Je suis là\n");
 		
-		}		
+		if(a=='o')
+		{	printf("que la peche commence\n");
+			que_la_peche_commence(x, y, plateau_de_jeu, &pecheur, species);
+		}	
+
+	
+	/***Jeu de l'IA***/	
 		clear_screen();	
 		afficher_point(x, y, color_RED);
+		
 		for (int i = 1; i <= NB_SPECIES; ++i)
 		{
 			elt=species[i];
-			printf("%d\n", WORLD_TIME);
+			printf("WOLRD_TIME : %d\n", WORLD_TIME);
 
 	//Survie.............................................................................................................
 			
