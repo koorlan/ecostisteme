@@ -12,6 +12,7 @@
 #include "grille.h"
 #include "libgraphique.h"
 #include "mobs_ia.h"
+#include "pecheur.h"
 
 int WORLD_TIME;
 
@@ -38,7 +39,7 @@ static const int saut_max[]={0, 0, 1, 2, 3, 0, 3, 2, 2, 2, 1, 0};
 static const int metabolisme[]={0, 0, 1, 1, 2, 0, 2, 2, 2, 0, 0};
 static const int gestation[]={0, 1, 1, 1, 1, 0, 2, 2, 2, 0, 0};
 static const int frequence_reproduction[]={10000, 4, 4, 4, 4, 10000, 4, 4, 4, 10000, 10000};
-static const couleurs mobs_draw[20]={color_WHITE, color_LIGHTGREEN, color_LIGHTRED, color_CYAN, color_BLUE, color_BROWN, color_BLACK, color_YELLOW, color_LIGHTMAGENTA};
+static const couleurs mobs_draw[20]={color_WHITE, color_LIGHTGREEN, color_LIGHTRED, color_CYAN, color_BLUE, color_BROWN, color_BLACK, color_YELLOW, color_LIGHTMAGENTA, color_MAGENTA, color_RED, color_LIGHTBLUE};
 
 //Matrice de prédation 
 

@@ -20,6 +20,7 @@ void afficher_point(int x, int y, couleurs coul)
 	draw_circle_full(M1+(x-0.5)*(639-2*M1)/(N), M2+(y-0.5)*(479-2*M2)/(N), 4.5);
 }
  
+
 void espece_consideree(int i, couleurs coul)
 {	switch (i)
 	{case 1 :

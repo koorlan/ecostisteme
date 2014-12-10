@@ -1,9 +1,9 @@
-HEADER_FILES = main.h mob.h grille.h liste.h eco.h libgraphique.h mobs_ia.h
+HEADER_FILES = main.h mob.h grille.h liste.h eco.h libgraphique.h mobs_ia.h pecheur.h
 CC = gcc -std=c99 -o
 LIB = -lglut -lGLU -lGL -lm
 
-prog: main.o mob.o grille.o liste.o eco.o libgraphique.o mobs_ia.o $(HEADER_FILES)
-	$(CC) prog main.o mob.o grille.o liste.o eco.o libgraphique.o mobs_ia.o $(LIB)
+prog: main.o mob.o grille.o liste.o eco.o libgraphique.o mobs_ia.o pecheur.o $(HEADER_FILES)
+	$(CC) prog main.o mob.o grille.o liste.o eco.o libgraphique.o mobs_ia.o pecheur.o $(LIB)
 
 main.o: main.c $(HEADER_FILES)
 	$(CC) main.o -c main.c $(LIB)
@@ -26,3 +26,6 @@ libgraphique.o : libgraphique.c $(HEADER_FILES)
 
 mobs_ia.o : mobs_ia.c $(HEADER_FILES)
 	$(CC) mobs_ia.o -c mobs_ia.c $(LIB)
+
+pecheur.o : pecheur.c $(HEADER_FILES)
+	$(CC) pecheur.o -c pecheur.c $(LIB) 

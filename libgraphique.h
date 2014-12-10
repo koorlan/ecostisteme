@@ -60,7 +60,8 @@ typedef enum t_special_keys {
   key_RIGHT = (GLUT_KEY_RIGHT<<8),
   key_UP = (GLUT_KEY_UP<<8),
   key_DOWN = (GLUT_KEY_DOWN<<8),
-  key_ESCAPE = 27
+  key_ESCAPE = 27,
+  key_ENTER = 13
 } touches;
 
 /**

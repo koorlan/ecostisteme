@@ -79,14 +79,14 @@ Mob * create_mob(int id_mob)
   
     // A FOUTRE (METTRE...) DANS AUTRE STRUCTURE
    /**********************
-	**ID 10 -> Pont
+	**ID 10 -> Pecheur
 	*********************/
     mobs_specs[10].dernier_repas = 9;
     mobs_specs[10].satiete = 9;
     mobs_specs[10].derniere_reproduction = 9;
 
     /**********************
-	**ID 11 -> Pecheur
+	**ID 11 -> Pont
 	*********************/
     mobs_specs[11].dernier_repas = 10;
     mobs_specs[11].satiete = 10;
