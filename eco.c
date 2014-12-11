@@ -1,7 +1,19 @@
 #include "eco.h"
 #include "main.h" 
 
-				
+/**********************************************************************/
+/*** 		NB, à propos des systèmes de coordonnées            ***/
+/***								    ***/
+/*** Travail avec l'affichage graphique :		            ***/
+/*** 1 à TAILLE_PLATEAU						    ***/
+/***								    ***/
+/*** Travail avec le plateau effectif (tableau) :		    ***/	
+/*** 0 à TAILLE_PLATEAU-1 					    ***/
+/***								    ***/						
+/**********************************************************************/
+
+
+
 
 void affiche_grille()
 /*affichage d'une grille n*n cases*/
@@ -64,21 +76,3 @@ void espece_consideree(int i, couleurs coul)
 }
 
 
-//int main (void)
-
-//{	int stop;
-//	coord p1={1, 1};
-//	coord p2={1, 2};
-//	coord p3={10, 1};
-//	start_graphics();	
-//	update_graphics();
-//	affiche_grille();
-//	update_graphics();
-//	afficher_point(p1, color_LIGHTBLUE);
-//	afficher_point(p2, color_LIGHTCYAN);
-//	afficher_point(p3, color_MAGENTA);		
-//	update_graphics();
-//	stop=get_key();
-//	stop_graphics();
-//	return 0;
-//}

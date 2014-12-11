@@ -8,6 +8,7 @@
 #include "grille.h"
 #include "mob.h"
 #include "liste.h"
+#include "pont.h"
 
 Liste * destroy_mob (Mob mob, Liste * list_of_specific_species );
 

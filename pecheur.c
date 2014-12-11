@@ -64,11 +64,18 @@ void deplacement_pecheur(int *x, int *y, couleurs coul, Mob * plateau[][TAILLE_P
 
 
 /*Determine l'action du pecheur après son déplacement*/
-int choix_action()
+int choix_action(int n)
 {	int a=0;
 	set_font(font_HELVETICA_12);
 	set_drawing_color(color_BLACK);
+	if (n==2)
+	{	set_drawing_color(color_WHITE);
+	}
 	draw_string(M1, M2/2, "Voulez-vous pecher? (o)ui (n)on\n");
+	if(n==2)
+	{	set_drawing_color(color_BLACK);
+		draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
+	}
 	update_graphics();
 	a=get_key();
 	return a;
@@ -142,7 +149,7 @@ void place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_cann
 	}
 }
 
-
+/*Affichage des réserves du pêcheur*/
 void afficher_munitions (Mob * pecheur)
 {	set_drawing_color(color_BLACK);	
 	set_font(font_HELVETICA_12);
@@ -155,15 +162,16 @@ void afficher_munitions (Mob * pecheur)
 	update_graphics();
 }
 
+/*Gestion des fonctions relatives à la pêche*/
 void que_la_peche_commence (int x_pecheur, int y_pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[])
 {
 	int x_canne=0, y_canne=0;
 	int peche;	
 	spawn_canne(x_pecheur, y_pecheur, &x_canne, &y_canne);
+	printf("%d, %d\n", x_canne, y_canne);
 	draw_canne(x_pecheur, y_pecheur, x_canne, y_canne, color_BLACK);	
 	update_graphics();		
 	place_canne_a_peche(x_pecheur, y_pecheur, &x_canne, &y_canne);	
-	printf("id = %d\n", plateau_de_jeu[x_canne-1][y_canne-1]->id);
 	if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1)
 	{	pecheur->satiete = pecheur->satiete + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
 		pecheur->dernier_repas=1;
@@ -175,9 +183,6 @@ void que_la_peche_commence (int x_pecheur, int y_pecheur, Mob * plateau_de_jeu[]
 	update_graphics();
 	
 }
-
-
-
 
 
 

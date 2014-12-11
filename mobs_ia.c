@@ -52,7 +52,9 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
                                 {       
 	        			if((taille[plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]>=taille[proie->id])&&(mob->satiete+taille[proie->id]<taille_du_bide[mob->id]))	//recherche de la proie de taille max
                                          {      //Affichage en rose de la (les) proie(s) potentielles
-						afficher_point((mob->x)+i+1, (mob->y)+j+1, mobs_draw[8]);
+						if(plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id==11)
+					 		draw_pont((mob->x)+i+1, (mob->y)+j+1, mobs_draw[8]); 							else 
+							afficher_point((mob->x)+i+1, (mob->y)+j+1, mobs_draw[8]);
 	        				proie->x=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->x;
                                                 proie->y=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->y;
                                                 proie->id=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id;
@@ -82,9 +84,10 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 		mob->y=proie->y;
                	mob->dernier_repas=WORLD_TIME;
 		mob->satiete=plateau_de_jeu[proie->x][proie->y]->satiete;                
-                	
-		//On retire la proie de la liste correspondant à son espèce
-           	species[proie->id]=destroy_mob(*proie, species[proie->id]);	 
+                
+		if(proie->id!=11)	
+			//On retire la proie de la liste correspondant à son espèce
+           		species[proie->id]=destroy_mob(*proie, species[proie->id]);	 
 //		free(proie);                
 		return 1;      
         }       	        	

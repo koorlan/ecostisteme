@@ -1,5 +1,6 @@
 #include "main.h"
 #include "eco.h"
+#include "pont.h"
 
 
 //Initialisation de la map vide
@@ -30,7 +31,10 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 	{
 		for (int j = 0; j < TAILLE_PLATEAU; ++j)
 		{
-			afficher_point(i+1, j+1, mobs_draw[plateau[i][j]->id]);
+			if(plateau[i][j]->id!=11)
+				afficher_point(i+1, j+1, mobs_draw[plateau[i][j]->id]);
+			else
+				draw_pont(i+1, j+1, mobs_draw[plateau[i][j]->id]);		
 		}
 	}
 	

@@ -56,13 +56,23 @@ int main(int argc, char const *argv[])
 	//Action du pêcheur.................................................................................................. 
 		afficher_munitions(&pecheur);
 		deplacement_pecheur(&x, &y, color_RED, plateau_de_jeu);
-		a=choix_action();
+		//possibilité de pêcher 		
+		a=choix_action(1);
 		
 		if(a=='o')
 		{	printf("que la peche commence\n");
 			que_la_peche_commence(x, y, plateau_de_jeu, &pecheur, species);
 		}	
-
+		else
+		{	//possibilité de construire le pont	
+			a=choix_action(2);
+			if(a=='o')
+			{	printf("contruction du pont\n");		
+				construire_pont(x, y, plateau_de_jeu, &pecheur, species);			
+			}		
+		}
+		draw_grid(plateau_de_jeu);
+			
 	
 	/***Jeu de l'IA***/	
 		clear_screen();	
