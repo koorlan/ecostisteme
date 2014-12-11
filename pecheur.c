@@ -17,43 +17,43 @@ int case_valide(int x, int y, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 }
 
 /*Permet le déplacement du pecheur sur le plateau de jeu*/
-void deplacement_pecheur(int *x, int *y, couleurs coul, Mob * plateau[][TAILLE_PLATEAU])
+void deplacement_pecheur(Mob *p, couleurs coul, Mob * plateau[][TAILLE_PLATEAU])
 {	int a=0;	
 	
-	afficher_point(*x, *y, coul);	
+	afficher_point(p->x, p->y, coul);	
 	while(a!=key_ENTER)
 	{	a=get_key();
 		switch(a)
 		{	case key_RIGHT:						
-				if(case_valide(*x+1, *y, plateau))
-				{	afficher_point(*x,*y,color_WHITE);				
-					(*x)++;
+				if(case_valide(p->x+1, p->y, plateau))
+				{	afficher_point(p->x,p->y,color_WHITE);				
+					(p->x)++;
 				}				
 				break;
 		
 			case key_LEFT : 
-				if(case_valide(*x-1, *y, plateau))
-				{	afficher_point(*x,*y,color_WHITE);
-					(*x)--;
+				if(case_valide(p->x-1, p->y, plateau))
+				{	afficher_point(p->x,p->y,color_WHITE);
+					(p->x)--;
 				}			
 				break;
 			case key_UP :
-				if(case_valide(*x, *y+1, plateau))				
-				{	afficher_point(*x,*y,color_WHITE);
-					(*y)++;
+				if(case_valide(p->x, p->y+1, plateau))				
+				{	afficher_point(p->x,p->y,color_WHITE);
+					(p->y)++;
 				}				
 				break;
 			case key_DOWN :
-				if(case_valide(*x, *y-1, plateau))				
-				{	afficher_point(*x,*y,color_WHITE);
-					(*y)--;
+				if(case_valide(p->x, p->y-1, plateau))				
+				{	afficher_point(p->x,p->y,color_WHITE);
+					(p->y)--;
 				}				
 				break;
 			default :
 				break;
 		
 		}
-		afficher_point(*x,*y,coul);						
+		afficher_point(p->x,p->y,coul);						
 		update_graphics();
 			
 	}
@@ -163,15 +163,15 @@ void afficher_munitions (Mob * pecheur)
 }
 
 /*Gestion des fonctions relatives à la pêche*/
-void que_la_peche_commence (int x_pecheur, int y_pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[])
+void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[])
 {
 	int x_canne=0, y_canne=0;
 	int peche;	
-	spawn_canne(x_pecheur, y_pecheur, &x_canne, &y_canne);
+	spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne);
 	printf("%d, %d\n", x_canne, y_canne);
-	draw_canne(x_pecheur, y_pecheur, x_canne, y_canne, color_BLACK);	
+	draw_canne((pecheur->x), (pecheur->y), x_canne, y_canne, color_BLACK);	
 	update_graphics();		
-	place_canne_a_peche(x_pecheur, y_pecheur, &x_canne, &y_canne);	
+	place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne);	
 	if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1)
 	{	pecheur->satiete = pecheur->satiete + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
 		pecheur->dernier_repas=1;
@@ -184,9 +184,18 @@ void que_la_peche_commence (int x_pecheur, int y_pecheur, Mob * plateau_de_jeu[]
 	
 }
 
+void plouf(Mob *pecheur)	
+{	set_drawing_color(color_BLACK);	
+	pecheur->satiete=0;
+	pecheur->dernier_repas=0;
+	pecheur->x=0;
+	pecheur->y=0;	
+	set_font(font_HELVETICA_12);
+	draw_printf(M1+150, 479-M2/2, "Vous etes tombe a l'eau au tour precedent, toutes vos munitions sont perdues");
+	afficher_munitions(pecheur); 
+	update_graphics();
 
-
-
+}
 
 
 

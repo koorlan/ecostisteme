@@ -17,16 +17,22 @@ int main(int argc, char const *argv[])
    	Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU] ;
   	// Compteur pour gérer les listes d'especes
   	int i = 0; 
+	
+
+
+
 	//Variables de déplacement du pêcheur
 	int x=0;
 	int y=0;
 	//Variable d'action du pêcheur
 	int a;
 	Mob pecheur;
-	//représente les "munitions" du pecheur
-	pecheur.satiete=0;	
+	//représente les "réserves" du pecheur
+	pecheur.satiete=1;	
 	//représente le fait que le pecheur ait pêché quelque chose au tour précédent  
 	pecheur.dernier_repas=0;
+	pecheur.x=x;
+	pecheur.y=y;
 	init_grid(plateau_de_jeu);
 
 
@@ -50,25 +56,27 @@ int main(int argc, char const *argv[])
 	Liste * elt;
 	WORLD_TIME=1;
 	do
-	{	
+	{	printf("WOLRD_TIME : %d\n", WORLD_TIME);
 
 	/***Jeu du pêcheur***/		
 	//Action du pêcheur.................................................................................................. 
+		if(!case_valide(pecheur.x, pecheur.y, plateau_de_jeu))		
+			plouf(&pecheur);
+				
 		afficher_munitions(&pecheur);
-		deplacement_pecheur(&x, &y, color_RED, plateau_de_jeu);
+		deplacement_pecheur(&pecheur, color_RED, plateau_de_jeu);
 		//possibilité de pêcher 		
 		a=choix_action(1);
-		
 		if(a=='o')
 		{	printf("que la peche commence\n");
-			que_la_peche_commence(x, y, plateau_de_jeu, &pecheur, species);
+			que_la_peche_commence(plateau_de_jeu, &pecheur, species);
 		}	
-		else
+		else if(pecheur.satiete!=0)
 		{	//possibilité de construire le pont	
 			a=choix_action(2);
 			if(a=='o')
-			{	printf("contruction du pont\n");		
-				construire_pont(x, y, plateau_de_jeu, &pecheur, species);			
+			{	printf("construction du pont\n");		
+					construire_pont(plateau_de_jeu, &pecheur, species);			
 			}		
 		}
 		draw_grid(plateau_de_jeu);
@@ -76,12 +84,11 @@ int main(int argc, char const *argv[])
 	
 	/***Jeu de l'IA***/	
 		clear_screen();	
-		afficher_point(x, y, color_RED);
+		afficher_point(pecheur.x, pecheur.y, color_RED);
 		
 		for (int i = 1; i <= NB_SPECIES; ++i)
 		{
 			elt=species[i];
-			printf("WOLRD_TIME : %d\n", WORLD_TIME);
 
 	//Survie.............................................................................................................
 			
@@ -101,19 +108,15 @@ int main(int argc, char const *argv[])
 					afficher_point(elt->mob.x+1, elt->mob.y+1, mobs_draw[7]);
 					plateau_de_jeu[elt->mob.x][elt->mob.y]=create_mob(0);	
 					draw_grid(plateau_de_jeu);
-					afficher_point(x, y, color_RED);						
-					//printf("L'individu est mort\n");
+					afficher_point(pecheur.x, pecheur.y, color_RED);						
 					stop=get_key();		
 					elt=elt->nxt;	
 				}
 				//L'individu a survécu	
-				else{
-					//printf("L'individu a survécu\n");			
+				else{			
 					draw_grid(plateau_de_jeu);
-					afficher_point(x, y, color_RED);
+					afficher_point(pecheur.x, pecheur.y, color_RED);
 					
-					
-				
 	//Predation............................................................................................................ 
 					if(elt->nxt!=NULL)
 					{					
@@ -121,22 +124,20 @@ int main(int argc, char const *argv[])
 						//L'individu mange						
 						if(predation(ptr, plateau_de_jeu, species))
 						{	draw_grid(plateau_de_jeu);
-							afficher_point(x, y,color_RED);							
+							afficher_point(pecheur.x, pecheur.y,color_RED);	 						
 							stop=get_key();
 							elt=elt->nxt;
 						}
 					//Fin de prédation
 						//l'individu n'a pas mangé						
 						else
-						{	//printf("L'individu n'a as mangé\n");	
 							elt=elt->nxt;
-												
-						}
 					}
 				}	
 			}	
 			clear_screen();
 			draw_grid(plateau_de_jeu);
+			afficher_point(pecheur.x, pecheur.y, color_RED);
 				
 		}
 		WORLD_TIME++;
