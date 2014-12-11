@@ -11,12 +11,13 @@ int rand_a_b(int a, int b)
 int main(int argc, char const *argv[])
 {
 	start_graphics();
-/*test*/
+	
+	/*test final_screen
 	int ab;
 			
 	final_screen (2);
 	ab=get_key();
-	update_graphics();
+	update_graphics();*/
 	
 
 	//Variable d'arrêt de la simulation 
@@ -26,7 +27,6 @@ int main(int argc, char const *argv[])
   	// Compteur pour gérer les listes d'especes
   	int i = 0; 
 	
-
 	int choix_du_mode;
 	/***Initialisation du pêcheur***/
 	//Variables de déplacement du pêcheur
@@ -64,6 +64,9 @@ int main(int argc, char const *argv[])
 	Mob * ptr;
 	Liste * elt;
 	WORLD_TIME=1;
+	
+
+
 	do
 	{	printf("WOLRD_TIME : %d\n", WORLD_TIME);
 
@@ -71,25 +74,31 @@ int main(int argc, char const *argv[])
 	//Action du pêcheur.................................................................................................. 
 		if(!case_valide(pecheur.x, pecheur.y, plateau_de_jeu))		
 		{	//plouf(&pecheur);
-			plouf2(&pecheur, plateau_de_jeu, species); 		
+			if(plouf2(&pecheur, plateau_de_jeu, species))
+			{	clear_screen();
+				plouf(&pecheur);
+				draw_grid(plateau_de_jeu);
+				choix_du_mode=get_key();				
+				update_graphics(); 		
+			}		
 		}		
 		else{ //ici
-		afficher_munitions(&pecheur);
-		deplacement_pecheur(&pecheur, color_RED, plateau_de_jeu);
-		//possibilité de pêcher 		
-		a=choix_action(1);
-		if(a=='o')
-		{	printf("que la peche commence\n");
-			que_la_peche_commence(plateau_de_jeu, &pecheur, species);
-		}	
-		else if(pecheur.satiete!=0)
-		{	//possibilité de construire le pont	
-			a=choix_action(2);
+			afficher_munitions(&pecheur);
+			deplacement_pecheur(&pecheur, color_RED, plateau_de_jeu);
+			//possibilité de pêcher 		
+			a=choix_action(1);
 			if(a=='o')
-			{	printf("construction du pont\n");		
+			{	printf("que la peche commence\n");
+				que_la_peche_commence(plateau_de_jeu, &pecheur, species);
+			}	
+			else if(pecheur.satiete!=0)
+			{	//possibilité de construire le pont	
+				a=choix_action(2);
+				if(a=='o')
+				{	printf("construction du pont\n");		
 					construire_pont(plateau_de_jeu, &pecheur, species);			
-			}		
-		}
+				}		
+			}
 		
 		} //et là	
 	
@@ -153,34 +162,11 @@ int main(int argc, char const *argv[])
 		}
 		WORLD_TIME++;
 	
-		//reproduction 
-
-/*		spawn_list_of_mobs(plateau_de_jeu, liste_plancton);
-		afficher_grille(plateau_de_jeu);
-		stop=get_key();
-
-		spawn_list_of_mobs(plateau_de_jeu, liste_corail);
-		afficher_grille(plateau_de_jeu);
-		stop=get_key();	
-	
-		spawn_list_of_mobs(plateau_de_jeu, liste_thon);
-		afficher_grille(plateau_de_jeu);
-		stop=get_key();		
-	
-		spawn_list_of_mobs(plateau_de_jeu, liste_pollution);
-		afficher_grille(plateau_de_jeu);
-		stop=get_key();	
-	
-		spawn_list_of_mobs(plateau_de_jeu, liste_bar);
-		afficher_grille(plateau_de_jeu);
-		stop=get_key();	
-	
-		afficher_grille(plateau_de_jeu);
-		stop=get_key(); 						*/
+		//reproduction
 		
 		
 		stop=get_key();	
-		//clear_screen();
+
 	
 	}while(stop!=key_DOWN||WORLD_TIME<10);
 

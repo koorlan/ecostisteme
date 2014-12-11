@@ -216,7 +216,7 @@ void plouf(Mob *pecheur)
 
 }
 
-void plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])	
+int plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])	
 {	int stop;	
 	char * nom;
 	set_drawing_color(color_LIGHTRED);	
@@ -226,9 +226,8 @@ void plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])
 	draw_printf(M1, 479-M2/2, "Vous etes tombe a l'eau, sortez de l'eau");
 	afficher_point(pecheur->x, pecheur->y, color_RED);	
 	
-	
-		deplacement_pecheur(pecheur, color_RED, plateau);
-		stop=get_key();
+	deplacement_pecheur(pecheur, color_RED, plateau);
+	//stop=get_key();
 		
 	//si le pecheur a rencontré un prédateur pendant qu'il tentait en vain de sortir de l'eau 	
 		if(pecheur->derniere_reproduction==0)
@@ -260,13 +259,15 @@ void plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])
 			draw_printf(M1+5, 240, "Cela signifie que vous avez perdu pour cette fois. Voulez-vous rententer votre chance?\n");
 			set_font(font_HELVETICA_18);			
 			draw_printf(M1+200, 200, "(o)ui / (n)on\n");
-
+			update_graphics();
+			stop=get_key();
 		}
-	
-	
-	//afficher_munitions(pecheur); 
+		else 
+			return 1;
+		return (stop=='o');
+	 
 	update_graphics();
-	stop=get_key();
+	
 }
 
 /*

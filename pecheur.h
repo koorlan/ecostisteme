@@ -29,8 +29,8 @@ void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur
 
 void plouf(Mob *pecheur);
 
-void plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[]);
+int plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[]);
 
-void final_screen (int a);
+//void final_screen (int a);
 
 #endif 
