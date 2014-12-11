@@ -25,26 +25,26 @@ void deplacement_pecheur(Mob *p, couleurs coul, Mob * plateau[][TAILLE_PLATEAU])
 	{	a=get_key();
 		switch(a)
 		{	case key_RIGHT:						
-				if(case_valide(p->x+1, p->y, plateau))
+				if(case_valide(p->x+1, p->y, plateau)||p->derniere_reproduction==1)
 				{	afficher_point(p->x,p->y,color_WHITE);				
 					(p->x)++;
 				}				
 				break;
 		
 			case key_LEFT : 
-				if(case_valide(p->x-1, p->y, plateau))
+				if(case_valide(p->x-1, p->y, plateau)||p->derniere_reproduction==1)
 				{	afficher_point(p->x,p->y,color_WHITE);
 					(p->x)--;
 				}			
 				break;
 			case key_UP :
-				if(case_valide(p->x, p->y+1, plateau))				
+				if(case_valide(p->x, p->y+1, plateau)||p->derniere_reproduction==1)				
 				{	afficher_point(p->x,p->y,color_WHITE);
 					(p->y)++;
 				}				
 				break;
 			case key_DOWN :
-				if(case_valide(p->x, p->y-1, plateau))				
+				if(case_valide(p->x, p->y-1, plateau)||p->derniere_reproduction==1)				
 				{	afficher_point(p->x,p->y,color_WHITE);
 					(p->y)--;
 				}				
@@ -55,7 +55,26 @@ void deplacement_pecheur(Mob *p, couleurs coul, Mob * plateau[][TAILLE_PLATEAU])
 		}
 		afficher_point(p->x,p->y,coul);						
 		update_graphics();
-			
+		/***Conditions d'arrêt pour le cas du pêcheur dans l'eau***/
+
+		//soit il regagne le rivage sain et sauf 
+		if(p->derniere_reproduction==1 && case_valide(p->x, p->y, plateau))
+		{	set_drawing_color(color_WHITE);
+			//set_font(font_HELVETICA_14);
+			draw_printf(M1, 479-M2/2, "Vous etes tombe a l'eau, sortez de l'eau");
+			set_drawing_color(color_BLACK);
+			draw_printf(M1, 479-M2/2, "Vous avez rejoint la terre ferme!\n");
+			update_graphics();			
+			return;
+					
+		}
+
+		//soit il se déplace sur une case qui contient un prédateur 
+		else if(p->derniere_reproduction==1 && eat_mat[plateau[p->x-1][p->y-1]->id][10]==1)
+		{	//on indique à la fonction plouf2 que le pêcheur a rencontré un prédateur
+			p->derniere_reproduction=0;
+			return;
+		}	
 	}
 	
 	update_graphics();
@@ -191,12 +210,99 @@ void plouf(Mob *pecheur)
 	pecheur->x=0;
 	pecheur->y=0;	
 	set_font(font_HELVETICA_12);
-	draw_printf(M1+150, 479-M2/2, "Vous etes tombe a l'eau au tour precedent, toutes vos munitions sont perdues");
+	draw_printf(M1+150, 479-M2/2, "Vous etes tombe a l'eau au tour precedent, vos munitions sont perdues");
 	afficher_munitions(pecheur); 
 	update_graphics();
 
 }
 
+void plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])	
+{	int stop;	
+	char * nom;
+	set_drawing_color(color_LIGHTRED);	
+	pecheur->dernier_repas=0;	
+	pecheur->derniere_reproduction=1; //le pêcheur est dans l'eau 
+	set_font(font_HELVETICA_18);	
+	draw_printf(M1, 479-M2/2, "Vous etes tombe a l'eau, sortez de l'eau");
+	afficher_point(pecheur->x, pecheur->y, color_RED);	
+	
+	
+		deplacement_pecheur(pecheur, color_RED, plateau);
+		stop=get_key();
+		
+	//si le pecheur a rencontré un prédateur pendant qu'il tentait en vain de sortir de l'eau 	
+		if(pecheur->derniere_reproduction==0)
+		{	printf("der_repro : %d\n", pecheur->derniere_reproduction);
+			clear_screen();
+			set_drawing_color(color_BLACK);
+			set_font(font_HELVETICA_18);
+			switch (plateau[pecheur->x][pecheur->y]->id)
+			{	case 6 :
+				{	nom="pyranha";
+					break;
+				}
+				case 7 :
+				{	nom="requin";
+					break;
+				}
+				case 8 :
+				{	nom="orque";
+					break;
+				}
+				default :	
+				{	nom="inattendu";
+					break;
+				}
+			
+			}
+			draw_printf(M1-20, 280, "Vous venez de vous faire manger par une espece de type %s\n", nom);
+			set_font(font_HELVETICA_12);			
+			draw_printf(M1+5, 240, "Cela signifie que vous avez perdu pour cette fois. Voulez-vous rententer votre chance?\n");
+			set_font(font_HELVETICA_18);			
+			draw_printf(M1+200, 200, "(o)ui / (n)on\n");
+
+		}
+	
+	
+	//afficher_munitions(pecheur); 
+	update_graphics();
+	stop=get_key();
+}
+
+/*
+void final_screen (int a)
+{	set_drawing_color(color_BLACK);	
+	set_font(font_HELVETICA_18);
+	char * nom;
+	int stop;	
+	switch (a)
+	{		case 6 :
+			{	nom="pyranha";
+				break;
+			}
+			case 7 :
+			{	nom="requin";
+				break;
+			}
+			case 8 :
+			{	nom="orque";
+				break;
+			}
+			default :	
+			{	nom="inattendu";
+				break;
+			}
+			
+	}
+		draw_printf(M1-20, 280, "Vous venez de vous faire manger par une espece de type %s\n", nom);
+		set_font(font_HELVETICA_12);			
+		draw_printf(M1+5, 240, "Cela signifie que vous avez perdu pour cette fois. Voulez-vous rententer votre chance?\n");
+		set_font(font_HELVETICA_18);			
+		draw_printf(M1+200, 200, "(o)ui / (n)on\n");
+		update_graphics();		
+		stop=get_key();	
+		stop=get_key();
+}
 
 
-
+*/

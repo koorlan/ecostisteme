@@ -11,6 +11,14 @@ int rand_a_b(int a, int b)
 int main(int argc, char const *argv[])
 {
 	start_graphics();
+/*test*/
+	int ab;
+			
+	final_screen (2);
+	ab=get_key();
+	update_graphics();
+	
+
 	//Variable d'arrêt de la simulation 
 	int stop=key_F1;
 	srand (time (NULL));
@@ -19,20 +27,21 @@ int main(int argc, char const *argv[])
   	int i = 0; 
 	
 
-
-
+	int choix_du_mode;
+	/***Initialisation du pêcheur***/
 	//Variables de déplacement du pêcheur
 	int x=0;
 	int y=0;
 	//Variable d'action du pêcheur
 	int a;
 	Mob pecheur;
-	//représente les "réserves" du pecheur
-	pecheur.satiete=1;	
-	//représente le fait que le pecheur ait pêché quelque chose au tour précédent  
-	pecheur.dernier_repas=0;
+	pecheur.satiete=1; //représente les "réserves" du pecheur
+	pecheur.dernier_repas=0; //vaut 1 quand le pecheur a pêché quelque chose au tour précédent, 0 sinon
+	pecheur.derniere_reproduction=0; //vaut 1 quand le pêcheur est dans l'eau	
 	pecheur.x=x;
 	pecheur.y=y;
+	
+
 	init_grid(plateau_de_jeu);
 
 
@@ -61,8 +70,10 @@ int main(int argc, char const *argv[])
 	/***Jeu du pêcheur***/		
 	//Action du pêcheur.................................................................................................. 
 		if(!case_valide(pecheur.x, pecheur.y, plateau_de_jeu))		
-			plouf(&pecheur);
-				
+		{	//plouf(&pecheur);
+			plouf2(&pecheur, plateau_de_jeu, species); 		
+		}		
+		else{ //ici
 		afficher_munitions(&pecheur);
 		deplacement_pecheur(&pecheur, color_RED, plateau_de_jeu);
 		//possibilité de pêcher 		
@@ -80,7 +91,7 @@ int main(int argc, char const *argv[])
 			}		
 		}
 		
-			
+		} //et là	
 	
 	/***Jeu de l'IA***/	
 		clear_screen();	
