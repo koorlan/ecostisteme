@@ -66,6 +66,7 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
                 	 }
 		}
 	}
+	update_graphics();
         if(proie->id!=0)
         {	
   
@@ -92,7 +93,7 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 		return 1;      
         }       	        	
 	return 0;
-
+	
 
 }
 

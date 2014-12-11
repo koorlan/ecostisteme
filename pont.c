@@ -103,8 +103,6 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], Mob * pecheur, Liste * spe
 	plateau[x_pont-1][y_pont-1]->derniere_reproduction=0;
 	pecheur->satiete--;
 	
-		
-	stop=get_key();
 }
 
 
