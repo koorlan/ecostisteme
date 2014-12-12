@@ -9,11 +9,8 @@
 #ifndef PECHEUR_H
 #define PECHEUR_H
 
-//#include "eco.h"
-//#include "mob.h"
 #include "main.h"
-//#include "mobs_ia.h"
-//#include "pont.h" 
+
 
 #define TAILLE_CANNE 1
 
@@ -25,13 +22,13 @@ int choix_action(int n);
 
 int case_valide_peche(int x, int y, int dx, int dy);
 
-void afficher_munitions(Mob * pecheur);
+void afficher_munitions(Mob * pecheur, int * reserves_gagnees);
 
-void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[], int type_materiel);
+void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[], int type_materiel, int * reserves_gagnees);
 
-void plouf(Mob *pecheur);
+void plouf_soft_version(Mob *pecheur);
 
-int plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[]);
+int plouf_hard_version(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[]);
 
 //void final_screen (int a);
 
