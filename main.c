@@ -66,6 +66,7 @@ int main(int argc, char const *argv[])
 
 	/***Jeu du pêcheur***/		
 	//Action du pêcheur.................................................................................................. 
+		
 		//Le pecheur est tombé dans l'eau			
 		if(!case_valide(pecheur.x, pecheur.y, plateau_de_jeu))		
 		{	
@@ -86,8 +87,10 @@ int main(int argc, char const *argv[])
 			//possibilité de pêcher 		
 			a=choix_action(1);
 			if(a=='o')
-			{	printf("que la peche commence\n");
-				que_la_peche_commence(plateau_de_jeu, &pecheur, species);
+			{	//choix du materiel de peche (canne ou filet)
+				a=choix_action(3);
+				printf("que la peche commence\n");
+				que_la_peche_commence(plateau_de_jeu, &pecheur, species, a);
 			}	
 			else if(pecheur.satiete!=0)
 			{	//possibilité de construire le pont	

@@ -1,11 +1,19 @@
+/**********************************************************************/
+/***  fichier: pecheur.h                                            ***/
+/***  en-tete de pecheur.c   					    ***/
+/***								    ***/	
+/***  gestion du pecheur                                            ***/
+/**********************************************************************/
+
+
 #ifndef PECHEUR_H
 #define PECHEUR_H
 
-#include "eco.h"
-#include "mob.h"
+//#include "eco.h"
+//#include "mob.h"
 #include "main.h"
-#include "mobs_ia.h"
-#include "pont.h" 
+//#include "mobs_ia.h"
+//#include "pont.h" 
 
 #define TAILLE_CANNE 1
 
@@ -15,17 +23,11 @@ void deplacement_pecheur(Mob * pecheur, couleurs coul, Mob * plateau[TAILLE_PLAT
 
 int choix_action(int n);
 
-void spawn_canne(int x, int y, int *x_c, int *y_c);
-
-void draw_canne(int x_pecheur, int y_pecheur, int x_canne, int y_canne, couleurs coul);
-
 int case_valide_peche(int x, int y, int dx, int dy);
-
-void place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne);
 
 void afficher_munitions(Mob * pecheur);
 
-void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[]);
+void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[], int type_materiel);
 
 void plouf(Mob *pecheur);
 

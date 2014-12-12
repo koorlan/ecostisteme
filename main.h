@@ -13,6 +13,8 @@
 #include "libgraphique.h"
 #include "mobs_ia.h"
 #include "pecheur.h"
+#include "canne.h"
+#include "filet.h"
 
 int WORLD_TIME;
 
