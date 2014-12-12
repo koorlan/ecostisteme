@@ -256,7 +256,7 @@ int plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])
 			}
 			draw_printf(M1-20, 280, "Vous venez de vous faire manger par une espece de type %s\n", nom);
 			set_font(font_HELVETICA_12);			
-			draw_printf(M1+5, 240, "Cela signifie que vous avez perdu pour cette fois. Voulez-vous rententer votre chance?\n");
+			draw_printf(M1+180, 240, "Voulez-vous continuer?\n");
 			set_font(font_HELVETICA_18);			
 			draw_printf(M1+200, 200, "(o)ui / (n)on\n");
 			update_graphics();
@@ -270,8 +270,8 @@ int plouf2(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])
 	
 }
 
-/*
-void final_screen (int a)
+
+/*void final_screen (int a)
 {	set_drawing_color(color_BLACK);	
 	set_font(font_HELVETICA_18);
 	char * nom;
@@ -297,7 +297,7 @@ void final_screen (int a)
 	}
 		draw_printf(M1-20, 280, "Vous venez de vous faire manger par une espece de type %s\n", nom);
 		set_font(font_HELVETICA_12);			
-		draw_printf(M1+5, 240, "Cela signifie que vous avez perdu pour cette fois. Voulez-vous rententer votre chance?\n");
+		draw_printf(M1+180, 240, "Voulez-vous continuer?\n");
 		set_font(font_HELVETICA_18);			
 		draw_printf(M1+200, 200, "(o)ui / (n)on\n");
 		update_graphics();		
@@ -305,5 +305,5 @@ void final_screen (int a)
 		stop=get_key();
 }
 
-
 */
+
