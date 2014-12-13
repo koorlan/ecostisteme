@@ -68,7 +68,7 @@ int main(int argc, char const *argv[])
 	draw_grid(plateau_de_jeu);
 	Mob * ptr;
 	Liste * elt;
-	WORLD_TIME=1;
+	WORLD_TIME=0;
 	
 
 
@@ -79,7 +79,9 @@ int main(int argc, char const *argv[])
 	/***Jeu du pêcheur***/		
 	//Action du pêcheur.................................................................................................. 
 		
-		//Le pecheur est tombé dans l'eau			
+	//Est-ce que c'est au pecheur de joué ?
+	if(WORLD_TIME % 10 == 0){			
+		//Le pecheur est tombé dans l'eau
 		if(!case_valide(pecheur.x, pecheur.y, plateau_de_jeu))		
 		{	
 			if(plouf_hard_version(&pecheur, plateau_de_jeu, species))
@@ -113,7 +115,8 @@ int main(int argc, char const *argv[])
 				}		
 			}
 		
-		} 	
+		}
+	} 	
 		if(!mort_pecheur)
 		{
 	/***Jeu de l'IA***/	
@@ -135,13 +138,13 @@ int main(int argc, char const *argv[])
 				}	
 				fprintf(fPtr,",%d",(nombre_elts_liste(species[i])*100)/(TAILLE_PLATEAU * TAILLE_PLATEAU) ) ;
 			}	
-			clear_screen();
+			//clear_screen();
 			draw_grid(plateau_de_jeu);
 			afficher_point(pecheur.x, pecheur.y, color_RED);
-				
+			usleep(100000);	
 			
 			WORLD_TIME++;
-			stop=get_key();	
+			//stop=get_key();	
 		}
 
 		
