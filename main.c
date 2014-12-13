@@ -148,6 +148,6 @@ int main(int argc, char const *argv[])
 		}while(stop!=key_DOWN && WORLD_TIME<100  && !mort_pecheur);
 	//Fermeture de la fenetre graphique	
 	stop_graphics();
-
+	fclose(fPtr);
 	return 0;
 }
