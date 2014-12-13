@@ -11,11 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "libgraphique.h"
-#define M1 63.9
-#define M2 47.9
-#define N 30
-
-
+#define M1 WINDOW_WIDTH/10
+#define M2 WINDOW_HEIGHT/10
+#define N TAILLE_PLATEAU
 
 
 void affiche_grille();

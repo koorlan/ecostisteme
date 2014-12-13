@@ -74,7 +74,7 @@ int isPlaceFree (Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b)
 int spawn_mob(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste )
 {
 	Liste * free_place_list = malloc(sizeof(Liste));
-	free_place_list = free_neighboor_case_list(plateau, liste->mob);
+	free_place_list = free_neighboor_case_list(plateau, &(liste->mob));
 	if (free_place_list->nxt == NULL)
 	{
 		
@@ -118,7 +118,7 @@ void spawn_list_of_mobs(Mob *  plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * 
 
 }
 
-Liste * free_neighboor_case_list(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob mob) 
+Liste * free_neighboor_case_list(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob * mob) 
 {
 	Liste * free_place_list = malloc(sizeof(Liste));
 	free_place_list->nxt = NULL;
@@ -129,9 +129,10 @@ Liste * free_neighboor_case_list(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], 
 		for (int j = -1 ; j <= 1; ++j)
 			{
 
-				if ((mob.x + i >= 0 && mob.y + j >= 0) && (mob.x + i < TAILLE_PLATEAU && mob.y + j < TAILLE_PLATEAU) && isPlaceFree(plateau,(mob.x + i ),(mob.y + j))){
+				if ((mob->x + i >= 0 && mob->y + j >= 0) && (mob->x + i < TAILLE_PLATEAU && mob->y + j < TAILLE_PLATEAU) && isPlaceFree(plateau,(mob->x + i ),(mob->y + j))){
 					//printf("J'ajoute en tete ! %d %d \n",i,j);
-					free_place_list = ajouterEnTete(free_place_list,*(plateau[mob.x + i][mob.y + j]));
+					//printf("COntrole free_neighboot %d,%d \n", mob->x + i,mob->y + j);
+					free_place_list = ajouterEnTete(free_place_list,*(plateau[mob->x + i][mob->y + j]));
 				}
 
 			}	

@@ -14,14 +14,13 @@
 
 
 
-
 void affiche_grille()
 /*affichage d'une grille n*n cases*/
 {	int i;
 	set_drawing_color(color_BLACK);
 	for(i=0;i<=N;i++)
-	{	draw_line(M1+i*(639-2*M1)/N, M2, M1+i*(639-2*M1)/N, 479-M2);
-		draw_line(M1, M2+i*(479-2*M2)/N, 639-M1, M2+i*(479-2*M2)/N);
+	{	draw_line(M1+i*(WINDOW_WIDTH-2*M1)/N, M2, M1+i*(WINDOW_WIDTH-2*M1)/N, WINDOW_HEIGHT-M2);
+		draw_line(M1, M2+i*(WINDOW_HEIGHT-2*M2)/N, WINDOW_WIDTH-M1, M2+i*(WINDOW_HEIGHT-2*M2)/N);
 	}		
 	update_graphics();	
 }
@@ -29,8 +28,7 @@ void affiche_grille()
 void afficher_point(int x, int y, couleurs coul)
 /*affichage d'un individu sur la grille en fonction de son espèce*/
 {	set_drawing_color(coul);
-	draw_circle_full(M1+(x-0.5)*(639-2*M1)/(N), M2+(y-0.5)*(479-2*M2)/(N), 4.5);
-	//update_graphics();
+	draw_circle_full(M1+(x-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y-0.5)*(WINDOW_HEIGHT-2*M2)/(N), 4.5);
 }
  
 

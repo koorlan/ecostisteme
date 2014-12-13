@@ -85,7 +85,7 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 void construire_pont(Mob * plateau[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[])
 {	int x_pont=0, y_pont=0;
 	int stop;	
-	Mob pont;
+	Mob pont ;
 	spawn_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
 	draw_pont(x_pont, y_pont, color_LIGHTBLUE);
 	place_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
@@ -93,7 +93,7 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], Mob * pecheur, Liste * spe
 	
 	//On détruit l'éspèce présente dans la case ou le pont a été construit	
 	if(plateau[x_pont-1][y_pont-1]->id!=0)
-	{	destroy_mob(*plateau[x_pont-1][y_pont-1], species[plateau[x_pont-1][y_pont-1]->id]);
+	{	species[plateau[x_pont-1][y_pont-1]->id] = destroy_mob(*plateau[x_pont-1][y_pont-1], species[plateau[x_pont-1][y_pont-1]->id]);
 	}	
 	plateau[x_pont-1][y_pont-1]->id=11;
 	plateau[x_pont-1][y_pont-1]->x=x_pont-1;

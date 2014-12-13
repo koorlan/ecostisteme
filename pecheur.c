@@ -149,6 +149,9 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheu
 			*reserves_gagnees=taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];
 			destroy_mob(*plateau_de_jeu[x_canne-1][y_canne-1], species[plateau_de_jeu[x_canne-1][y_canne-1]->id]);
 			plateau_de_jeu[x_canne-1][y_canne-1]=create_mob(0);
+			plateau_de_jeu[x_canne-1][y_canne-1]->x= x_canne-1;
+			plateau_de_jeu[x_canne-1][y_canne-1]->y= y_canne-1;
+
 		}
 			printf("Les munitions du pêcheur sont : %d\nA-t-il peché (0 : non , 1 : oui)? %d\n", pecheur->satiete, pecheur->dernier_repas); 
 		update_graphics();
@@ -173,6 +176,8 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheu
 						
 						destroy_mob(*plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2], species[plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->id]);
 						plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]=create_mob(0);
+						plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->x = pecheur->x+i-2;
+						plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->y = pecheur->y+j-2;
 					 }
 				}
 			}

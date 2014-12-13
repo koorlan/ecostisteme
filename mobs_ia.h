@@ -12,15 +12,18 @@
 
 Liste * destroy_mob (Mob mob, Liste * list_of_specific_species );
 
-int survie(Mob mob, Liste * species[NB_SPECIES]);
+int survie(Mob * mob, Liste * species[NB_SPECIES]);
 
-int reproduction(Mob mob);
+int reproduction(Mob *mob, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES]);
 
 int predation(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES]);
 
-int deplacement(Mob mob);
+int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES]);
 
-int tour();
+void tour(Mob * mob);
+
+void ia_mob(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES]);
+
 
 
 

@@ -95,10 +95,11 @@ Mob * create_mob(int id_mob)
 
 
  	Mob * mob  = malloc(sizeof(Mob));
-	mob->id = id_mob;
-	mob->dernier_repas = mobs_specs[id_mob].dernier_repas;
-	mob->satiete = mobs_specs[id_mob].satiete;
-	mob->derniere_reproduction =  mobs_specs[id_mob].derniere_reproduction;
+    mob->id = id_mob;
+    mob->dernier_repas = WORLD_TIME;
+    mob->satiete = 0;
+    mob->derniere_reproduction =  WORLD_TIME;
+
 
 	return mob;
 }

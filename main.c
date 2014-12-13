@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
 	Mob pecheur;
 	int mort_pecheur=0;
 	int reserves_gagnees=0;
-	pecheur.satiete=1; //représente les "réserves" du pecheur
+	pecheur.satiete=20; //représente les "réserves" du pecheur
 	pecheur.dernier_repas=0; //vaut 1 quand le pecheur a pêché quelque chose au tour précédent, 0 sinon
 	pecheur.derniere_reproduction=0; //vaut 1 quand le pêcheur est dans l'eau	
 	pecheur.x=x;
@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
 		
 		/*Ordre de creation            Espece vide - Plancton -   Corail -   Bar -  Thon - Pollution
    		Correspondance des couleurs    WHITE -       LIGHTGREEN - LIGHTRED - CYAN - BLUE - RED    */
-   	Liste * species[] = {NULL, init_mobs(1,9), init_mobs(2, 8), init_mobs(3, 5), init_mobs(4, 2), init_mobs(5, 1)};
+   	Liste * species[] = {NULL, init_mobs(1,10), init_mobs(2, 5), init_mobs(3,6), init_mobs(4, 10), init_mobs(5, 2)};
 
 
 	//Génération des mobs sur le plateau de jeu..........................................................................	
@@ -115,59 +115,26 @@ int main(int argc, char const *argv[])
 				elt=species[i];
 
 	//Survie.............................................................................................................
-			
+				
 				while(elt->nxt !=NULL)
 				{	
-					elt->mob.satiete --;
-					espece_consideree(i, mobs_draw[i]);	
-					draw_grid(plateau_de_jeu);
-					stop=get_key();				
-					afficher_point(elt->mob.x+1, elt->mob.y+1, mobs_draw[7]);
-					afficher_point(pecheur.x, pecheur.y, color_RED);
-					//L'individu est mort				
-					if(!survie(elt->mob, species)&&elt->nxt!=NULL)
-					{	
-						afficher_point(elt->mob.x+1, elt->mob.y+1, mobs_draw[7]); 				
-						plateau_de_jeu[elt->mob.x][elt->mob.y]=create_mob(0);	
-						draw_grid(plateau_de_jeu);
-						afficher_point(pecheur.x, pecheur.y, color_RED); 							
-					stop=get_key();		
-						
-						elt=elt->nxt;	
-					}
-					//L'individu a survécu	
-					else{			
-						draw_grid(plateau_de_jeu);
-						afficher_point(pecheur.x, pecheur.y, color_RED);
-						
-	//Predation............................................................................................................ 
-						if(elt->nxt!=NULL)
-						{					
-							ptr=&(elt->mob);
-							//L'individu mange						
-							if(predation(ptr, plateau_de_jeu, species))
-							{	draw_grid(plateau_de_jeu);
-								afficher_point(pecheur.x, pecheur.y,color_RED);	 									stop=get_key();
-								elt=elt->nxt;
-							}
-						//Fin de prédation
-							//l'individu n'a pas mangé						
-							else
-								elt=elt->nxt;
-						}
-					}	
+				ptr = &(elt->mob);
+				ia_mob(ptr,plateau_de_jeu,species);
+				elt = elt->nxt;							
 				}	
-				clear_screen();
-				draw_grid(plateau_de_jeu);
-				afficher_point(pecheur.x, pecheur.y, color_RED);
-					
-			}
+
+			}	
+			clear_screen();
+			draw_grid(plateau_de_jeu);
+			afficher_point(pecheur.x, pecheur.y, color_RED);
+				
+			
 			WORLD_TIME++;
 			stop=get_key();	
-			}
+		}
 
 		
-		}while(stop!=key_DOWN && WORLD_TIME<10  && !mort_pecheur);
+		}while(stop!=key_DOWN && WORLD_TIME<100  && !mort_pecheur);
 	//Fermeture de la fenetre graphique	
 	stop_graphics();
 
