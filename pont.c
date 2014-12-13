@@ -11,7 +11,7 @@ void spawn_pont(int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * pl
 {	int i, j;
 	for(i=-1; i<=1; i++)
 	{	for(j=-1;j<=1;j++)
-		{	if( ((x_pecheur+i>=1 && x_pecheur+i<=30) && (y_pecheur+j>=1 && y_pecheur+j<=30)) && (plateau[x_pecheur+i-1][y_pecheur+i-1]->id != 11))
+		{	if( ((x_pecheur+i>=1 && x_pecheur+i<=TAILLE_PLATEAU) && (y_pecheur+j>=1 && y_pecheur+j<=TAILLE_PLATEAU)) && (plateau[x_pecheur+i-1][y_pecheur+j-1]->id != 11))
 			{	*x_pont=x_pecheur+i;
 				*y_pont=y_pecheur+j;
 				return;			
@@ -25,13 +25,13 @@ void draw_pont(int x, int y, couleurs coul)
 {		
 	set_drawing_color(coul);
 	set_fill_color(coul);
-	draw_rectangle_full(M1+x*(639-2*M1)/N-1, M2+y*(479-2*M2)/N-1, M1+(x-1)*(639-2*M1)/N+1, M2+(y-1)*(479-2*M2)/N+1);
+	draw_rectangle_full(M1+x*(WINDOW_WIDTH-2*M1)/N-1, M2+y*(WINDOW_HEIGHT-2*M2)/N -1, M1+(x-1)*(WINDOW_WIDTH-2*M1)/N+1, M2+(y-1)*(WINDOW_HEIGHT-2*M2)/N +1);
 
 }
 
 /*Atteste de la validité d'une case lors du déplacement du pont*/
 int case_valide_pont(int x_pont, int y_pont, int x_pecheur, int y_pecheur, Mob * plateau[][TAILLE_PLATEAU])
-{	return (case_valide_peche(x_pont, y_pont, x_pecheur, y_pecheur) && (plateau[x_pont-1][y_pont-1]->id != 11));
+{	return (case_valide_peche(x_pont, y_pont, x_pecheur, y_pecheur,plateau) && (plateau[x_pont-1][y_pont-1]->id != 11));
 		
 }
 

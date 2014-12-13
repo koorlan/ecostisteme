@@ -112,10 +112,10 @@ int choix_action(int n)
 }
 		
 /*Atteste de la validité d'une case lors du déplacement de la canne à pêche*/
-int case_valide_peche(int x_canne, int y_canne, int x2, int y2)
+int case_valide_peche(int x_canne, int y_canne, int x2, int y2,Mob * plateau[][TAILLE_PLATEAU])
 {	int dx = x_canne-x2;
 	int dy = y_canne-y2;
-	return ( ( (x_canne>=1 && x_canne<=30) && (y_canne>=1 && y_canne<=30) ) && ( sqrtf(dx*dx + dy*dy)<= sqrt(2) ) );
+	return ( ( (x_canne>=1 && x_canne<=30) && (y_canne>=1 && y_canne<=30) ) && ( sqrtf(dx*dx + dy*dy)<= sqrt(2) ) && (plateau[x_canne-1][y_canne-1]->id != 11) );
 }
 
 /*Affichage des réserves du pêcheur*/
@@ -123,11 +123,11 @@ void afficher_munitions (Mob * pecheur, int *reserves_gagnees)
 {	set_drawing_color(color_BLACK);	
 	set_font(font_HELVETICA_12);
 	if(pecheur->dernier_repas==1)
-	{	draw_printf(M1+150, 479-M2/2, "Vos derniers exploits a la peche a la ligne vous rapportent %d munitions", *reserves_gagnees);
+	{	draw_printf(M1+150, WINDOW_HEIGHT-M2/2, "Vos derniers exploits a la peche a la ligne vous rapportent %d munitions", *reserves_gagnees);
 		*reserves_gagnees=0;
 	}
 	//set_drawing_color(color_LIGHTBLUE);	
-	draw_printf(M1-30, 479-M2/2, "RESERVES DISPONIBLES : %d\n", pecheur->satiete);
+	draw_printf(M1-30, WINDOW_HEIGHT-M2/2, "RESERVES DISPONIBLES : %d\n", pecheur->satiete);
 	pecheur->dernier_repas=0; 
 	update_graphics();
 }
@@ -138,11 +138,11 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheu
 	int x_canne=0, y_canne=0;
 	int peche;	
 	if(type_materiel=='c')
-	{	spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne);
+	{	spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne, plateau_de_jeu);
 		printf("%d, %d\n", x_canne, y_canne);
 		draw_canne((pecheur->x), (pecheur->y), x_canne, y_canne, color_BLACK);	
 		update_graphics();		
-		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne);	
+		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne,plateau_de_jeu);	
 		if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1)
 		{	pecheur->satiete = pecheur->satiete + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
 			pecheur->dernier_repas=1;

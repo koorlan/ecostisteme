@@ -20,7 +20,7 @@ void deplacement_pecheur(Mob * pecheur, couleurs coul, Mob * plateau[TAILLE_PLAT
 
 int choix_action(int n);
 
-int case_valide_peche(int x, int y, int dx, int dy);
+int case_valide_peche(int x, int y, int dx, int dy, Mob * plateau[][TAILLE_PLATEAU]);
 
 void afficher_munitions(Mob * pecheur, int * reserves_gagnees);
 

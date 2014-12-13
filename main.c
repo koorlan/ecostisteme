@@ -12,6 +12,13 @@ int main(int argc, char const *argv[])
 {
 	start_graphics();
 
+	//RECORD
+    FILE *fPtr;
+    fPtr=fopen("records.csv","w");
+
+    if (fPtr == NULL)
+    printf("Error in opening file\n");
+	
 	//Variable d'arrêt de la simulation 
 	int stop=key_F1;
 	srand (time (NULL));
@@ -48,12 +55,15 @@ int main(int argc, char const *argv[])
    		Correspondance des couleurs    WHITE -       LIGHTGREEN - LIGHTRED - CYAN - BLUE - RED    */
    	Liste * species[] = {NULL, init_mobs(1,10), init_mobs(2, 5), init_mobs(3,6), init_mobs(4, 10), init_mobs(5, 2)};
 
+   	//
+   	fprintf(fPtr,"%s","WORLD_TIME");
 
 	//Génération des mobs sur le plateau de jeu..........................................................................	
 	for (int i = 1; i <= NB_SPECIES; ++i)
 	{
 		spawn_list_animal_random(plateau_de_jeu, species[i]);
 		printf("Il y a %d individus de l'espece %d \n", nombre_elts_liste(species[i]), i);
+		fprintf(fPtr,",%d",i);
 	}
 	draw_grid(plateau_de_jeu);
 	Mob * ptr;
@@ -64,6 +74,7 @@ int main(int argc, char const *argv[])
 
 	do
 	{	printf("WOLRD_TIME : %d\n", WORLD_TIME);
+	fprintf(fPtr,"\n%d", WORLD_TIME);
 
 	/***Jeu du pêcheur***/		
 	//Action du pêcheur.................................................................................................. 
@@ -122,7 +133,7 @@ int main(int argc, char const *argv[])
 				ia_mob(ptr,plateau_de_jeu,species);
 				elt = elt->nxt;							
 				}	
-
+				fprintf(fPtr,",%d",(nombre_elts_liste(species[i])*100)/(TAILLE_PLATEAU * TAILLE_PLATEAU) ) ;
 			}	
 			clear_screen();
 			draw_grid(plateau_de_jeu);

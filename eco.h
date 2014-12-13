@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "libgraphique.h"
-#define M1 WINDOW_WIDTH/10
-#define M2 WINDOW_HEIGHT/10
+#define M1 (WINDOW_WIDTH)/10
+#define M2 (WINDOW_HEIGHT)/10
 #define N TAILLE_PLATEAU
 
 
