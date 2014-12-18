@@ -25,13 +25,13 @@ void draw_filet(int x_pecheur, int y_pecheur, int filet[][3])
 		{	if(filet[i][j]==1)
 				{	//case x_pecheur+i-1 y_pecheur+j-1
 					for (sup=-1;sup<=1;sup++)
-					{ 	draw_line(M1+(x_pecheur+i-2)*(639-2*M1)/(N), M2+(y_pecheur+j-1.5+sup*0.25)*(479-2*M2)/(N), M1+(x_pecheur+i-1.5-sup*0.25)*(639-2*M1)/(N), M2+(y_pecheur+j-1)*(479-2*M2)/(N));
-						draw_line(M1+(x_pecheur+i-1)*(639-2*M1)/(N), M2+(y_pecheur+j-1.5+sup*0.25)*(479-2*M2)/(N), M1+(x_pecheur+i-1.5+sup*0.25)*(639-2*M1)/(N), M2+(y_pecheur+j-1)*(479-2*M2)/(N)) ;
+					{ 	draw_line(M1+(x_pecheur+i-2)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-1.5+sup*0.25)*(WINDOW_HEIGHT-2*M2)/(N), M1+(x_pecheur+i-1.5-sup*0.25)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-1)*(WINDOW_HEIGHT-2*M2)/(N));
+						draw_line(M1+(x_pecheur+i-1)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-1.5+sup*0.25)*(WINDOW_HEIGHT-2*M2)/(N), M1+(x_pecheur+i-1.5+sup*0.25)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-1)*(WINDOW_HEIGHT-2*M2)/(N)) ;
 					}
 					for (inf=-2;inf<=1;inf++)	
-					{	draw_line(M1+(x_pecheur+i-1.5+inf*0.25)*(639-2*M1)/(N), M2+(y_pecheur+j-2)*(479-2*M2)/(N), M1+(x_pecheur+i-1)*(639-2*M1)/(N), M2+(y_pecheur+j-1.5-inf*0.25)*(479-2*M2)/(N));
+					{	draw_line(M1+(x_pecheur+i-1.5+inf*0.25)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-2)*(WINDOW_HEIGHT-2*M2)/(N), M1+(x_pecheur+i-1)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-1.5-inf*0.25)*(WINDOW_HEIGHT-2*M2)/(N));
 												
-						draw_line(M1+(x_pecheur+i-1.5-inf*0.25)*(639-2*M1)/(N), M2+(y_pecheur+j-2)*(479-2*M2)/(N), M1+(x_pecheur+i+-1-1)*(639-2*M1)/(N), M2+(y_pecheur+j-1.5-inf*0.25)*(479-2*M2)/(N));
+						draw_line(M1+(x_pecheur+i-1.5-inf*0.25)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-2)*(WINDOW_HEIGHT-2*M2)/(N), M1+(x_pecheur+i+-1-1)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur+j-1.5-inf*0.25)*(WINDOW_HEIGHT-2*M2)/(N));
 					}
 						
 				}
@@ -39,6 +39,6 @@ void draw_filet(int x_pecheur, int y_pecheur, int filet[][3])
 	}					
 								
 				
-//		draw_line(M1+(x_pecheur-0.5)*(639-2*M1)/(N), M2+(y_pecheur-0.5)*(479-2*M2)/(N), M1+(x_canne-0.5)*(639-2*M1)/(N), M2+(y_canne-0.5)*(479-2*M2)/(N));
+//		draw_line(M1+(x_pecheur-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur-0.5)*(WINDOW_HEIGHT-2*M2)/(N), M1+(x_canne-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_canne-0.5)*(WINDOW_HEIGHT-2*M2)/(N));
 }	
 

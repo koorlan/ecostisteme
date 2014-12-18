@@ -165,6 +165,8 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 }
 
 int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES] ){
+	int mob_saut_max = saut_max[mob->id];
+	//while(mob_saut_max < saut_max[mob->id] ){
 	Liste * free_place_list = malloc(sizeof(Liste));
 	free_place_list = free_neighboor_case_list(plateau_de_jeu, mob);
 	if (free_place_list->nxt == NULL)
@@ -182,27 +184,14 @@ int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU],
 	} 
 
 
-	plateau_de_jeu[free_place_list->mob.x][free_place_list->mob.y]->id=(*mob).id;
-  //plateau_de_jeu[free_place_list->mob.x][free_place_list->mob.y]->derniere_reproduction=(*mob).derniere_reproduction;
-  //  plateau_de_jeu[free_place_list->mob.x][free_place_list->mob.y]->satiete=(*mob).satiete+taille[proie->id]; 
-  //	plateau_de_jeu[free_place_list->mob.x][free_place_list->mob.y]->dernier_repas=WORLD_TIME;
-		
-	//La case précedente du mob est remplacée par l'espece vide                 
+	plateau_de_jeu[free_place_list->mob.x][free_place_list->mob.y]->id=(*mob).id;          
 	plateau_de_jeu[(*mob).x][(*mob).y]=create_mob(0);
 	plateau_de_jeu[(*mob).x][(*mob).y]->x = (*mob).x ;
 	plateau_de_jeu[(*mob).x][(*mob).y]->y = (*mob).y ;
-	
-	
-	//Les coordonnées et caractéristiques du mob sont changées, nb : pas dans la liste de ce mob ... 	
-	//Il faut que ce mob soit passé par ADRESSE	
 	mob->x=free_place_list->mob.x;
 	mob->y=free_place_list->mob.y;
-   // mob->dernier_repas=WORLD_TIME;
-               
-               	
-	//On retire la proie de la liste correspondant à son espèce
-    //species[proie->id]=destroy_mob(*proie, species[proie->id]);	 
-//	free(proie);                
+	mob_saut_max--;
+	//}
 	return 1;      
 }
 

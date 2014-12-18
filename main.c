@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
 		
 		/*Ordre de creation            Espece vide - Plancton -   Corail -   Bar -  Thon - Pollution
    		Correspondance des couleurs    WHITE -       LIGHTGREEN - LIGHTRED - CYAN - BLUE - RED    */
-   	Liste * species[] = {NULL, init_mobs(1,10), init_mobs(2, 5), init_mobs(3,6), init_mobs(4, 10), init_mobs(5, 2)};
+   	Liste * species[] = {NULL, init_mobs(1,10), init_mobs(2, 5), init_mobs(3,6), init_mobs(4, 5), init_mobs(5, 2), init_mobs(6, 4), init_mobs(7, 5), init_mobs(8, 2), init_mobs(9, 2)};
 
    	//
    	fprintf(fPtr,"%s","WORLD_TIME");
@@ -80,7 +80,7 @@ int main(int argc, char const *argv[])
 	//Action du pêcheur.................................................................................................. 
 		
 	//Est-ce que c'est au pecheur de joué ?
-	if(WORLD_TIME % 10 == 0){			
+	/* if(WORLD_TIME % 10 == 0){			
 		//Le pecheur est tombé dans l'eau
 		if(!case_valide(pecheur.x, pecheur.y, plateau_de_jeu))		
 		{	
@@ -116,11 +116,11 @@ int main(int argc, char const *argv[])
 			}
 		
 		}
-	} 	
+	} 	*/
 		if(!mort_pecheur)
 		{
 	/***Jeu de l'IA***/	
-			clear_screen();	
+			//clear_screen();	
 			draw_grid(plateau_de_jeu);
 			afficher_point(pecheur.x, pecheur.y, color_RED);
 			
@@ -148,9 +148,12 @@ int main(int argc, char const *argv[])
 		}
 
 		
-		}while(stop!=key_DOWN && WORLD_TIME<100  && !mort_pecheur);
+		}while( WORLD_TIME <= 1000 );
+
+
 	//Fermeture de la fenetre graphique	
 	stop_graphics();
 	fclose(fPtr);
+
 	return 0;
 }

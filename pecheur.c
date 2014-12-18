@@ -61,9 +61,9 @@ void deplacement_pecheur(Mob *p, couleurs coul, Mob * plateau[][TAILLE_PLATEAU])
 		if(p->derniere_reproduction==1 && case_valide(p->x, p->y, plateau))
 		{	set_drawing_color(color_WHITE);
 			//set_font(font_HELVETICA_14);
-			draw_printf(M1, 479-M2/2, "Vous etes tombe a l'eau, sortez de l'eau");
+			draw_printf(M1, WINDOW_HEIGHT-M2/2, "Vous etes tombe a l'eau, sortez de l'eau");
 			set_drawing_color(color_BLACK);
-			draw_printf(M1, 479-M2/2, "Vous avez rejoint la terre ferme!\n");
+			draw_printf(M1, WINDOW_HEIGHT-M2/2, "Vous avez rejoint la terre ferme!\n");
 			update_graphics();			
 			return;
 					
@@ -194,7 +194,7 @@ void plouf_soft_version(Mob *pecheur)
 	pecheur->x=0;
 	pecheur->y=0;	
 	set_font(font_HELVETICA_12);
-	draw_printf(M1+150, 479-M2/2, "Vous etes tombe a l'eau au tour precedent, vos munitions sont perdues");
+	draw_printf(M1+150, WINDOW_HEIGHT-M2/2, "Vous etes tombe a l'eau au tour precedent, vos munitions sont perdues");
 	afficher_munitions(pecheur, 0); 
 	update_graphics();
 
@@ -207,7 +207,7 @@ int plouf_hard_version(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * sp
 	pecheur->dernier_repas=0;	
 	pecheur->derniere_reproduction=1; //le pêcheur est dans l'eau 
 	set_font(font_HELVETICA_18);	
-	draw_printf(M1, 479-M2/2, "Vous etes tombe a l'eau, sortez de l'eau");
+	draw_printf(M1, WINDOW_HEIGHT-M2/2, "Vous etes tombe a l'eau, sortez de l'eau");
 	afficher_point(pecheur->x, pecheur->y, color_RED);	
 	
 	deplacement_pecheur(pecheur, color_RED, plateau);
