@@ -44,7 +44,7 @@ int main(int argc, char const *argv[])
 
 	//initialisation de la table des bonus 	
 	int bonus_tab[8]={0};
-	bonus_tab[7]=0;
+	bonus_tab[7]=1;
 
 	init_grid(plateau_de_jeu);
 	
@@ -131,7 +131,7 @@ int main(int argc, char const *argv[])
 					a=choix_action(2);
 					if(a=='o')
 					{	printf("construction du pont\n");		
-						construire_pont(plateau_de_jeu, &pecheur, species);			
+						construire_pont(plateau_de_jeu, &pecheur, species, bonus_tab);			
 					}		
 				}
 				//clear_datas(pecheur);

@@ -39,9 +39,10 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 		switch(a)
 		{	case key_RIGHT:						
 				if(case_valide(p->x+1, p->y, plateau)||p->allo==1)
-				{	//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
+				{	//Si le pêcheur était sur le pont 
 					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)
 						afficher_point(p->x,p->y,mobs_draw[11]);
+					//Si le pecheur était sur le rivage						
 					else
 						afficher_point(p->x,p->y,color_WHITE);				
 					(p->x)++;
@@ -150,6 +151,8 @@ int case_valide_peche(int x_canne, int y_canne, int x2, int y2,Mob * plateau[][T
 	return ( ( (x_canne>=1 && x_canne<=TAILLE_PLATEAU) && (y_canne>=1 && y_canne<=TAILLE_PLATEAU) ) && ( sqrtf(dx*dx + dy*dy)<= sqrt(2) ) && (plateau[x_canne-1][y_canne-1]->id != 11) );
 }
 
+
+
 /*Affichage des réserves du pêcheur*/
 void afficher_munitions (fisher * pecheur)
 {	set_drawing_color(color_BLACK);	
@@ -164,6 +167,8 @@ void afficher_munitions (fisher * pecheur)
 	update_graphics();
 }
 
+
+
 /*Gestion des fonctions relatives à la pêche*/
 void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel) 
 {
@@ -177,7 +182,6 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne,plateau_de_jeu);	
 		if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1)
 		{	pecheur->reserves = pecheur->reserves + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
-			//pecheur->nv=1;
 			pecheur->nv_reserves=taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];
 			destroy_mob(*plateau_de_jeu[x_canne-1][y_canne-1], species[plateau_de_jeu[x_canne-1][y_canne-1]->id]);
 			plateau_de_jeu[x_canne-1][y_canne-1]=create_mob(0);
@@ -219,6 +223,7 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 	
 }
 
+/*Le pecheur respawn sur le rivage, il perd ses munitions*/
 void plouf_soft_version(fisher *pecheur)	
 {	set_drawing_color(color_BLACK);	
 	pecheur->reserves=0;
@@ -233,6 +238,8 @@ void plouf_soft_version(fisher *pecheur)
 
 }
 
+
+/*Le pecheur doit nager jusqu'au rivage, il peut rencontrer un prédateur*/
 int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])	
 {	int stop=0;	
 	char * nom;
