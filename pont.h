@@ -23,6 +23,6 @@ int case_valide_pont(int x_pont, int y_pont, int x_pecheur, int y_pecheur, Mob *
 
 void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * plateau[][TAILLE_PLATEAU]);
 
-void construire_pont(Mob * plateau[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[]);
+void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[]);
 
 #endif

@@ -22,19 +22,45 @@ void init_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 }
 
 /* Affichage de la Map dans une fenêtre graphique */
-void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
+void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 {
 	int i=0;
 	int j=0;
-	affiche_grille();	//voir eco 
+	int a;
+	if(mode==1)
+		affiche_grille();
 	for (int i = 0; i < TAILLE_PLATEAU; ++i)
 	{
 		for (int j = 0; j < TAILLE_PLATEAU; ++j)
-		{
-			if(plateau[i][j]->id!=11)
-				afficher_point(i+1, j+1, mobs_draw[plateau[i][j]->id]);
-			else
-				draw_pont(i+1, j+1, mobs_draw[plateau[i][j]->id]);		
+		{	/*if(plateau[i][j]->id==11)
+				draw_pont(i+1, j+1, mobs_draw[11]);*/
+
+			//mode aveugle
+			if(mode==0)
+			{	if(plateau[i][j]->id==11)
+					draw_pont(i+1, j+1, mobs_draw[11]);
+				else
+				{	a=rand()%(2)+1;
+					switch (a)
+					{	case 1 : 	
+							set_drawing_color(color_BLUE);
+							draw_rectangle_full(M1+(i+1)*(WINDOW_WIDTH-2*M1)/N, M2+(j+1)*(WINDOW_HEIGHT-2*M2)/N, M1+(i)*(WINDOW_WIDTH-2*M1)/N, M2+(j)*(WINDOW_HEIGHT-2*M2)/N);
+							break;
+						case 2 : 
+							set_drawing_color(color_LIGHTBLUE);
+							draw_rectangle_full(M1+(i+1)*(WINDOW_WIDTH-2*M1)/N, M2+(j+1)*(WINDOW_HEIGHT-2*M2)/N, M1+(i)*(WINDOW_WIDTH-2*M1)/N, M2+(j)*(WINDOW_HEIGHT-2*M2)/N);
+							break;
+					}
+				}
+			}
+			//mode vision 
+			else			
+			{		
+				if(plateau[i][j]->id!=11)
+					afficher_point(i+1, j+1, mobs_draw[plateau[i][j]->id]);
+				else 
+					draw_pont(i+1, j+1, mobs_draw[11]);
+			}		
 		}
 	}
 	

@@ -14,21 +14,27 @@
 
 #define TAILLE_CANNE 1
 
+
+
+
+
+void init_fisher (fisher * pecheur, int x, int y);
+
 int case_valide(int x, int y, Mob * plateau[][TAILLE_PLATEAU]);
 
-void deplacement_pecheur(Mob * pecheur, couleurs coul, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
+void deplacement_pecheur(fisher * pecheur, couleurs coul, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
 
 int choix_action(int n);
 
 int case_valide_peche(int x, int y, int dx, int dy, Mob * plateau[][TAILLE_PLATEAU]);
 
-void afficher_munitions(Mob * pecheur, int * reserves_gagnees);
+void afficher_munitions(fisher * pecheur);
 
-void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[], int type_materiel, int * reserves_gagnees);
+void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel);
 
-void plouf_soft_version(Mob *pecheur);
+void plouf_soft_version(fisher *pecheur);
 
-int plouf_hard_version(Mob *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[]);
+int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[]);
 
 //void final_screen (int a);
 

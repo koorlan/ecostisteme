@@ -23,8 +23,8 @@ void spawn_pont(int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * pl
 /*Affichage du pont*/
 void draw_pont(int x, int y, couleurs coul)
 {		
-	set_drawing_color(coul);
-	set_fill_color(coul);
+	set_drawing_color(color_BROWN);
+	set_fill_color(color_BROWN);
 	draw_rectangle_full(M1+x*(WINDOW_WIDTH-2*M1)/N-1, M2+y*(WINDOW_HEIGHT-2*M2)/N -1, M1+(x-1)*(WINDOW_WIDTH-2*M1)/N+1, M2+(y-1)*(WINDOW_HEIGHT-2*M2)/N +1);
 
 }
@@ -74,7 +74,7 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 			default :
 				break;
 		}
-		draw_pont(*x_pont, *y_pont, color_LIGHTBLUE); 
+		draw_pont(*x_pont, *y_pont, mobs_draw[11]); 
 		update_graphics();
 		pont=get_key();		
 	}
@@ -82,12 +82,14 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 
 
 /*Gestion des fonctions relatives à la construction du pont*/
-void construire_pont(Mob * plateau[][TAILLE_PLATEAU], Mob * pecheur, Liste * species[])
+void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[])
 {	int x_pont=0, y_pont=0;
 	int stop;	
 	Mob pont ;
+	set_drawing_color(color_WHITE);
+	draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
 	spawn_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
-	draw_pont(x_pont, y_pont, color_LIGHTBLUE);
+	draw_pont(x_pont, y_pont, mobs_draw[11]);
 	place_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
 	update_graphics();
 	
@@ -101,8 +103,8 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], Mob * pecheur, Liste * spe
 	plateau[x_pont-1][y_pont-1]->satiete=0;
 	plateau[x_pont-1][y_pont-1]->dernier_repas=0;
 	plateau[x_pont-1][y_pont-1]->derniere_reproduction=0;
-	pecheur->satiete--;
-	
+	pecheur->reserves--;
+	pecheur->bridge++;	
 }
 
 

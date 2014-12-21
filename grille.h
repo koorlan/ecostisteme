@@ -5,7 +5,7 @@
 
 
 
-void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]) ;
+void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode) ;
 
 void init_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
 

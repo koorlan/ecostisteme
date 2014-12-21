@@ -92,22 +92,22 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 	for(i=-1; i<=1; i++)
 	{	for(j=-1; j<=1; j++)
 		{	
-        	if(((((mob->x)+i>=0) && ((mob->y)+j>=0))&&(((mob->x)+i<TAILLE_PLATEAU) && ((mob->y)+j<TAILLE_PLATEAU)))) //case hors champ
+        		if(((((mob->x)+i>=0) && ((mob->y)+j>=0))&&(((mob->x)+i<TAILLE_PLATEAU) && ((mob->y)+j<TAILLE_PLATEAU)))) //case hors champ
 			{
-            	if(eat_mat[mob->id][plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]==1) //si on trouve une espèce commestible dans les cases adjacentes
-              	{     
+            			if(eat_mat[mob->id][plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]==1) //si on trouve une espèce commestible dans les cases adjacentes
+              			{     
 
-	        		if((taille[plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]>=taille[proie->id])&&((mob->satiete)+taille[proie->id]<taille_du_bide[mob->id]))	//recherche de la proie de taille max
-                    {      //Affichage en rose de la (les) proie(s) potentielles
+	        			if((taille[plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]>=taille[proie->id])&&((mob->satiete)+taille[proie->id]<taille_du_bide[mob->id]))	//recherche de la proie de taille max
+                    			{      	//Affichage en rose de la (les) proie(s) potentielles
 						//afficher_point((mob->x)+i+1, (mob->y)+j+1, mobs_draw[8]);
-	        		}
-	        		proie->x=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->x;
-                        proie->y=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->y;
-                       	proie->id=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id;
-
-                       	a_miam = ajouterEnTete(a_miam, *proie);  
-        	    }      
-            }
+	        			}
+	        				proie->x=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->x;
+                        			proie->y=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->y;
+                       				proie->id=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id;
+	                       			a_miam = ajouterEnTete(a_miam, *proie);
+					 
+        			}      
+            		}
 		}
 	}
 	if (a_miam->nxt == NULL)
@@ -118,9 +118,7 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 	} 
 
 	int randomPick = rand_a_b(1,nombre_elts_liste(a_miam)+1);
-	//printf("%d \n", nombre_elts_liste(a_miam));
-	//printf("%d\t",randomPick);
-
+	
 	i = 1;
 	while(i != randomPick){
 		//printf("%d\n",a_miam->mob.x );
@@ -128,14 +126,15 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 		i++;
 	} 
 	*proie = a_miam->mob;
+	//LISTE A LIBERER
 	free(a_miam);
-   // if(proie->id!=0)
+    	if(proie->id!=0)
    	{	
   
  		//La case de la proie prend les caractéristiques du mob	                    
-        plateau_de_jeu[proie->x][proie->y]->id=(*mob).id;
+        	plateau_de_jeu[proie->x][proie->y]->id=(*mob).id;
 		plateau_de_jeu[proie->x][proie->y]->derniere_reproduction=(*mob).derniere_reproduction;
-        plateau_de_jeu[proie->x][proie->y]->satiete=(*mob).satiete+taille[proie->id]; 
+        	plateau_de_jeu[proie->x][proie->y]->satiete=(*mob).satiete+taille[proie->id]; 
 		plateau_de_jeu[proie->x][proie->y]->dernier_repas=WORLD_TIME;
 		
 		//La case précedente du mob est remplacée par l'espece vide                 
@@ -144,19 +143,22 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 		plateau_de_jeu[(*mob).x][(*mob).y]->y = (*mob).y ;
 		
 		
-		//Les coordonnées et caractéristiques du mob sont changées, nb : pas dans la liste de ce mob ... 	
+		//Les coordonnées et caractéristiques du mob sont changées	
 		//Il faut que ce mob soit passé par ADRESSE	
 		mob->x=proie->x;
 		mob->y=proie->y;
-        mob->dernier_repas=WORLD_TIME;
+        	mob->dernier_repas=WORLD_TIME;
 		mob->satiete=plateau_de_jeu[proie->x][proie->y]->satiete;                
-                	
+	                	
+		if (proie->id ==11)
+			draw_pont(proie->x+1, proie->y+1, color_WHITE);
 		//On retire la proie de la liste correspondant à son espèce
-		if (proie->id != 11) {
-           	species[proie->id]=destroy_mob(*proie, species[proie->id]);	 
-		
-		free(proie);                
+		if (proie->id != 11)
+		{
+           		species[proie->id]=destroy_mob(*proie, species[proie->id]);	 
+			free(proie);                
 		}
+		 
 		return 1;      
     }       	        	
 	return 0;
