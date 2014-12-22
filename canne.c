@@ -1,5 +1,13 @@
 #include "canne.h"
 
+
+/*Atteste de la validité d'une case lors du déplacement de la canne à pêche*/
+int case_valide_peche(int x_canne, int y_canne, int x2, int y2,Mob * plateau[][TAILLE_PLATEAU])
+{	int dx = x_canne-x2;
+	int dy = y_canne-y2;
+	return ( ( (x_canne>=1 && x_canne<=TAILLE_PLATEAU) && (y_canne>=1 && y_canne<=TAILLE_PLATEAU) ) && ( sqrtf(dx*dx + dy*dy)<= sqrt(2) ) && (plateau[x_canne-1][y_canne-1]->id != 11) );
+}
+
 /*Selection de coordonnées valides (où il est possible de pêcher) pour l'apparition de la canne à pêche*/
 void spawn_canne(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob * plateau[][TAILLE_PLATEAU])
 {	int i, j;

@@ -10,6 +10,7 @@
 
 #include "main.h"
 
+int case_valide_peche(int x, int y, int dx, int dy, Mob * plateau[][TAILLE_PLATEAU]);
 
 void spawn_canne(int x, int y, int *x_c, int *y_c, Mob * plateau[][TAILLE_PLATEAU]);
 

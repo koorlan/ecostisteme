@@ -98,3 +98,73 @@ void espece_consideree(int i, couleurs coul)
 }
 
 
+int start_screen ()
+{	int select=0;
+	int current=1;	
+	set_drawing_color(color_BLACK);
+	set_font(font_HELVETICA_18);
+	draw_printf(WINDOW_WIDTH/2-160, WINDOW_HEIGHT/2+40, "CHOIX DU MODE DE JEU\n");
+	set_font(font_HELVETICA_12);
+	
+	draw_printf(WINDOW_WIDTH/2-190, WINDOW_HEIGHT/2-40, "Appuyez sur la touche ENTREE pour selectionner\n");
+	set_font(font_HELVETICA_18);			
+	set_drawing_color(color_LIGHTRED);
+	draw_printf(WINDOW_WIDTH/2-280, WINDOW_HEIGHT/2, "Ecosysteme seul");
+	set_drawing_color(color_BLACK);
+	draw_printf(WINDOW_WIDTH/2-105, WINDOW_HEIGHT/2, "Mode 1 joueur");
+	//set_drawing_color(color_LIGHTRED);
+	//draw_printf(WINDOW_WIDTH/2+5, WINDOW_HEIGHT/2-40, "(N)"); 
+	//set_drawing_color(color_BLACK);
+	draw_printf(WINDOW_WIDTH/2+55, WINDOW_HEIGHT/2, "Mode 2 joueurs");
+	update_graphics();
+	while(select!=key_ENTER){
+	select=get_key();
+	switch (select)	
+	{	case key_RIGHT:
+				set_font(font_HELVETICA_18);			
+				set_drawing_color(color_BLACK);
+				if (current==1)
+				{	draw_printf(WINDOW_WIDTH/2-280, WINDOW_HEIGHT/2, "Ecosysteme seul");	
+					set_drawing_color(color_LIGHTRED); 
+					draw_printf(WINDOW_WIDTH/2-105, WINDOW_HEIGHT/2, "Mode 1 joueur");
+					current ++;
+					
+				}	
+				else if (current==2)
+				{	draw_printf(WINDOW_WIDTH/2-105, WINDOW_HEIGHT/2, "Mode 1 joueur");	
+					set_drawing_color(color_LIGHTRED);
+					draw_printf(WINDOW_WIDTH/2+55, WINDOW_HEIGHT/2, "Mode 2 joueurs");
+					current ++;
+				
+				}
+				break;
+		case key_LEFT:	
+				set_font(font_HELVETICA_18);	
+
+				set_drawing_color(color_BLACK);
+				if (current==3)
+				{	draw_printf(WINDOW_WIDTH/2+55, WINDOW_HEIGHT/2, "Mode 2 joueurs");	
+					set_drawing_color(color_LIGHTRED); 
+					draw_printf(WINDOW_WIDTH/2-105, WINDOW_HEIGHT/2, "Mode 1 joueur");
+					current --;
+				}
+				else if (current==2)
+				{	draw_printf(WINDOW_WIDTH/2-105, WINDOW_HEIGHT/2, "Mode 1 joueur");
+					set_drawing_color(color_LIGHTRED);
+					draw_printf(WINDOW_WIDTH/2-280, WINDOW_HEIGHT/2, "Ecosysteme seul");	
+					current --;
+				}
+				break;
+		default :
+				set_font(font_HELVETICA_12);			
+				set_drawing_color(color_BLACK);	
+				draw_printf(150, M2, "Utiliser les fleches pour changer de selection");
+				break;
+		}
+		update_graphics();
+			
+	}
+	return current-1;
+}
+
+

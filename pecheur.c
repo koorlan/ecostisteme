@@ -1,7 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-
 #include "pecheur.h"
 
 
@@ -10,7 +6,7 @@
 /*Initialisation du pecheur*/
 void init_fisher(fisher * pecheur, int x, int y, int id)
 {	pecheur->id_proie=0;	
-	pecheur->reserves=20; //représente les "réserves" du pecheur
+	pecheur->reserves=0; //représente les "réserves" du pecheur
 	pecheur->nv_reserves=0; //les reserves pechees au tour precedent
 	pecheur->allo=0; //vaut 1 quand le pêcheur est dans l'eau	
 	pecheur->xp=0;	
@@ -152,13 +148,6 @@ int choix_action(int n)
 	return a;
 }
 		
-/*Atteste de la validité d'une case lors du déplacement de la canne à pêche*/
-int case_valide_peche(int x_canne, int y_canne, int x2, int y2,Mob * plateau[][TAILLE_PLATEAU])
-{	int dx = x_canne-x2;
-	int dy = y_canne-y2;
-	return ( ( (x_canne>=1 && x_canne<=TAILLE_PLATEAU) && (y_canne>=1 && y_canne<=TAILLE_PLATEAU) ) && ( sqrtf(dx*dx + dy*dy)<= sqrt(2) ) && (plateau[x_canne-1][y_canne-1]->id != 11) );
-}
-
 
 
 /*Affichage des réserves du pêcheur*/
@@ -462,8 +451,61 @@ void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, 
 
 		
 
+void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int bonus_tab[], int * mort_pecheur, Liste * species[])
+{	int stop=0;
+	int a;	
+	//Le pecheur est tombé dans l'eau
+	if(!case_valide(pecheur->x, pecheur->y, plateau_de_jeu))		
+	{	
+		if(plouf_hard_version(pecheur, plateau_de_jeu, species))
+		{	clear_screen();
+			plouf_soft_version(pecheur);
+			draw_grid(plateau_de_jeu, bonus_tab[7]);
+			stop=get_key();				
+			update_graphics(); 		
+									
+		}		
+		else
+			*mort_pecheur=1; 
+				
+	}	
+	//Le pêcheur effectue un tour de jeu normal	
+	else
+	{	capitaliser_bonus(pecheur, bonus_tab);
+		pecheur->bridge=0;				
+		clear_screen();
+		draw_grid(plateau_de_jeu, bonus_tab[7]);
+		afficher_point(pecheur->x, pecheur->y, color_RED);
+		appliquer_bonus(pecheur, bonus_tab);
+		printf("pont construit %d\n", pecheur->bridge);				
+		afficher_munitions(pecheur);
+		deplacement_pecheur(pecheur, color_RED, plateau_de_jeu);
+		//possibilité de pêcher 		
+		a=choix_action(1);
+		if(a=='o')
+		{	//choix du materiel de peche (canne ou filet)
+			//si le filet n'est pas débloqué, la canne à pêche est choisie par défaut 						
+			if(bonus_tab[4]!=0)					
+				a=choix_action(3);
+			else
+				a='c';	
+			que_la_peche_commence(plateau_de_jeu, pecheur, species, a);
+		}	
+		else if(pecheur->reserves!=0)
+		{	//possibilité de construire le pont	
+			a=choix_action(2);
+			if(a=='o')
+				construire_pont(plateau_de_jeu, pecheur, species, bonus_tab);			
+					
+			//possibilité de rejeter un poisson dans l'eau 
+			else if(pecheur->id_proie!=0)
+			{	a=choix_action(4);		
+				if(a=='o')
+					relacher_poisson(plateau_de_jeu, pecheur, species, bonus_tab);
+			}				
+		}
 	
-	
-
-
+					
+	}	
+}
 
