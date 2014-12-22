@@ -10,6 +10,8 @@
 #include "liste.h"
 #include "pont.h"
 
+void  destroy_list (Liste ** l);
+
 Liste * destroy_mob (Mob mob, Liste * list_of_specific_species );
 
 int survie(Mob * mob, Liste * species[NB_SPECIES]);

@@ -10,7 +10,7 @@
 #include <string.h>
 #include <time.h>
 
-typedef struct fisher {	int id;
+typedef struct fisher {	int id_proie; //identifiant du dernier poisson peché 
 			int x;
 			int y;
 			int reserves;
@@ -21,6 +21,8 @@ typedef struct fisher {	int id;
 			int allo;
 			//experience du pecheur
 			int xp;
+			//identifiant du pecheur pour le mode 2 joueurs
+			int id;
 			}fisher;
 
 
@@ -58,16 +60,18 @@ int WORLD_TIME;
 	**8orque.............8
 	**9baleine...........9  3          	 5        2			2   	  2		2 	 	 4
 	**10pecheur...........10 10 000       	 3        0			1         0		0	 	 10 000
-	**11pont..............11 10 000          1        0			0         0		0	 	 10 000			*********************/
+	**11pont..............11 10 000          1        0			0         0		0	 	 10 000			
+*********************/
 
 
-static const int duree_survie[]={10000, 10000, 5, 5, 1, 10000, 4, 25, 20, 100, 10000, 10000};
-static const int taille[]={-1, 2, 1, 3, 3, 10000, 2, 4, 4, 5, 3, 2};
-static const int taille_du_bide[]={0, 0, 3, 3, 4, 4, 4, 8, 4, 60, 0, 0};
+static const int duree_survie[]={10000, 10000, 1, 2, 2, 10000, 8, 6, 20, 100, 10000, 10000};
+static const int taille[]={-1, 2, 1, 3, 2, 10000, 3, 4, 4, 5, 3, 2};
+static const int taille_du_bide[]={0, 0, 2, 4, 3, 10000, 3, 6, 4, 60, 0, 0};
 static const int saut_max[]={0, 0, 1, 2, 2, 0, 3, 2, 2, 2, 1, 0};
 static const int metabolisme[]={0, 0, 1, 1, 1, 0, 1, 2, 2, 2, 0, 0};
-static const int gestation[]={0, 2, 2, 2, 2, 0, 1, 2, 2, 10, 0, 0};
-static const int frequence_reproduction[]={10000, 0, 4, 5, 60, 10000, 35, 4, 2, 25, 10000, 10000};
+static const int gestation[]={0, 1, 2, 3, 2, 0, 1, 2, 2, 10, 0, 0};
+static const int frequence_reproduction[]={10000, 0, 3, 2, 1, 10000, 1, 2, 2, 25, 10000, 10000};
+
 
 /*
 static const int duree_survie[]={10000, 10000, 5, 6, 1, 10000, 3, 25, 100, 100, 10000, 10000};

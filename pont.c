@@ -37,14 +37,14 @@ int case_valide_pont(int x_pont, int y_pont, int x_pecheur, int y_pecheur, Mob *
 
 
 /*Selection par le joueur de la position du pont*/
-void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[])
+void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul)
 {	int pont=0;
 	while(pont!=key_ENTER)
 	{	switch (pont)
 		{	case key_RIGHT:						
 				if(case_valide_pont(*x_pont+1, *y_pont, x_pecheur, y_pecheur, plateau))
 				{	
-					if(bonus_tab[7]==1)
+					if(bonus_tab[7]!=0)
 					{	draw_pont(*x_pont, *y_pont, color_WHITE);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}					
 					else
@@ -56,7 +56,7 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 		
 			case key_LEFT : 
 				if(case_valide_pont(*x_pont-1, *y_pont, x_pecheur, y_pecheur, plateau))
-				{	if(bonus_tab[7]==1)
+				{	if(bonus_tab[7]!=0)
 					{	draw_pont(*x_pont, *y_pont, color_WHITE);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
 					else
@@ -69,7 +69,7 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 				break;
 			case key_UP :
 				if(case_valide_pont(*x_pont, *y_pont+1, x_pecheur, y_pecheur, plateau))				
-				{	if(bonus_tab[7]==1)
+				{	if(bonus_tab[7]!=0)
 					{	draw_pont(*x_pont, *y_pont, color_WHITE);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
 					else
@@ -80,7 +80,7 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 				break;
 			case key_DOWN :
 				if(case_valide_pont(*x_pont, *y_pont-1, x_pecheur, y_pecheur, plateau))				
-				{	if(bonus_tab[7]==1)
+				{	if(bonus_tab[7]!=0)
 					{	draw_pont(*x_pont, *y_pont, color_WHITE);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
 					else
@@ -92,7 +92,7 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 			default :
 				break;
 		}
-		draw_pont(*x_pont, *y_pont, mobs_draw[11]); 
+		draw_pont(*x_pont, *y_pont, coul); 
 		update_graphics();
 		pont=get_key();		
 	}
@@ -108,7 +108,7 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * 
 	draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
 	spawn_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
 	draw_pont(x_pont, y_pont, mobs_draw[11]);
-	place_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau, bonus_tab);
+	place_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau, bonus_tab, mobs_draw[11]);
 	update_graphics();
 	
 	//On détruit l'éspèce présente dans la case ou le pont a été construit	
@@ -125,4 +125,4 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * 
 	pecheur->bridge++;	
 }
 
-
+ 	

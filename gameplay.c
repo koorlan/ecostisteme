@@ -3,7 +3,7 @@
 /***bonus_tab : 
 	indice		0		1		2	3		4		5		6		7	
 	sens		first_fish	first_bridge	fish	bridge		écolo		life bonus	filet		vision
-	valeur		0;1;2		0;1;2		0;1	0;1		0;1		0;1;0		0;1 		0;1 	
+	valeur		0;1;2		0;1;2		0;1	0;1		0;1		0;1;0		0;1;2 		0;1;2 	
 ***/
 
 
@@ -42,6 +42,7 @@ void afficher_bonus(int n)
 			set_font(font_HELVETICA_18);
 			draw_printf(WINDOW_WIDTH-M1+10, M2, "+50 XP");
 			break;
+
 		case 1 : 
 			set_font(font_HELVETICA_18);
 			draw_printf(WINDOW_WIDTH-M1+10, M2+45, "BONUS");
@@ -68,13 +69,19 @@ void afficher_bonus(int n)
 			break;
 	
 		case 6 : 
-			
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+120, "BONUS");
+			draw_printf(WINDOW_WIDTH-M1+11, M2+170, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+103, "ile deserte");
+			draw_printf(WINDOW_WIDTH-M1+15, M2+153, "ile deserte");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+75, "+200 XP");
+			draw_printf(WINDOW_WIDTH-M1+24, M2+125, "Filet");
+			draw_printf(WINDOW_WIDTH-M1+10, M2+95, "+200 XP");
+			break;
+		case 7 : 
+			set_font(font_HELVETICA_18);
+			draw_printf(WINDOW_WIDTH-M1+10, M2+170, "BONUS");
+			set_font(font_HELVETICA_12);
+			draw_printf(WINDOW_WIDTH-M1+10, M2+153, "vision");
 			break;
 	}
 
@@ -116,9 +123,12 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 	if(bonus_tab[6]==1)
 	{	pecheur->xp=pecheur->xp+200;
 		afficher_bonus(6);
+		bonus_tab[6]=2;
 	}
+	/*vision*/
 	if(bonus_tab[7]==1)
 	{	afficher_bonus(7);
+		bonus_tab[7]=2;
 	}
 	afficher_xp(pecheur);
 }

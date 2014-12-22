@@ -8,14 +8,16 @@
 
 
 /*Initialisation du pecheur*/
-void init_fisher(fisher * pecheur, int x, int y)
-{	pecheur->id=10;	
+void init_fisher(fisher * pecheur, int x, int y, int id)
+{	pecheur->id_proie=0;	
 	pecheur->reserves=20; //représente les "réserves" du pecheur
 	pecheur->nv_reserves=0; //les reserves pechees au tour precedent
 	pecheur->allo=0; //vaut 1 quand le pêcheur est dans l'eau	
 	pecheur->xp=0;	
+	pecheur->bridge=0;
 	pecheur->x=x;
 	pecheur->y=y;
+	pecheur->id=id;
 }
 
 /*Teste la validité d'une case sélectionnée par un joueur*/
@@ -125,7 +127,7 @@ int choix_action(int n)
 {	int a=0;
 	set_font(font_HELVETICA_12);
 	set_drawing_color(color_BLACK);
-	if (n==2||n==3)
+	if (n==2||n==3||n==4)
 	{	set_drawing_color(color_WHITE);
 	}
 	draw_string(M1, M2/2, "Voulez-vous pecher? (o)ui (n)on\n");
@@ -137,7 +139,13 @@ int choix_action(int n)
 	{	set_drawing_color(color_BLACK);
 		draw_string(M1, M2/2, "Choisissez votre materiel de peche? (c)anne a peche (f)ilet\n");
 	}	
-	
+	if(n==4)
+	{	set_drawing_color(color_WHITE);
+		draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
+		set_drawing_color(color_BLACK);
+		draw_string(M1, M2/2, "Voulez-vous relacher le poisson precedemment peche? (o)ui (n)on\n");
+	}
+		
 	update_graphics();
 	while(a!='o' && a!='n' && a!='f' && a!='c')
 		a=get_key();
@@ -181,7 +189,8 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 		update_graphics();		
 		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne,plateau_de_jeu);	
 		if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1)
-		{	pecheur->reserves = pecheur->reserves + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
+		{	pecheur->id_proie=plateau_de_jeu[x_canne-1][y_canne-1]->id;
+			pecheur->reserves = pecheur->reserves + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
 			pecheur->nv_reserves=taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];
 			destroy_mob(*plateau_de_jeu[x_canne-1][y_canne-1], species[plateau_de_jeu[x_canne-1][y_canne-1]->id]);
 			plateau_de_jeu[x_canne-1][y_canne-1]=create_mob(0);
@@ -205,7 +214,8 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 					
 				{	printf("id : %d\n", plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->id);	
 					if(eat_mat[10][plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->id]==1)
-					{	
+					{	if(taille[plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->id]>taille[pecheur->id_proie])
+							pecheur->id_proie=plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->id;
 						pecheur->reserves=pecheur->reserves+taille[plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->id];
 						pecheur->nv_reserves=pecheur->nv_reserves+taille[plateau_de_jeu[pecheur->x+i-2][pecheur->y+j-2]->id];  
 
@@ -351,6 +361,109 @@ void final_screen (int a)
 		stop=get_key();	
 		stop=get_key();
 }*/
+
+void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul)
+{	int a=0;	
+	
+	draw_pont(*x, *y, coul);	
+	while(a!=key_ENTER)
+	{	a=get_key();
+		switch(a)
+		{	case key_RIGHT:						
+				if(!case_valide((*x)+1, *y, plateau))
+				{	if(bonus_tab[7]==0)
+						draw_pont(*x, *y, color_BLUE);
+											
+					else
+					{	draw_pont(*x, *y, color_WHITE);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					}				
+					(*x)++;
+
+				}				
+				break;
+		
+			case key_LEFT : 
+				if(!case_valide((*x)-1, (*y), plateau))
+				{	
+					if(bonus_tab[7]==0)
+						draw_pont(*x, *y, color_BLUE);
+											
+					else
+					{	draw_pont(*x, *y, color_WHITE);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					}
+					(*x)--;
+				}			
+				break;
+			case key_UP :
+				if(!case_valide((*x), (*y)+1, plateau))				
+				{	if(bonus_tab[7]==0)
+						draw_pont(*x, *y, color_BLUE);
+											
+					else
+					{	draw_pont(*x, *y, color_WHITE);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					}
+					(*y)++;
+				}				
+				break;
+			case key_DOWN :
+				if(!case_valide((*x), (*y)-1, plateau))				
+				{	
+					if(bonus_tab[7]==0)
+						draw_pont(*x, *y, color_BLUE);
+											
+					else
+					{	draw_pont(*x, *y, color_WHITE);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					}
+					(*y)--;
+				}				
+				break;
+			default :
+				break;
+		
+		}
+		draw_pont(*x, *y,coul);						
+		update_graphics();	
+	}
+	
+	update_graphics();
+
+}
+
+void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int bonus_tab[])
+{	int x_curseur=0;
+	int y_curseur=0;
+	spawn_pont(pecheur->x, pecheur->y, &x_curseur, &y_curseur, plateau_de_jeu);
+	draw_pont(x_curseur, y_curseur, color_LIGHTGREEN);
+	update_graphics();
+	deplacement_curseur(&x_curseur, &y_curseur, plateau_de_jeu, bonus_tab, color_LIGHTGREEN);
+	if(plateau_de_jeu[x_curseur-1][y_curseur-1]->id!=0)
+		destroy_mob(*plateau_de_jeu[x_curseur-1][y_curseur-1], species[plateau_de_jeu[x_curseur-1][y_curseur-1]->id]);
+	Mob * newMob = create_mob(pecheur->id_proie);
+	newMob->id=pecheur->id_proie;
+	newMob->x = x_curseur-1;
+	newMob->y = y_curseur-1;
+	//création d'un supermob
+	newMob->satiete=100;
+	newMob->dernier_repas=WORLD_TIME;
+	newMob->derniere_reproduction=WORLD_TIME;
+	printf("nv reserves  %d\n", pecheur->nv_reserves);
+	printf("taille %d\n", pecheur->id_proie);	
+	pecheur->reserves=pecheur->reserves-taille[pecheur->id_proie];
+	species[pecheur->id_proie] = ajouterEnTete(species[pecheur->id_proie], *newMob);
+	plateau_de_jeu[x_curseur-1][y_curseur-1] = newMob;
+	pecheur->id_proie=0;
+	//pecheur->nv_reserves=0;	
+
+}
+
+		
+
+	
+	
 
 
 

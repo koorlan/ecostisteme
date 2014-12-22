@@ -5,6 +5,9 @@ Liste * ajouterEnTete(Liste * liste, Mob newMob)
 {
     /* On crée un nouvel élément */
 	Liste * nouvelElement = malloc(sizeof(Liste));
+	
+	if(nouvelElement==NULL)
+		exit(EXIT_FAILURE);
  
     /* On assigne la valeur au nouvel élément */   
 	nouvelElement->mob =  newMob;
@@ -28,6 +31,8 @@ int nombre_elts_liste(Liste * liste){
 Liste * init_mobs(int id, int percentage) 
 {   
 	Liste * list_of_mobs = malloc(sizeof(Liste));
+	if(list_of_mobs==NULL)
+		exit(EXIT_FAILURE);
 	list_of_mobs->mob.x = 666;
 	list_of_mobs->mob.y = 666;
 	list_of_mobs->nxt = NULL ;

@@ -27,7 +27,7 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 	int i=0;
 	int j=0;
 	int a;
-	if(mode==1)
+	if(mode!=0)
 		affiche_grille();
 	for (int i = 0; i < TAILLE_PLATEAU; ++i)
 	{
@@ -82,12 +82,12 @@ void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],List
 
 		listeMob->mob.x = i;	
 		listeMob->mob.y = j;
-		free(plateau[i][j]);
+		//free(plateau[i][j]);
 		//printf("Spaw: ID : %d " liste->mob.id);
 		plateau[i][j] = &(listeMob->mob);
     		listeMob = listeMob->nxt;
     }
-	return;
+	
 }
 
 
@@ -115,16 +115,14 @@ int spawn_mob(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste )
 		free_place_list = free_place_list->nxt;
 		i++;
 	}
-	//Afaire l'accrochage a la liste
-
-	//On free la ou on etait pou accueilir le mob
+	
 	free(plateau[free_place_list->mob.x][free_place_list->mob.y]); 
-
 	plateau[free_place_list->mob.x][free_place_list->mob.y] = create_mob(liste->mob.id);
 	
-	// osef plateau[free_place_list->mob.x][free_place_list->mob.y].coul = mobs_draw[liste->mob.id] ;
-	
+	//libération mémoire	
+	destroy_list(&free_place_list);		
 	free(free_place_list);
+	free_place_list=NULL;
     return 1;
 }
 
@@ -137,10 +135,6 @@ void spawn_list_of_mobs(Mob *  plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * 
 		spawn_mob(plateau, liste);
 		liste = liste->nxt;
 	}
-
-	
-	
-	return ;
 
 }
 
@@ -156,8 +150,6 @@ Liste * free_neighboor_case_list(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], 
 			{
 
 				if ((mob->x + i >= 0 && mob->y + j >= 0) && (mob->x + i < TAILLE_PLATEAU && mob->y + j < TAILLE_PLATEAU) && isPlaceFree(plateau,(mob->x + i ),(mob->y + j))){
-					//printf("J'ajoute en tete ! %d %d \n",i,j);
-					//printf("COntrole free_neighboot %d,%d \n", mob->x + i,mob->y + j);
 					free_place_list = ajouterEnTete(free_place_list,*(plateau[mob->x + i][mob->y + j]));
 				}
 
