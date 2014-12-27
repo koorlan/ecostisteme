@@ -76,7 +76,7 @@ int main(int argc, char const *argv[])
 		
 		/*Ordre de creation            Espece vide - Plancton -   Corail -   Bar -  Thon - Pollution
    		Correspondance des couleurs    WHITE -       LIGHTGREEN - LIGHTRED - CYAN - BLUE - RED    */
-   	Liste * species[] = {NULL, init_mobs(1,12), init_mobs(2, 1), init_mobs(3,9), init_mobs(4, 5), init_mobs(5, 2), init_mobs(6, 4), init_mobs(7, 5), init_mobs(8, 2), init_mobs(9, 2)};
+   	Liste * species[] = {NULL, init_mobs(1,5), init_mobs(2, 3), init_mobs(3,6), init_mobs(4, 3), init_mobs(5, 2), init_mobs(6, 4), init_mobs(7, 5), init_mobs(8, 2), init_mobs(9, 2)};
 
 
 

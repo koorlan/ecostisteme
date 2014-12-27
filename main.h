@@ -65,13 +65,13 @@ int WORLD_TIME;
 *********************/
 
 
-static const int duree_survie[]={10000, 10000, 1, 2, 2, 10000, 8, 6, 20, 100, 10000, 10000};
-static const int taille[]={-1, 2, 1, 2, 2, 10000, 3, 4, 4, 5, 3, 2};
-static const int taille_du_bide[]={0, 0, 2, 2, 3, 6, 3, 6, 4, 60, 0, 0};
+static const int duree_survie[]={10000, 10000, 1, 10, 2, 10000, 8, 100, 50, 100, 10000, 10000};
+static const int taille[]={-1, 2, 1, 2, 2, 10000, 2, 4, 4, 5, 3, 2};
+static const int taille_du_bide[]={0, 0, 2, 4, 3, 10000, 3, 6, 4, 60, 0, 0};
 static const int saut_max[]={0, 0, 1, 2, 2, 0, 3, 2, 2, 2, 1, 0};
-static const int metabolisme[]={0, 0, 1, 1, 1, 0, 1, 2, 2, 2, 0, 0};
-static const int gestation[]={0, 1, 2, 1, 1, 0, 1, 2, 2, 10, 0, 0};
-static const int frequence_reproduction[]={10000, 0, 3, 1, 1, 10000, 1, 2, 2, 25, 10000, 10000};
+static const int metabolisme[]={0, 0, 1, 1, 1, 0, 1, 1, 2, 2, 0, 0};
+static const int gestation[]={0, 1, 2, 3, 2, 0, 1, 1, 2, 10, 0, 0};
+static const int frequence_reproduction[]={10000, 0, 3, 3, 2, 10000, 1, 10, 2, 25, 10000, 10000};
 
 
 /*
