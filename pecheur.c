@@ -14,6 +14,7 @@ void init_fisher(fisher * pecheur, int x, int y, int id)
 	pecheur->x=x;
 	pecheur->y=y;
 	pecheur->id=id;
+	pecheur->ecolo=0;
 }
 
 /*Teste la validité d'une case sélectionnée par un joueur*/
@@ -119,6 +120,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 /*** 2 -> le pecheur veut-il construire le pont?	***/
 /*** 3 -> avec quel materiel le pecheur veut-il pecher? ***/
 /**********************************************************/
+
 int choix_action(int n)
 {	int a=0;
 	set_font(font_HELVETICA_12);
@@ -167,17 +169,19 @@ void afficher_munitions (fisher * pecheur)
 
 
 /*Gestion des fonctions relatives à la pêche*/
-void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel) 
+void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel, int bonus) 
 {
 	int x_canne=0, y_canne=0;
 	int peche;	
+	set_drawing_color(color_BLACK);
+	draw_string(M1, M2/2, "Appuyez sur entree pour pecher\n");
 	if(type_materiel=='c')
 	{	spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne, plateau_de_jeu);
 		printf("%d, %d\n", x_canne, y_canne);
 		draw_canne((pecheur->x), (pecheur->y), x_canne, y_canne, color_BLACK);	
 		update_graphics();		
 		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne,plateau_de_jeu);	
-		if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1)
+		if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1||(plateau_de_jeu[x_canne-1][y_canne-1]->id==5 && bonus==2))
 		{	pecheur->id_proie=plateau_de_jeu[x_canne-1][y_canne-1]->id;
 			pecheur->reserves = pecheur->reserves + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
 			pecheur->nv_reserves=taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];
@@ -243,6 +247,7 @@ int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste *
 {	int stop=0;	
 	char * nom;
 	set_drawing_color(color_WHITE);
+	draw_printf(M1+200, WINDOW_HEIGHT-M2+20, "Vos derniers exploits a la peche a la ligne vous rapportent %d munitions", pecheur->nv_reserves);
 	draw_printf(M1-30, WINDOW_HEIGHT-M2+20, "RESERVES DISPONIBLES : %d\n", pecheur->reserves);
 	set_drawing_color(color_LIGHTRED);	
 	set_font(font_HELVETICA_18);	
@@ -445,6 +450,7 @@ void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, 
 	species[pecheur->id_proie] = ajouterEnTete(species[pecheur->id_proie], *newMob);
 	plateau_de_jeu[x_curseur-1][y_curseur-1] = newMob;
 	pecheur->id_proie=0;
+	pecheur->ecolo++;
 	//pecheur->nv_reserves=0;	
 
 }
@@ -485,11 +491,18 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 		if(a=='o')
 		{	//choix du materiel de peche (canne ou filet)
 			//si le filet n'est pas débloqué, la canne à pêche est choisie par défaut 						
-			if(bonus_tab[4]!=0)					
+			if(bonus_tab[5]!=0)					
+			{	
 				a=choix_action(3);
+				set_drawing_color(color_WHITE);
+				draw_string(M1, M2/2, "Choisissez votre materiel de peche? (c)anne a peche (f)ilet\n");
+			}
 			else
-				a='c';	
-			que_la_peche_commence(plateau_de_jeu, pecheur, species, a);
+			{	a='c';	
+				set_drawing_color(color_WHITE);
+				draw_string(M1, M2/2, "Voulez-vous pecher? (o)ui (n)on\n");	
+			}
+			que_la_peche_commence(plateau_de_jeu, pecheur, species, a, bonus_tab[4]);
 		}	
 		else if(pecheur->reserves!=0)
 		{	//possibilité de construire le pont	

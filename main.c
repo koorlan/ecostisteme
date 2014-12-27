@@ -52,6 +52,8 @@ int main(int argc, char const *argv[])
 	//initialisation de la table des bonus 	
 	int bonus_tab[8]={0};
 	int bonus_tab2[8]={0};
+	
+	bonus_tab[7]=1;
 
 	//1 pour la vision		
 //	bonus_tab[7]=0;

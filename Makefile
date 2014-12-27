@@ -42,3 +42,6 @@ filet.o : filet.c $(HEADER_FILES)
 bonus.o : bonus.c $(HEADER_FILES)
 	$(CC) bonus.o -c bonus.c $(LIB)
 
+clean:
+	rm -f prog prog.db *.o *.do
+
