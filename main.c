@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
 	int bonus_tab[8]={0};
 	int bonus_tab2[8]={0};
 	
-	bonus_tab[7]=1;
+	bonus_tab[7]=0;
 
 	//1 pour la vision		
 //	bonus_tab[7]=0;
