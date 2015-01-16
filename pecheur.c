@@ -31,7 +31,6 @@ int case_valide(int x, int y, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 /*Permet le déplacement du pecheur sur le plateau de jeu*/
 void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEAU])
 {	int a=0;	
-	
 	afficher_point(p->x, p->y, coul);	
 	while(a!=key_ENTER)
 	{	a=get_key();
@@ -359,18 +358,18 @@ void final_screen (int a)
 void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul)
 {	int a=0;	
 	
-	draw_pont(*x, *y, coul);	
+	draw_square(*x, *y, coul);	
 	while(a!=key_ENTER)
 	{	a=get_key();
 		switch(a)
 		{	case key_RIGHT:						
 				if(!case_valide((*x)+1, *y, plateau))
 				{	if(bonus_tab[7]==0)
-						draw_pont(*x, *y, color_BLUE);
+						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_pont(*x, *y, color_WHITE);
-						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, color_WHITE);
+						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}				
 					(*x)++;
 
@@ -381,11 +380,11 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 				if(!case_valide((*x)-1, (*y), plateau))
 				{	
 					if(bonus_tab[7]==0)
-						draw_pont(*x, *y, color_BLUE);
+						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_pont(*x, *y, color_WHITE);
-						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, color_WHITE);
+						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}
 					(*x)--;
 				}			
@@ -393,11 +392,11 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 			case key_UP :
 				if(!case_valide((*x), (*y)+1, plateau))				
 				{	if(bonus_tab[7]==0)
-						draw_pont(*x, *y, color_BLUE);
+						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_pont(*x, *y, color_WHITE);
-						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, color_WHITE);
+						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}
 					(*y)++;
 				}				
@@ -406,11 +405,11 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 				if(!case_valide((*x), (*y)-1, plateau))				
 				{	
 					if(bonus_tab[7]==0)
-						draw_pont(*x, *y, color_BLUE);
+						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_pont(*x, *y, color_WHITE);
-						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, color_WHITE);
+						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}
 					(*y)--;
 				}				
@@ -419,7 +418,7 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 				break;
 		
 		}
-		draw_pont(*x, *y,coul);						
+		draw_square(*x, *y,coul);						
 		update_graphics();	
 	}
 	
@@ -431,7 +430,7 @@ void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, 
 {	int x_curseur=0;
 	int y_curseur=0;
 	spawn_pont(pecheur->x, pecheur->y, &x_curseur, &y_curseur, plateau_de_jeu);
-	draw_pont(x_curseur, y_curseur, color_LIGHTGREEN);
+	draw_square(x_curseur, y_curseur, color_LIGHTGREEN);
 	update_graphics();
 	deplacement_curseur(&x_curseur, &y_curseur, plateau_de_jeu, bonus_tab, color_LIGHTGREEN);
 	if(plateau_de_jeu[x_curseur-1][y_curseur-1]->id!=0)

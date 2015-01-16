@@ -30,6 +30,15 @@ void afficher_point(int x, int y, couleurs coul)
 {	set_drawing_color(coul);
 	draw_circle_full(M1+(x-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y-0.5)*(WINDOW_HEIGHT-2*M2)/(N), 4.5);
 }
+
+void draw_square(int x, int y, couleurs coul)
+{		
+	set_drawing_color(coul);
+	set_fill_color(coul);
+	draw_rectangle_full(M1+x*(WINDOW_WIDTH-2*M1)/N-1, M2+y*(WINDOW_HEIGHT-2*M2)/N -1, M1+(x-1)*(WINDOW_WIDTH-2*M1)/N+1, M2+(y-1)*(WINDOW_HEIGHT-2*M2)/N +1);
+
+}
+
  
 /*void blind_grid()
 {	int i,j,a;

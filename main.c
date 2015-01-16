@@ -48,7 +48,8 @@ int main(int argc, char const *argv[])
 	//initialisation du pecheur 
 	init_fisher(&pecheur, x, y, 1);
 	init_fisher(&pecheur2, x2, y2, 2);
-		
+	
+		pecheur.reserves = 5000;	
 	//initialisation de la table des bonus 	
 	int bonus_tab[8]={0};
 	int bonus_tab2[8]={0};
@@ -67,6 +68,7 @@ int main(int argc, char const *argv[])
 	
 
 	init_grid(plateau_de_jeu);
+	spawn_island(plateau_de_jeu);
 
 	
 
@@ -100,9 +102,9 @@ int main(int argc, char const *argv[])
 
 
 	do
-	{	printf("WOLRD_TIME : %d\n", WORLD_TIME);
+	{	printf("WORLD_TIME : %d\n", WORLD_TIME);
 		fprintf(fPtr,"\n%d", WORLD_TIME);
-
+		
 		/***Jeu du pêcheur***/		
 		
 		//Jeu du pêcheur tous les 10 tours d'écosystème

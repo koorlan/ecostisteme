@@ -3,8 +3,8 @@
 
 #include <GL/freeglut.h>
 
-#define WINDOW_WIDTH 1300
-#define WINDOW_HEIGHT 770
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 1000
 
 
 

@@ -17,6 +17,19 @@ void destroy_list (Liste ** l)
 	
 }
 
+void free_list (Liste *l){
+	Liste *tmp;
+
+   while (l != NULL)
+    {
+       tmp = l;
+       l = l->nxt;
+       free(tmp);
+    }
+
+
+
+}
 
 /*void destroy_list (Liste ** l)
 {	Liste * elt =malloc(sizeof(Liste));
@@ -42,27 +55,27 @@ void destroy_list (Liste ** l)
 Liste * destroy_mob (Mob mob, Liste * list_of_specific_species )
 
 {      
-	if(list_of_specific_species ->nxt == NULL)
+	if(list_of_specific_species->nxt == NULL)
         	return list_of_specific_species;
-    	if(list_of_specific_species->mob.x == mob.x && list_of_specific_species->mob.y == mob.y)
+    if(list_of_specific_species->mob.x == mob.x && list_of_specific_species->mob.y == mob.y)
 	{
-        	Liste * tmp=malloc(sizeof(Liste));
+       	Liste * tmp=malloc(sizeof(Liste));
 		tmp=list_of_specific_species->nxt;
  //       	Liste * clean=malloc(sizeof(Liste));
 //		clean=list_of_specific_species;
-		if(tmp==NULL/*||clean==NULL*/)
-			exit(EXIT_FAILURE);
+		//if(tmp==NULL/*||clean==NULL*/)
+		//	exit(EXIT_FAILURE);
+
+		free(list_of_specific_species);
 
 		//libération mémoire 		
 //		free(clean);
 //		clean=NULL;
-        	return tmp;
+       	return tmp;
     	} 
-	else 
-	{
-        	list_of_specific_species->nxt = destroy_mob (mob,list_of_specific_species->nxt);
-        	return list_of_specific_species;
-    	}    
+    list_of_specific_species->nxt = destroy_mob (mob,list_of_specific_species->nxt);
+    return list_of_specific_species;
+    	    
 
 }
 
@@ -71,8 +84,8 @@ int survie(Mob * mob, Liste * species[NB_SPECIES])
 {
 	if(mob->satiete <= 0 && (WORLD_TIME-mob->dernier_repas)>duree_survie[mob->id]) 
   	{	
-		species[mob->id] = destroy_mob(*mob, species[mob->id]);  //On passe la liste de l'espece a la fonction destroy pour le supprimer de la liste
-		
+		  //On passe la liste de l'espece a la fonction destroy pour le supprimer de la liste
+			
         	return 0;
 	} 
 	return 1;
@@ -84,47 +97,46 @@ int reproduction(Mob * mob, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste
 	
 	if(mob->satiete >= gestation[mob->id] * metabolisme[mob->id] && mob->derniere_reproduction + frequence_reproduction[mob->id] < WORLD_TIME) {
 	
-		Liste * free_place_list = malloc(sizeof(Liste));
-		if(free_place_list==NULL)
-			exit(EXIT_FAILURE);
-	
-		free_place_list = free_neighboor_case_list(plateau, mob);
-		if (free_place_list->nxt == NULL)
-		{	
-			free(free_place_list);
-			free_place_list=NULL;
-			return 0;
-		}	
-	
-		int randomPick = rand_a_b(0,nombre_elts_liste(free_place_list));
-	
+		int randomPick = 0;
+		Mob * libre[8] = { NULL } ;
 		int i = 0;
-		while(i != randomPick){
-			free_place_list = free_place_list->nxt;
-			i++;
-		} 
+		int j = 0;
+		int indice = 0;
+
+		for (i = -1; i < 1; ++i)
+		{
+			for (j = -1; j <1; ++j)
+			{
+				if( ((((mob->x)+i>=0) && ((mob->y)+j>=0))&&(((mob->x)+i<TAILLE_PLATEAU) && ((mob->y)+j<TAILLE_PLATEAU))) ){ //case hors champ
+           			if( (plateau[i+mob->x][j+mob->y])->id == 0 ){
+           				libre[indice] = plateau[i+mob->x][j+mob->y];
+           				indice ++;
+           			}
+
+            	}
+			}
+		}
+
+		if (indice  != 0)
+			randomPick = rand_a_b(0,indice);
+		else
+			return 0;
 		
+		int xtemp = libre[randomPick]->x;
+		int ytemp = libre[randomPick]->y;		
+		free(libre[randomPick]);
 
 		Mob * newMob = create_mob(mob->id);
-		newMob->x = free_place_list->mob.x ;
-		newMob->y = free_place_list->mob.y;
-		newMob->satiete = 0;
-		newMob->dernier_repas = WORLD_TIME;
-		newMob->derniere_reproduction = WORLD_TIME;
+		plateau[xtemp][ytemp] = newMob;
+		plateau[xtemp][ytemp]->id = mob->id;
+		plateau[xtemp][ytemp]->x = xtemp;
+		plateau[xtemp][ytemp]->y = ytemp;
+		plateau[xtemp][ytemp]->satiete = 0;
+		plateau[xtemp][ytemp]->dernier_repas = WORLD_TIME;
+		plateau[xtemp][ytemp]->derniere_reproduction = WORLD_TIME;
 		species[mob->id] = ajouterEnTete(species[mob->id], *newMob);
-
-		Mob * tmp = malloc(sizeof(Mob));
-		tmp=plateau[free_place_list->mob.x][free_place_list->mob.y];
-
-		free(tmp);
-		tmp=NULL;
-		plateau[free_place_list->mob.x][free_place_list->mob.y] = newMob;
 		
-		//libération mémoire
-		destroy_list(&free_place_list);
-		free(free_place_list);
-		free_place_list=NULL;
-	
+
     	return 1;
 		} else 
 			return 0;
@@ -139,101 +151,85 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 	int i, j;
 	i= 0;
 	j= 0;
-	Mob * proie = malloc(sizeof(Mob));
+
+	int indice =0 ;
+	int randomPick = 0;
+	Mob * proie ;
 	proie=create_mob(0);
-	Liste *a_miam = malloc(sizeof(Liste));
-	a_miam->nxt = NULL;
+	Mob * a_miam[8] = { NULL } ;
+	int taille_max=0;
 
-
-
-	for(i=-1; i<=1; i++)
+	for(i= -1; i<=1; i++)
 	{	for(j=-1; j<=1; j++)
 		{	
-        		if(((((mob->x)+i>=0) && ((mob->y)+j>=0))&&(((mob->x)+i<TAILLE_PLATEAU) && ((mob->y)+j<TAILLE_PLATEAU)))) //case hors champ
-			{
-            			if(eat_mat[mob->id][plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]==1) //si on trouve une espèce commestible dans les cases adjacentes
-              			{     
 
-	        			if((taille[plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]>=taille[proie->id])&&((mob->satiete)+taille[proie->id]<taille_du_bide[mob->id]))	//recherche de la proie de taille max
-                    			{      	//Affichage en rose de la (les) proie(s) potentielles
-						//afficher_point((mob->x)+i+1, (mob->y)+j+1, mobs_draw[8]);
-	        			
-	        				proie->x=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->x;
-                        			proie->y=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->y;
-                       				proie->id=plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id;
-	                       			a_miam = ajouterEnTete(a_miam, *proie);
+        	if( ((((mob->x)+i>=0) && ((mob->y)+j>=0))&&(((mob->x)+i<TAILLE_PLATEAU) && ((mob->y)+j<TAILLE_PLATEAU))) ){ //case hors champ
+            	if(eat_mat[mob->id][plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id]==1){ //si on trouve une espèce commestible dans les cases adjacentes    
+					if( (mob->satiete)+taille[proie->id]<taille_du_bide[mob->id] ){
+						a_miam[indice] = plateau_de_jeu[(mob->x)+i][(mob->y)+j];
+						indice++;
+						if (taille[ (plateau_de_jeu[(mob->x)+i][(mob->y)+j])->id ] >= taille_max)
+							taille_max = taille[ (plateau_de_jeu[(mob->x)+i][(mob->y)+j])->id ];
 					}
 					 
-        			}      
-            		}
+        		}      
+            }
 		}
 	}
-	if (a_miam->nxt == NULL)
-	{
-		
-		free(a_miam);
-		a_miam=NULL;
+	if (indice  != 0)
+		randomPick = rand_a_b(0,indice);
+	else{ 
+		free(proie);
 		return 0;
-	} 
+	}
 
-	int randomPick = rand_a_b(1,nombre_elts_liste(a_miam)+1);
-	Liste * tmp=malloc(sizeof(Liste));
-	if(tmp==NULL)
-		exit(EXIT_FAILURE);
-	tmp=a_miam;	
-		
-	i = 1;
-	
-	while(i != randomPick){
-		
-		tmp = a_miam->nxt;
-		i++;
-	} 
-	*proie = tmp->mob;
-//	free(tmp);
-//	tmp=NULL;
-	destroy_list(&a_miam);
-	free(a_miam);	
-//	a_miam=NULL;
+
+	while ( a_miam[randomPick%8] == NULL || taille[(a_miam[randomPick%8])->id] != taille_max ){
+		randomPick++;
+	}
+
+	*proie = *a_miam[randomPick%8];
+
+
     	if(proie->id!=0)
    	{	
-  
- 		//La case de la proie prend les caractéristiques du mob	                    
-        	plateau_de_jeu[proie->x][proie->y]->id=(*mob).id;
+   		//La case de la proie prend les caractéristiques du mob	                    
+        plateau_de_jeu[proie->x][proie->y]->id=(*mob).id;
 		plateau_de_jeu[proie->x][proie->y]->derniere_reproduction=(*mob).derniere_reproduction;
-        	plateau_de_jeu[proie->x][proie->y]->satiete=(*mob).satiete+taille[proie->id]; 
+        plateau_de_jeu[proie->x][proie->y]->satiete=(*mob).satiete+taille[proie->id]; 
 		plateau_de_jeu[proie->x][proie->y]->dernier_repas=WORLD_TIME;
 		
-		//La case précedente du mob est remplacée par l'espece vide                 
-		plateau_de_jeu[(*mob).x][(*mob).y]=create_mob(0);
-		plateau_de_jeu[(*mob).x][(*mob).y]->x = (*mob).x ;
-		plateau_de_jeu[(*mob).x][(*mob).y]->y = (*mob).y ;
+		//La case précedente du mob est remplacée par l'espece vide  
+		int xtmp = (*mob).x;
+		int ytmp = (*mob).y;
+		//free(plateau_de_jeu[xtmp][ytmp]);
+		plateau_de_jeu[xtmp][ytmp]=create_mob(0);
+		plateau_de_jeu[xtmp][ytmp]->x = xtmp ;
+		plateau_de_jeu[xtmp][ytmp]->y = ytmp ;
 		
 		
 		//Les coordonnées et caractéristiques du mob sont changées		
 		mob->x=proie->x;
 		mob->y=proie->y;
-        	mob->dernier_repas=WORLD_TIME;
+        mob->dernier_repas=WORLD_TIME;
 		mob->satiete=plateau_de_jeu[proie->x][proie->y]->satiete;                
 	                	
 		if (proie->id ==11)
-			draw_pont(proie->x+1, proie->y+1, color_WHITE);
+			draw_square(proie->x+1, proie->y+1, color_WHITE);
 		//On retire la proie de la liste correspondant à son espèce
 		if (proie->id != 11)
 		{
-           		species[proie->id]=destroy_mob(*proie, species[proie->id]);	 
-			              
+           	species[proie->id]=destroy_mob(*proie, species[proie->id]);	               
 		}
-		free(proie); 
-		proie=NULL;  
-	//	free(tmp);
-	//	tmp=NULL;		
+		free(proie);
+		proie =NULL;
+
 		return 1;      
-    }       
+    }      
+
 	free(proie); 
 	proie=NULL; 	 
-	//free(tmp);
-	//tmp=NULL;       	
+   	
 	return 0;
 
 
@@ -241,40 +237,53 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 
 int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES] ){
 	int mob_saut_max = saut_max[mob->id];
-	//while(mob_saut_max < saut_max[mob->id] ){
-	Liste * free_place_list = malloc(sizeof(Liste));
-	free_place_list = free_neighboor_case_list(plateau_de_jeu, mob);
+	
+	do {
+		
+	int indice = 0;
+	Mob * cases_libre[8] = { NULL } ;
+	int i,j,randomPick;
+	randomPick = 0;
 
-	if (free_place_list->nxt == NULL)
-	{
-		free(free_place_list);
-		free_place_list=NULL;
+	for(i= -1; i<=1; i++)
+	{	for(j=-1; j<=1; j++)
+		{	
+
+        	if( ((((mob->x)+i>=0) && ((mob->y)+j>=0))&&(((mob->x)+i<TAILLE_PLATEAU) && ((mob->y)+j<TAILLE_PLATEAU))) ){ //case hors champ
+            	
+            	if( plateau_de_jeu[(mob->x)+i][(mob->y)+j]->id == 0){
+						cases_libre[indice] = plateau_de_jeu[(mob->x)+i][(mob->y)+j];
+						indice++;
+					}
+			}
+		}
+	}
+	if (indice  != 0)
+		randomPick = rand_a_b(0,indice);
+	else{ 
 		return 0;
 	}
-	
-	int randomPick = rand_a_b(0,nombre_elts_liste(free_place_list));
-	
-	int i = 0;
-	while(i != randomPick){
-		free_place_list = free_place_list->nxt;
-		i++;
-	} 
 
 
-	plateau_de_jeu[free_place_list->mob.x][free_place_list->mob.y]->id=(*mob).id;          
+	while ( cases_libre[randomPick%8] == NULL ){
+		randomPick++;
+	}
+
+
+	plateau_de_jeu[(cases_libre[randomPick%8])->x][(cases_libre[randomPick%8])->y]->id=(*mob).id;          
 	plateau_de_jeu[(*mob).x][(*mob).y]=create_mob(0);
 	plateau_de_jeu[(*mob).x][(*mob).y]->x = (*mob).x ;
 	plateau_de_jeu[(*mob).x][(*mob).y]->y = (*mob).y ;
-	mob->x=free_place_list->mob.x;
-	mob->y=free_place_list->mob.y;
+	mob->x=cases_libre[randomPick%8]->x;
+	mob->y=cases_libre[randomPick%8]->y;
 	mob_saut_max--;
-	//}
+	
+	} while (0);
+	
 	return 1;      
 }
 
 void tour(Mob * mob){
-	//printf("Ma satiete avant %d \n" mob->satiete);
-	//printf(" sat : %d \n",mob->satiete );
 	mob->satiete = max(mob->satiete - metabolisme[mob->id] , 0 );
 	
 }
@@ -286,6 +295,7 @@ void ia_mob(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Lis
 		plateau_de_jeu[mob->x][mob->y]=create_mob(0);
 		plateau_de_jeu[mob->x][mob->y]->x = mob->x;
 		plateau_de_jeu[mob->x][mob->y]->y = mob->y;	
+		species[mob->id] = destroy_mob(*mob, species[mob->id]);
 		return;
 	}	
 	else{

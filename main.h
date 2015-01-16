@@ -1,6 +1,6 @@
 #ifndef __MAIN__H
 #define __MAIN__H 
-#define TAILLE_PLATEAU 70
+#define TAILLE_PLATEAU 80
 #define NB_SPECIES 9
 
 
@@ -62,17 +62,18 @@ int WORLD_TIME;
 	**8orque.............8
 	**9baleine...........9  3          	 5        2			2   	  2		2 	 	 4
 	**10pecheur...........10 10 000       	 3        0			1         0		0	 	 10 000
-	**11pont..............11 10 000          1        0			0         0		0	 	 10 000			
+	**11pont..............11 10 000          1        0			0         0		0	 	 10 000	
+	**12ile		
 *********************/
 
 
-static const int duree_survie[]={10000, 10000, 1, 10, 2, 10000, 8, 100, 50, 100, 10000, 10000};
-static const int taille[]={-1, 2, 1, 2, 2, 10, 2, 4, 4, 5, 3, 2};
-static const int taille_du_bide[]={0, 0, 2, 4, 3, 10000, 3, 6, 4, 60, 0, 0};
-static const int saut_max[]={0, 0, 1, 2, 2, 0, 3, 2, 2, 2, 1, 0};
-static const int metabolisme[]={0, 0, 1, 1, 1, 0, 1, 1, 2, 2, 0, 0};
-static const int gestation[]={0, 1, 2, 3, 2, 0, 1, 1, 2, 10, 0, 0};
-static const int frequence_reproduction[]={10000, 0, 3, 3, 2, 10000, 1, 10, 2, 25, 10000, 10000};
+static const int duree_survie[]={10000, 10000, 1, 10, 2, 10000, 8, 100, 50, 100, 10000, 10000, 10000};
+static const int taille[]={-1, 2, 1, 2, 2, 10, 2, 4, 4, 5, 3, 2, 2};
+static const int taille_du_bide[]={0, 0, 2, 4, 3, 10000, 3, 6, 4, 60, 0, 0, 0};
+static const int saut_max[]={0, 0, 1, 2, 2, 0, 3, 2, 2, 2, 1, 0, 0};
+static const int metabolisme[]={0, 0, 1, 1, 1, 0, 1, 1, 2, 2, 0, 0, 0};
+static const int gestation[]={0, 1, 2, 3, 2, 0, 1, 1, 2, 10, 0, 0, 0};
+static const int frequence_reproduction[]={10000, 0, 3, 3, 2, 10000, 1, 10, 2, 25, 10000, 10000, 10000};
 
 
 /*
@@ -86,22 +87,22 @@ static const int frequence_reproduction[]={10000, 0, 1, 8, 51, 10000, 35, 4, 2, 
 
 
 
-static const couleurs mobs_draw[20]={color_WHITE, color_LIGHTGREEN, color_LIGHTRED, color_CYAN, color_BLUE, color_LIGHTGRAY, color_BLACK, color_YELLOW, color_LIGHTMAGENTA, color_MAGENTA, color_RED, color_BROWN};
+static const couleurs mobs_draw[20]={(255<<24)+(255<<16)+(255<<8), (0<<24)+(153<<16)+(76<<8), color_LIGHTRED, color_CYAN, color_BLUE, color_LIGHTGRAY, color_BLACK, color_YELLOW, color_LIGHTMAGENTA, color_MAGENTA, color_RED, color_BROWN, color_BROWN};
 
 //Matrice de prédation 
 
-static const int eat_mat[12][12]={{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-								  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-							   	  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							      	  {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-								  {0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0},
-								  {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0}, 
-								  {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0}, 
-								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, 
-								  {0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0}, 
-								  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+static const int eat_mat[13][13]={{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+								  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+							   	  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+							      {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+								  {0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0},
+								  {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0}, 
+								  {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0}, 
+								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, 
+								  {0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0}, 
+								  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
 /* Initialisation de la matrice de prédation 
 	eat_mat[0][]={0}; //espece vide ne mange rien

@@ -28,17 +28,19 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 	int j=0;
 	int a;
 	if(mode!=0)
-		affiche_grille();
+		{update_graphics();
+		affiche_grille();  //uncomment for smooth grid
+	}
 	for (int i = 0; i < TAILLE_PLATEAU; ++i)
 	{
 		for (int j = 0; j < TAILLE_PLATEAU; ++j)
 		{	/*if(plateau[i][j]->id==11)
-				draw_pont(i+1, j+1, mobs_draw[11]);*/
+				draw_square(i+1, j+1, mobs_draw[11]);*/
 
 			//mode aveugle
 			if(mode==0)
 			{	if(plateau[i][j]->id==11)
-					draw_pont(i+1, j+1, mobs_draw[11]);
+					draw_square(i+1, j+1, mobs_draw[11]);
 				else
 				{	a=rand()%(2)+1;
 					switch (a)
@@ -55,17 +57,89 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 			}
 			//mode vision 
 			else			
-			{		
-				if(plateau[i][j]->id!=11)
-					afficher_point(i+1, j+1, mobs_draw[plateau[i][j]->id]);
-				else 
-					draw_pont(i+1, j+1, mobs_draw[11]);
+			{	
+				switch (plateau[i][j]->id)
+				{
+				case 0:
+						draw_square(i+1, j+1, mobs_draw[plateau[i][j]->id]);
+						break;
+
+				case 11:
+						draw_square(i+1, j+1, mobs_draw[11]);
+						break;
+				case 12:
+						draw_square(i+1, j+1, mobs_draw[11]);
+						break;		
+				default:
+						afficher_point(i+1, j+1, mobs_draw[plateau[i][j]->id]);
+						break;
+				}
 			}		
 		}
 	}
 	
 	return;
 }
+
+void spawn_island(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
+	int nb_island = 3;
+	int radius;
+	while(nb_island != 0){
+		radius = rand_a_b(2,8);
+	//int a = rand_a_b(TAILLE_PLATEAU /2  - 30,TAILLE_PLATEAU /2 + 30);
+	//int b = rand_a_b(TAILLE_PLATEAU /2 - 30,TAILLE_PLATEAU /2 + 30);
+	//int a = rand_a_b(radius,TAILLE_PLATEAU-radius);
+	//int b = rand_a_b(radius,TAILLE_PLATEAU-radius);
+	int a = rand_a_b(TAILLE_PLATEAU /2 - radius,TAILLE_PLATEAU /2 + radius);
+	int b = rand_a_b(TAILLE_PLATEAU /2 - radius,TAILLE_PLATEAU /2 + radius);
+
+	for (int i = -radius; i <= radius	; ++i)
+	{
+		for (int j = -radius; j <= radius; ++j)
+		{
+			if(i*i+j*j <= radius*radius) {
+			plateau[i+a][j+b] = create_mob(12);
+			plateau[i+a][j+b]->x = i+a;
+			plateau[i+a][j+b]->y = j+b;
+			
+			}
+			if(rand_a_b(1,5) >= 4) {
+			 plateau[i+a][j+b] = create_mob(12);
+			plateau[i+a][j+b]->x = i+a;
+			plateau[i+a][j+b]->y = j+b;
+			
+			} 
+		}
+	}
+
+	nb_island--;
+	}
+
+/*	for (int i = 0; i < TAILLE_PLATEAU; i+=3)
+	{
+		radius = 3;
+		
+		for (int j = -radius; j <= radius	; ++j)
+		{
+		for (int k = -radius; k <= radius; ++k)
+			{
+			if(k*k+j*j <= radius*radius ) {
+			/*plateau[i+j][k] = create_mob(12);
+			plateau[i+j][k]->x = i+j;
+			plateau[i+j][k]->y = k; */
+
+/*			plateau[j][i+k] = create_mob(12);
+			plateau[j][i+k]->x = j;
+			plateau[j][i+k]->y = i+k; 
+
+			}
+			
+			}
+		}  */
+
+
+	}
+
 
 /* Reçoit une liste de Mobs déjà générés et leur attribue une place sur la Map */
 void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],Liste * listeMob)
@@ -97,46 +171,6 @@ int isPlaceFree (Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b)
 }
 
 
-int spawn_mob(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste )
-{
-	Liste * free_place_list = malloc(sizeof(Liste));
-	free_place_list = free_neighboor_case_list(plateau, &(liste->mob));
-	if (free_place_list->nxt == NULL)
-	{
-		
-		free(free_place_list);
-		return -1;
-	}
-	
-	int randomPick = rand_a_b(0,nombre_elts_liste(free_place_list));
-	
-	int i = 0;
-	while(i != randomPick){
-		free_place_list = free_place_list->nxt;
-		i++;
-	}
-	
-	free(plateau[free_place_list->mob.x][free_place_list->mob.y]); 
-	plateau[free_place_list->mob.x][free_place_list->mob.y] = create_mob(liste->mob.id);
-	
-	//libération mémoire	
-	destroy_list(&free_place_list);		
-	free(free_place_list);
-	free_place_list=NULL;
-    return 1;
-}
-
-
-void spawn_list_of_mobs(Mob *  plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * liste ){
-	
-	while (liste->nxt != NULL)
-	{	
-		
-		spawn_mob(plateau, liste);
-		liste = liste->nxt;
-	}
-
-}
 
 Liste * free_neighboor_case_list(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob * mob) 
 {
