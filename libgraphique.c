@@ -56,7 +56,7 @@ couleurs VG_COLOR_FILL;
  */
 void init_colors() {
   set_drawing_color(color_BLACK);
-  set_background_color(color_WHITE);
+  set_background_color(color_BACKGROUND);
   set_fill_color(color_LIGHTGRAY);
 }
 
@@ -305,7 +305,7 @@ void start_graphics() {
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutInitWindowPosition(200, 100);
-    WINDOW = glutCreateWindow("Affichage graphique");
+    WINDOW = glutCreateWindow("Jeu de la vie - AUBRY - COLAS");
     // Initialisation handlers
     glutReshapeFunc(_call_reshape);
     glutDisplayFunc(_call_display);

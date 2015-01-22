@@ -48,60 +48,60 @@ void afficher_bonus(int n)
 	switch (n)
 	{	case 0 :
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+45, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+270, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+28, "1er poisson");
+			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+253, "1er poisson");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2, "+50 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+230, "+50 XP");
 			break;
 
 		case 1 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+45, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+15, M2+28, "1er pont");
+			draw_printf(WINDOW_WIDTH-M1+15, M2+253, "1er pont");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2, "+50 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+230, "+50 XP");
 			break;
 		case 2 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+45, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+28, "poisson");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+253, "poisson");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2, "+25 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+230, "+25 XP");
 			break;
 		case 3 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+45, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+28, "pont");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+253, "pont");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2, "+25 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20,M2+230, "+25 XP");
 			break;
 		case 4 :
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+45, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+28, "ecolo");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+253, "ecolo");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2, "+50 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+230, "+50 XP");
 			break;
 	
-		case 6 : 
+		case 6 : //Affichage a fix !
 			set_font(font_HELVETICA_18);
 			draw_printf(WINDOW_WIDTH-M1+11, M2+170, "BONUS");
 			set_font(font_HELVETICA_12);
 			draw_printf(WINDOW_WIDTH-M1+15, M2+153, "ile deserte");
 			set_font(font_HELVETICA_18);
 			draw_printf(WINDOW_WIDTH-M1+24, M2+125, "Filet");
-			draw_printf(WINDOW_WIDTH-M1+10, M2+95, "+200 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+95, "+200 XP");
 			break;
 		case 7 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+170, "BONUS");
+			//draw_printf(WINDOW_WIDTH-M3+M1+20, M2+170, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+10, M2+153, "vision");
+			//draw_printf(WINDOW_WIDTH-M3+M1+20, M2+153, "vision");
 			break;
 	}
 

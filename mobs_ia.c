@@ -69,7 +69,7 @@ Liste * destroy_mob (Mob mob, Liste * list_of_specific_species )
 		free(list_of_specific_species);
 
 		//libération mémoire 		
-//		free(clean);
+	//free(clean);
 //		clean=NULL;
        	return tmp;
     	} 
@@ -277,8 +277,9 @@ int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU],
 	mob->x=cases_libre[randomPick%8]->x;
 	mob->y=cases_libre[randomPick%8]->y;
 	mob_saut_max--;
-	
-	} while (0);
+	//usleep(500);
+	//draw_grid(plateau_de_jeu, 1);
+	} while (mob_saut_max >0);
 	
 	return 1;      
 }

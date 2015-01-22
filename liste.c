@@ -33,8 +33,8 @@ Liste * init_mobs(int id, int percentage)
 	Liste * list_of_mobs = malloc(sizeof(Liste));
 	if(list_of_mobs==NULL)
 		exit(EXIT_FAILURE);
-	list_of_mobs->mob.x = 666;
-	list_of_mobs->mob.y = 666;
+	list_of_mobs->mob.x = -1;
+	list_of_mobs->mob.y = -1;
 	list_of_mobs->nxt = NULL ;
 
 	

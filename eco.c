@@ -17,10 +17,10 @@
 void affiche_grille()
 /*affichage d'une grille n*n cases*/
 {	int i;
-	set_drawing_color(color_BLACK);
+	
 	for(i=0;i<=N;i++)
-	{	draw_line(M1+i*(WINDOW_WIDTH-2*M1)/N, M2, M1+i*(WINDOW_WIDTH-2*M1)/N, WINDOW_HEIGHT-M2);
-		draw_line(M1, M2+i*(WINDOW_HEIGHT-2*M2)/N, WINDOW_WIDTH-M1, M2+i*(WINDOW_HEIGHT-2*M2)/N);
+	{	draw_line(M1+i*(WINDOW_WIDTH-M3)/N, M2, M1+i*(WINDOW_WIDTH-M3)/N, WINDOW_HEIGHT-M4);
+		draw_line(M1, M2+i*(WINDOW_HEIGHT-2*M4)/N, (WINDOW_WIDTH-M3)+M1, M2+i*(WINDOW_HEIGHT-2*M4)/N);
 	}		
 	update_graphics();	
 }
@@ -28,14 +28,14 @@ void affiche_grille()
 void afficher_point(int x, int y, couleurs coul)
 /*affichage d'un individu sur la grille en fonction de son espèce*/
 {	set_drawing_color(coul);
-	draw_circle_full(M1+(x-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y-0.5)*(WINDOW_HEIGHT-2*M2)/(N), 4.5);
+	draw_circle_full(M1+(x-0.5)*(WINDOW_WIDTH-M3)/(N), M2+(y-0.5)*(WINDOW_HEIGHT-2*M4)/(N), 4.5);
 }
 
 void draw_square(int x, int y, couleurs coul)
 {		
 	set_drawing_color(coul);
 	set_fill_color(coul);
-	draw_rectangle_full(M1+x*(WINDOW_WIDTH-2*M1)/N-1, M2+y*(WINDOW_HEIGHT-2*M2)/N -1, M1+(x-1)*(WINDOW_WIDTH-2*M1)/N+1, M2+(y-1)*(WINDOW_HEIGHT-2*M2)/N +1);
+	draw_rectangle_full(M1+x*(WINDOW_WIDTH-M3)/N-1, M2+y*(WINDOW_HEIGHT-2*M4)/N -1, M1+(x-1)*(WINDOW_WIDTH-M3)/N+1, M2+(y-1)*(WINDOW_HEIGHT-2*M4)/N +1);
 
 }
 
@@ -110,7 +110,7 @@ void espece_consideree(int i, couleurs coul)
 int start_screen ()
 {	int select=0;
 	int current=1;	
-	set_drawing_color(color_BLACK);
+	set_drawing_color(color_WHITE);
 	set_font(font_HELVETICA_18);
 	draw_printf(WINDOW_WIDTH/2-160, WINDOW_HEIGHT/2+40, "CHOIX DU MODE DE JEU\n");
 	set_font(font_HELVETICA_12);
@@ -119,7 +119,7 @@ int start_screen ()
 	set_font(font_HELVETICA_18);			
 	set_drawing_color(color_LIGHTRED);
 	draw_printf(WINDOW_WIDTH/2-280, WINDOW_HEIGHT/2, "Ecosysteme seul");
-	set_drawing_color(color_BLACK);
+	set_drawing_color(color_WHITE);
 	draw_printf(WINDOW_WIDTH/2-105, WINDOW_HEIGHT/2, "Mode 1 joueur");
 	//set_drawing_color(color_LIGHTRED);
 	//draw_printf(WINDOW_WIDTH/2+5, WINDOW_HEIGHT/2-40, "(N)"); 
@@ -131,7 +131,7 @@ int start_screen ()
 	switch (select)	
 	{	case key_RIGHT:
 				set_font(font_HELVETICA_18);			
-				set_drawing_color(color_BLACK);
+				set_drawing_color(color_WHITE);
 				if (current==1)
 				{	draw_printf(WINDOW_WIDTH/2-280, WINDOW_HEIGHT/2, "Ecosysteme seul");	
 					set_drawing_color(color_LIGHTRED); 
@@ -150,7 +150,7 @@ int start_screen ()
 		case key_LEFT:	
 				set_font(font_HELVETICA_18);	
 
-				set_drawing_color(color_BLACK);
+				set_drawing_color(color_WHITE);
 				if (current==3)
 				{	draw_printf(WINDOW_WIDTH/2+55, WINDOW_HEIGHT/2, "Mode 2 joueurs");	
 					set_drawing_color(color_LIGHTRED); 
@@ -166,8 +166,8 @@ int start_screen ()
 				break;
 		default :
 				set_font(font_HELVETICA_12);			
-				set_drawing_color(color_BLACK);	
-				draw_printf(150, M2, "Utiliser les fleches pour changer de selection");
+				set_drawing_color(color_LIGHTRED);	
+				draw_printf(150, M4, "Utiliser les fleches pour changer de selection");
 				break;
 		}
 		update_graphics();
@@ -175,5 +175,4 @@ int start_screen ()
 	}
 	return current-1;
 }
-
 

@@ -1,6 +1,7 @@
 #ifndef __MAIN__H
 #define __MAIN__H 
-#define TAILLE_PLATEAU 80
+
+#define TAILLE_PLATEAU 70
 #define NB_SPECIES 9
 
 
@@ -9,9 +10,10 @@
 #include <stdlib.h>	
 #include <string.h>
 #include <time.h>
-#include<math.h>
+#include <math.h>
 
 typedef struct fisher {	int id_proie; //identifiant du dernier poisson peché 
+			char nom_joueur[9] ; //Au maximum 8 caractère/nom pour des raisons d'affichage  c'est peut etre mal fait pour le caractere dechappement "\0"
 			int x;
 			int y;
 			int reserves;
@@ -69,8 +71,8 @@ int WORLD_TIME;
 
 static const int duree_survie[]={10000, 10000, 1, 10, 2, 10000, 8, 100, 50, 100, 10000, 10000, 10000};
 static const int taille[]={-1, 2, 1, 2, 2, 10, 2, 4, 4, 5, 3, 2, 2};
-static const int taille_du_bide[]={0, 0, 2, 4, 3, 10000, 3, 6, 4, 60, 0, 0, 0};
-static const int saut_max[]={0, 0, 1, 2, 2, 0, 3, 2, 2, 2, 1, 0, 0};
+static const int taille_du_bide[]={0, 0, 2, 4, 3, 10000, 3, 6, 4, 2, 0, 0, 0};
+static const int saut_max[]={0, 0, 1, 2, 2, 0, 3, 2, 2, 20, 1, 0, 0};
 static const int metabolisme[]={0, 0, 1, 1, 1, 0, 1, 1, 2, 2, 0, 0, 0};
 static const int gestation[]={0, 1, 2, 3, 2, 0, 1, 1, 2, 10, 0, 0, 0};
 static const int frequence_reproduction[]={10000, 0, 3, 3, 2, 10000, 1, 10, 2, 25, 10000, 10000, 10000};
@@ -87,7 +89,9 @@ static const int frequence_reproduction[]={10000, 0, 1, 8, 51, 10000, 35, 4, 2, 
 
 
 
-static const couleurs mobs_draw[20]={(255<<24)+(255<<16)+(255<<8), (0<<24)+(153<<16)+(76<<8), color_LIGHTRED, color_CYAN, color_BLUE, color_LIGHTGRAY, color_BLACK, color_YELLOW, color_LIGHTMAGENTA, color_MAGENTA, color_RED, color_BROWN, color_BROWN};
+static const char *mobs_name[20] = {"Vide","Plancton","Corail","Bar","Thon","Pollution","Pyranha","Requin","Orque","Baleine","Pecheur","Pont","Ile"};
+
+static const couleurs mobs_draw[20]={(87<<24)+(113<<16)+(144<<8), (77<<24)+(255<<16)+(84<<8), (254<<24)+(84<<16)+(6<<8), (120<<24)+(192<<16)+(168<<8), (27<<24)+(234<<16)+(255<<8), color_LIGHTGRAY, color_BLACK, color_YELLOW, color_LIGHTMAGENTA, color_MAGENTA, color_RED, color_BROWN, (241<<24)+(184<<16)+(40<<8)};
 
 //Matrice de prédation 
 

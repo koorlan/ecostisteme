@@ -28,8 +28,9 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 	int j=0;
 	int a;
 	if(mode!=0)
-		{update_graphics();
-		affiche_grille();  //uncomment for smooth grid
+		{//update_graphics();
+		set_drawing_color(mobs_draw[0]); 
+		affiche_grille(); 
 	}
 	for (int i = 0; i < TAILLE_PLATEAU; ++i)
 	{
@@ -42,17 +43,8 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 			{	if(plateau[i][j]->id==11)
 					draw_square(i+1, j+1, mobs_draw[11]);
 				else
-				{	a=rand()%(2)+1;
-					switch (a)
-					{	case 1 : 	
-							set_drawing_color(color_BLUE);
-							draw_rectangle_full(M1+(i+1)*(WINDOW_WIDTH-2*M1)/N, M2+(j+1)*(WINDOW_HEIGHT-2*M2)/N, M1+(i)*(WINDOW_WIDTH-2*M1)/N, M2+(j)*(WINDOW_HEIGHT-2*M2)/N);
-							break;
-						case 2 : 
-							set_drawing_color(color_LIGHTBLUE);
-							draw_rectangle_full(M1+(i+1)*(WINDOW_WIDTH-2*M1)/N, M2+(j+1)*(WINDOW_HEIGHT-2*M2)/N, M1+(i)*(WINDOW_WIDTH-2*M1)/N, M2+(j)*(WINDOW_HEIGHT-2*M2)/N);
-							break;
-					}
+				{	
+					draw_square(i+1,j+1, (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8));
 				}
 			}
 			//mode vision 
@@ -68,9 +60,10 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 						draw_square(i+1, j+1, mobs_draw[11]);
 						break;
 				case 12:
-						draw_square(i+1, j+1, mobs_draw[11]);
+						draw_square(i+1, j+1, mobs_draw[12]);
 						break;		
 				default:
+						draw_square(i+1, j+1, mobs_draw[0]);
 						afficher_point(i+1, j+1, mobs_draw[plateau[i][j]->id]);
 						break;
 				}
@@ -99,12 +92,14 @@ void spawn_island(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
 		{
 			if(i*i+j*j <= radius*radius) {
 			plateau[i+a][j+b] = create_mob(12);
+			plateau[i+a][j+b]->id = 12;
 			plateau[i+a][j+b]->x = i+a;
 			plateau[i+a][j+b]->y = j+b;
 			
 			}
 			if(rand_a_b(1,5) >= 4) {
-			 plateau[i+a][j+b] = create_mob(12);
+			plateau[i+a][j+b] = create_mob(12);
+			plateau[i+a][j+b]->id = 12;
 			plateau[i+a][j+b]->x = i+a;
 			plateau[i+a][j+b]->y = j+b;
 			
@@ -159,7 +154,8 @@ void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],List
 		//free(plateau[i][j]);
 		//printf("Spaw: ID : %d " liste->mob.id);
 		plateau[i][j] = &(listeMob->mob);
-    		listeMob = listeMob->nxt;
+		plateau[i][j]->id = listeMob->mob.id;
+    	listeMob = listeMob->nxt;
     }
 	
 }

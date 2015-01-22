@@ -5,7 +5,8 @@
 
 /*Initialisation du pecheur*/
 void init_fisher(fisher * pecheur, int x, int y, int id)
-{	pecheur->id_proie=0;	
+{	
+	pecheur->id_proie=0;	
 	pecheur->reserves=0; //représente les "réserves" du pecheur
 	pecheur->nv_reserves=0; //les reserves pechees au tour precedent
 	pecheur->allo=0; //vaut 1 quand le pêcheur est dans l'eau	
@@ -42,7 +43,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 						afficher_point(p->x,p->y,mobs_draw[11]);
 					//Si le pecheur était sur le rivage						
 					else
-						afficher_point(p->x,p->y,color_WHITE);				
+						afficher_point(p->x,p->y,color_BACKGROUND);				
 					(p->x)++;
 				}				
 				break;
@@ -54,7 +55,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)					
 						afficher_point(p->x,p->y,mobs_draw[11]);
 					else
-						afficher_point(p->x,p->y,color_WHITE);
+						afficher_point(p->x,p->y,color_BACKGROUND);
 					(p->x)--;
 				}			
 				break;
@@ -65,7 +66,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 						afficher_point(p->x,p->y,mobs_draw[11]);
 
 					else
-						afficher_point(p->x,p->y,color_WHITE);
+						afficher_point(p->x,p->y,color_BACKGROUND);
 					(p->y)++;
 				}				
 				break;
@@ -75,7 +76,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)
 						afficher_point(p->x,p->y,mobs_draw[11]);
 					else
-						afficher_point(p->x,p->y,color_WHITE);
+						afficher_point(p->x,p->y,color_BACKGROUND);
 					(p->y)--;
 				}				
 				break;
@@ -478,7 +479,7 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 	else
 	{	capitaliser_bonus(pecheur, bonus_tab);
 		pecheur->bridge=0;				
-		clear_screen();
+		//clear_screen();
 		draw_grid(plateau_de_jeu, bonus_tab[7]);
 		afficher_point(pecheur->x, pecheur->y, color_RED);
 		appliquer_bonus(pecheur, bonus_tab);

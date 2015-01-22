@@ -4,7 +4,7 @@
 #include <GL/freeglut.h>
 
 #define WINDOW_WIDTH 1000
-#define WINDOW_HEIGHT 1000
+#define WINDOW_HEIGHT 768
 
 
 
@@ -18,6 +18,7 @@
 typedef enum t_colors {
   color_BLACK=0,
   color_BLUE=128<<8,
+  color_test=(128<<24)+(128<<16)+(128<<8),
   color_GREEN=128<<16,
   color_CYAN=(128<<16)+(128<<8),
   color_RED=128<<24,
@@ -31,7 +32,8 @@ typedef enum t_colors {
   color_LIGHTRED=255<<24,
   color_LIGHTMAGENTA=(255<<24)+(255<<8),
   color_YELLOW=(255<<24)+(255<<16),
-  color_WHITE=(255<<24)+(255<<16)+(255<<8)
+  color_WHITE=(255<<24)+(255<<16)+(255<<8),
+  color_BACKGROUND=(31<<24)+(30<<16)+(36<<8)
 } couleurs;
 
 

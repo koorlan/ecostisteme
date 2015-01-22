@@ -26,7 +26,7 @@ void spawn_canne(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob *
 /*Affichage de la canne à pêche sur le plateau de jeu*/
 void draw_canne(int x_pecheur, int y_pecheur, int x_canne, int y_canne, couleurs coul)
 {	set_drawing_color(coul);
-	draw_line(M1+(x_pecheur-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur-0.5)*(WINDOW_HEIGHT-2*M2)/(N), M1+(x_canne-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_canne-0.5)*(WINDOW_HEIGHT-2*M2)/(N));
+	draw_line(M1+(x_pecheur-0.5)*(WINDOW_WIDTH-M3)/(N), M2+(y_pecheur-0.5)*(WINDOW_HEIGHT-2*M4)/(N), M1+(x_canne-0.5)*(WINDOW_WIDTH-M3)/(N), M2+(y_canne-0.5)*(WINDOW_HEIGHT-2*M4)/(N));
 }	
 
 /*Déplacement de la canne à pêche*/
