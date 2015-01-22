@@ -14,10 +14,6 @@
 
 #define TAILLE_CANNE 1
 
-
-
-
-
 void init_fisher (fisher * pecheur, int x, int y, int id);
 
 int case_valide(int x, int y, Mob * plateau[][TAILLE_PLATEAU]);

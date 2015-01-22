@@ -29,8 +29,8 @@ void espece_consideree(int i, couleurs coul);
 
 int start_screen(); 
 
+int final_screen(FILE * fscore, char name[8]);
 
-//void blind_grid();
 
 
 #endif

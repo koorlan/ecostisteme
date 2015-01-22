@@ -39,29 +39,6 @@ void draw_square(int x, int y, couleurs coul)
 
 }
 
- 
-/*void blind_grid()
-{	int i,j,a;
-	for(j=1; j<=TAILLE_PLATEAU;j++)
-	{	for(i=1;i<=TAILLE_PLATEAU;i++)
-		{	
-				a=rand()%(2)+1;
-				switch (a)
-				{	case 1 : 	
-						set_drawing_color(color_BLUE);
-						draw_rectangle_full(M1+i*(WINDOW_WIDTH-2*M1)/N, M2+j*(WINDOW_HEIGHT-2*M2)/N, M1+(i-1)*(WINDOW_WIDTH-2*M1)/N, M2+(j-1)*(WINDOW_HEIGHT-2*M2)/N);
-						break;
-					case 2 : 
-						set_drawing_color(color_LIGHTBLUE);
-						draw_rectangle_full(M1+i*(WINDOW_WIDTH-2*M1)/N, M2+j*(WINDOW_HEIGHT-2*M2)/N, M1+(i-1)*(WINDOW_WIDTH-2*M1)/N, M2+(j-1)*(WINDOW_HEIGHT-2*M2)/N);
-						break;
-				}
-			
-		}
-	}
-	update_graphics();
-}	
-*/
 
 void espece_consideree(int i, couleurs coul)
 {	switch (i)
@@ -174,5 +151,77 @@ int start_screen ()
 			
 	}
 	return current-1;
+}
+
+int final_screen(FILE *fscore, char name [8])
+{	int select=0;
+	int current=1;
+	int score[3]={0};
+	int i=0, k=0;
+	int res=WORLD_TIME/10;
+
+	clear_screen();
+	set_background_color(color_BACKGROUND);
+	set_drawing_color(color_WHITE);
+	set_font(font_HELVETICA_18);
+	set_drawing_color(color_WHITE);
+
+	fscanf(fscore, "%d %d %d", &score[0], &score[1], &score[2]);
+ 	fseek(fscore, 0, SEEK_SET);
+	
+	    	
+	draw_printf(WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2+40, "Le gagnant est :");
+	//Affichage du nom du gagnant
+	while(name[i]!='\0')
+	{	draw_printf(WINDOW_WIDTH/2+5+k, WINDOW_HEIGHT/2+40, "%c", name[i]);
+		if(name[i]=='l'||name[i]=='r'||name[i]=='i')
+			k+=8;
+		else
+			k+=12;
+		i++;
+	}
+
+	//draw_printf(WINDOW_WIDTH/2-130, WINDOW_HEIGHT/2+20, "Le gagnant est :");
+	set_font(font_HELVETICA_12);
+	draw_printf(WINDOW_WIDTH/2-170, WINDOW_HEIGHT/2-60, "Appuyez sur la touche ENTREE pour quitter\n");
+	set_font(font_HELVETICA_18);
+	set_drawing_color(mobs_draw[0]);
+	draw_printf(WINDOW_WIDTH/2-120, WINDOW_HEIGHT/2-10, "Votre score : %d", res);			
+	//if(score==0 || res<=score)
+	//{	
+		//draw_printf(WINDOW_WIDTH/2-180, WINDOW_HEIGHT/2-40, "Les 3 meilleurs scores sont ");
+		//fseek(fscore, 0, SEEK_SET);
+		//fprintf(fscore, "%d", res);	
+	//}	
+	if(res<=score[0])
+	{
+		fprintf(fscore, "%d %d %d", res, score[0], score[1]);
+		score[2]=score[1];
+		score[1]=score[0];
+		score[0]=res;
+	}	
+	else if(res<=score[1])
+	{	
+		fprintf(fscore, "%d %d %d", score[0], res, score[1]);
+		score[2]=score[1];
+		score[1]=res;	
+	}
+
+	else if(res<=score[2])
+	{
+		fprintf(fscore, "%d %d %d", score[0], score[1], res);
+		score[2]=res;
+	}	
+	
+	draw_printf(WINDOW_WIDTH/2-190, WINDOW_HEIGHT/2-40, "Les 3 meilleurs scores sont [%d] [%d] [%d]", score[0], score[1], score[2]);
+	//else if((WORLD_TIME/10)>score)
+	//	draw_printf(WINDOW_WIDTH/2-180, WINDOW_HEIGHT/2-40, "Le meilleur score enregistre est : %d", score);
+		
+	
+	update_graphics();
+	
+	while(select!=key_ENTER)
+		select=get_key();
+	return 1;
 }
 

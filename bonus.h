@@ -26,7 +26,7 @@ int vision(fisher *pecheur, int bonus);
 
 void afficher_bonus(int n);
 
-void afficher_xp(fisher * pecheur);
+//void afficher_xp(fisher * pecheur);
 
 void appliquer_bonus(fisher * pecheur, int bonus_tab[]);
 

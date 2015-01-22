@@ -4,8 +4,6 @@
 #define TAILLE_PLATEAU 70
 #define NB_SPECIES 9
 
-
-
 #include <stdio.h>
 #include <stdlib.h>	
 #include <string.h>
@@ -13,20 +11,16 @@
 #include <math.h>
 
 typedef struct fisher {	int id_proie; //identifiant du dernier poisson peché 
-			char nom_joueur[9] ; //Au maximum 8 caractère/nom pour des raisons d'affichage  c'est peut etre mal fait pour le caractere dechappement "\0"
-			int x;
-			int y;
-			int reserves;
-			//reserves pechees au tour precedent
-			int nv_reserves; 
-			int bridge;
-			//vaut 1 si le pecheur est tombé à l'eau au tour précédent
-			int allo;
-			//experience du pecheur
-			int xp;
-			//identifiant du pecheur pour le mode 2 joueurs
-			int id;
-			int ecolo;
+			char nom_joueur[9] ; //Au maximum 8 caractère/nom pour des raisons d'affichage c'est peut etre mal fait pour le caractere d'echappement "\0"
+			int x; //coordonnées du joueur
+			int y; 
+			int reserves; //reserves disponibles
+			int nv_reserves; //reserves pechees au tour precedent (bonus poisson)
+			int bridge; 
+			int allo; //vaut 1 si le pecheur est tombé à l'eau au tour précédent 
+			int xp; //experience du pecheur
+			int id; //identifiant du pecheur pour le mode 2 joueurs
+			int ecolo; //total des poissons rejetés à l'eau (bonus écolo)
 			}fisher;
 
 
@@ -95,12 +89,12 @@ static const couleurs mobs_draw[20]={(87<<24)+(113<<16)+(144<<8), (77<<24)+(255<
 
 //Matrice de prédation 
 
-static const int eat_mat[13][13]={{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+static const int eat_mat[13][13]={				  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
 							   	  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-							      {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+							     	  {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
 								  {0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0},
 								  {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0}, 
 								  {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0}, 
@@ -124,17 +118,5 @@ static const int eat_mat[13][13]={{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 
 
 int rand_a_b(int a, int b);
-
-/*typedef struct fisher {	int id;
-			int x;
-			int y;
-			int reserves;
-			//reserves pechees au tour precedent
-			int nv_reserves; 
-			//vaut 1 si le pecheur est tombé à l'eau au tour précédent
-			int allo;
-			//experience du pecheur
-			int xp;
-			}fisher;*/
 
 #endif

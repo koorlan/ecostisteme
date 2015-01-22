@@ -2,8 +2,8 @@
 
 /***bonus_tab : 
 	indice		0		1		2	3		4		5		6		7	
-	sens		first_fish	first_bridge	fish	bridge		écolo		life bonus	filet		vision
-	valeur		0;1;2		0;1;2		0;1	0;1		0;1		0;1;0		0;1;2 		0;1;2 	
+	sens		first_fish	first_bridge	fish	bridge		écolo		filet		vision		victoire
+	valeur		0;1;2		0;1;2		0;1	0;1		0;1		0;1;2		0;1;2 		0;1 	
 ***/
 
 /*Bonus premier poisson*/
@@ -48,71 +48,72 @@ void afficher_bonus(int n)
 	switch (n)
 	{	case 0 :
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+270, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+253, "1er poisson");
+			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+183, "1er poisson");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+230, "+50 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+160, "+50 XP");
 			break;
 
 		case 1 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+15, M2+253, "1er pont");
+			draw_printf(WINDOW_WIDTH-M1+15, M2+183, "1er pont");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+230, "+50 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+160, "+50 XP");
 			break;
 		case 2 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+253, "poisson");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+183, "poisson");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+230, "+25 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+160, "+25 XP");
 			break;
 		case 3 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+253, "pont");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+183, "pont");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20,M2+230, "+25 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20,M2+160, "+25 XP");
 			break;
 		case 4 :
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+270, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+253, "ecolo");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+183, "ecolo");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+230, "+50 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+160, "+50 XP");
 			break;
 	
-		case 6 : //Affichage a fix !
+		case 5 : //Affichage a fix !
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+11, M2+170, "BONUS");
+			draw_printf(WINDOW_WIDTH-M1+100, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+15, M2+153, "ile deserte");
+			draw_printf(WINDOW_WIDTH-M1+104, M2+183, "ile deserte");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+24, M2+125, "Filet");
-			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+95, "+200 XP");
+			draw_printf(WINDOW_WIDTH-M1+113, M2+160, "Filet");
+			draw_printf(WINDOW_WIDTH-M3+M1+102, M2+145, "+200 XP");
 			break;
-		case 7 : 
+		case 6 : 
 			set_font(font_HELVETICA_18);
-			//draw_printf(WINDOW_WIDTH-M3+M1+20, M2+170, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+120, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			//draw_printf(WINDOW_WIDTH-M3+M1+20, M2+153, "vision");
+			draw_printf(WINDOW_WIDTH-M3+M1+135, M2+183, "vision");
 			break;
 	}
 
 }
 
-/*Affiche l'xp d'un joueur sur la fenêtre graphique*/
+/*Affiche l'xp d'un joueur sur la fenêtre graphique
 void afficher_xp(fisher * pecheur)
 {	set_font(font_HELVETICA_18);
 	set_drawing_color(color_BLACK);
 	draw_printf(WINDOW_WIDTH/2-70, M2/2-5, "VOTRE XP : %d", pecheur->xp);
 }
+*/
 
 /*Applique les bonus des joueurs*/
 void appliquer_bonus(fisher * pecheur, int bonus_tab[])
@@ -149,22 +150,23 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 	}
 
 	/*island*/
-	if(bonus_tab[6]==1)
+	if(bonus_tab[5]==1)
 	{	pecheur->xp=pecheur->xp+200;
-		afficher_bonus(6);
-		bonus_tab[6]=2;
+		afficher_bonus(5);
+		bonus_tab[5]=2;
 	}
 	/*vision*/
-	if(bonus_tab[7]==1)
-	{	afficher_bonus(7);
-		bonus_tab[7]=2;
+	if(bonus_tab[6]==1)
+	{	afficher_bonus(6);
+		bonus_tab[6]=2;
 	}
-	afficher_xp(pecheur);
+	//afficher_xp(pecheur);
 }
 
 /*Capitalise bonus des joueurs*/
 void capitaliser_bonus(fisher * pecheur, int bonus_tab[])
-{	/*bonus premier poisson*/
+{	printf("bonus tab 0 vaut %d\n", bonus_tab[0]);	
+	/*bonus premier poisson*/
 	if(first_fish(pecheur->nv_reserves, bonus_tab[0]))
 		bonus_tab[0]=1;
 	
@@ -184,13 +186,13 @@ void capitaliser_bonus(fisher * pecheur, int bonus_tab[])
 	if(ecolo(pecheur->ecolo, bonus_tab[4]))
 		bonus_tab[4]=1;
 	
-	/*bonus île, bébloque filet*/
+	/*bonus île, débloque filet*/
 	if(island(pecheur))
-		bonus_tab[6]=1;
+		bonus_tab[5]=1;
 
 	/*bonus vision*/
-	if(vision(pecheur, bonus_tab[7]))
-		bonus_tab[7]=1;
+	if(vision(pecheur, bonus_tab[6]))
+		bonus_tab[6]=1;
 	
 
 }

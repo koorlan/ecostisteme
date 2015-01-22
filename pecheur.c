@@ -24,7 +24,7 @@ int case_valide(int x, int y, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 		return 1;
 	else if ((x==0 || x==TAILLE_PLATEAU+1) && (y>=0 && y<=TAILLE_PLATEAU+1))
 		return 1;
-	else if(((x>=1 && x<=TAILLE_PLATEAU) && (y>=1 && y<=TAILLE_PLATEAU)) && plateau[x-1][y-1]->id==11) 
+	else if(((x>=1 && x<=TAILLE_PLATEAU) && (y>=1 && y<=TAILLE_PLATEAU)) && (plateau[x-1][y-1]->id==11 || plateau[x-1][y-1]->id==12)) 
 		return 2;
 	return 0;
 }
@@ -39,8 +39,8 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 		{	case key_RIGHT:						
 				if(case_valide(p->x+1, p->y, plateau)||p->allo==1)
 				{	//Si le pêcheur était sur le pont 
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)
-						afficher_point(p->x,p->y,mobs_draw[11]);
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))
+						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 					//Si le pecheur était sur le rivage						
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);				
@@ -53,7 +53,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 				{	
 					//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
 					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)					
-						afficher_point(p->x,p->y,mobs_draw[11]);
+						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);
 					(p->x)--;
@@ -62,8 +62,8 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 			case key_UP :
 				if(case_valide(p->x, p->y+1, plateau)||p->allo==1)				
 				{	//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)
-						afficher_point(p->x,p->y,mobs_draw[11]);
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))
+						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);
@@ -73,8 +73,8 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 			case key_DOWN :
 				if(case_valide(p->x, p->y-1, plateau)||p->allo==1)				
 				{	//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)
-						afficher_point(p->x,p->y,mobs_draw[11]);
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))
+						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id==11]);
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);
 					(p->y)--;
@@ -124,23 +124,23 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 int choix_action(int n)
 {	int a=0;
 	set_font(font_HELVETICA_12);
-	set_drawing_color(color_BLACK);
+	set_drawing_color(color_WHITE);
 	if (n==2||n==3||n==4)
-	{	set_drawing_color(color_WHITE);
+	{	set_drawing_color(color_BACKGROUND);
 	}
 	draw_string(M1, M2/2, "Voulez-vous pecher? (o)ui (n)on\n");
 	if(n==2)
-	{	set_drawing_color(color_BLACK);
+	{	set_drawing_color(color_WHITE);
 		draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
 	}
 	if(n==3)
-	{	set_drawing_color(color_BLACK);
+	{	set_drawing_color(color_WHITE);
 		draw_string(M1, M2/2, "Choisissez votre materiel de peche? (c)anne a peche (f)ilet\n");
 	}	
 	if(n==4)
-	{	set_drawing_color(color_WHITE);
+	{	set_drawing_color(color_BACKGROUND);
 		draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
-		set_drawing_color(color_BLACK);
+		set_drawing_color(color_WHITE);
 		draw_string(M1, M2/2, "Voulez-vous relacher le poisson precedemment peche? (o)ui (n)on\n");
 	}
 		
@@ -154,7 +154,7 @@ int choix_action(int n)
 
 /*Affichage des réserves du pêcheur*/
 void afficher_munitions (fisher * pecheur)
-{	set_drawing_color(color_BLACK);	
+{	set_drawing_color(color_WHITE);	
 	set_font(font_HELVETICA_12);
 	if(pecheur->nv_reserves!=0)
 	{	draw_printf(M1+200, WINDOW_HEIGHT-M2+20, "Vos derniers exploits a la peche a la ligne vous rapportent %d munitions", pecheur->nv_reserves);
@@ -173,7 +173,7 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 {
 	int x_canne=0, y_canne=0;
 	int peche;	
-	set_drawing_color(color_BLACK);
+	set_drawing_color(color_WHITE);
 	draw_string(M1, M2/2, "Appuyez sur entree pour pecher\n");
 	if(type_materiel=='c')
 	{	spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne, plateau_de_jeu);
@@ -229,7 +229,7 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 
 /*Le pecheur respawn sur le rivage, il perd ses munitions*/
 void plouf_soft_version(fisher *pecheur)	
-{	set_drawing_color(color_BLACK);	
+{	set_drawing_color(color_WHITE);	
 	pecheur->reserves=0;
 	pecheur->nv_reserves=0;
 	pecheur->allo=0;
@@ -247,7 +247,7 @@ void plouf_soft_version(fisher *pecheur)
 int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[])	
 {	int stop=0;	
 	char * nom;
-	set_drawing_color(color_WHITE);
+	set_drawing_color(color_BACKGROUND);
 	draw_printf(M1+200, WINDOW_HEIGHT-M2+20, "Vos derniers exploits a la peche a la ligne vous rapportent %d munitions", pecheur->nv_reserves);
 	draw_printf(M1-30, WINDOW_HEIGHT-M2+20, "RESERVES DISPONIBLES : %d\n", pecheur->reserves);
 	set_drawing_color(color_LIGHTRED);	
@@ -266,7 +266,8 @@ int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste *
 		if(pecheur->allo==0)
 		{	//printf("der_repro : %d\n", pecheur->derniere_reproduction);
 			clear_screen();
-			set_drawing_color(color_BLACK);
+			set_background_color(color_BACKGROUND);
+			set_drawing_color(color_WHITE);
 			set_font(font_HELVETICA_18);
 			printf("L'id du predateur est %d\n", plateau[pecheur->x-1][pecheur->y-1]->id);
 			switch (plateau[pecheur->x-1][pecheur->y-1]->id)
@@ -293,11 +294,11 @@ int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste *
 			set_font(font_HELVETICA_18);			
 			set_drawing_color(color_LIGHTRED);
 			draw_printf(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2-40, "(O)");
-			set_drawing_color(color_BLACK);
+			set_drawing_color(color_WHITE);
 			draw_printf(WINDOW_WIDTH/2-22, WINDOW_HEIGHT/2-40, "ui / ");
 			set_drawing_color(color_LIGHTRED);
 			draw_printf(WINDOW_WIDTH/2+5, WINDOW_HEIGHT/2-40, "(N)"); 
-			set_drawing_color(color_BLACK);
+			set_drawing_color(color_WHITE);
 			draw_printf(WINDOW_WIDTH/2+31, WINDOW_HEIGHT/2-40, "on");
 			update_graphics();	
 			
@@ -366,12 +367,12 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 		switch(a)
 		{	case key_RIGHT:						
 				if(!case_valide((*x)+1, *y, plateau))
-				{	if(bonus_tab[7]==0)
+				{	if(bonus_tab[6]==0)
 						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_square(*x, *y, color_WHITE);
-						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, mobs_draw[0]);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}				
 					(*x)++;
 
@@ -381,24 +382,24 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 			case key_LEFT : 
 				if(!case_valide((*x)-1, (*y), plateau))
 				{	
-					if(bonus_tab[7]==0)
+					if(bonus_tab[6]==0)
 						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_square(*x, *y, color_WHITE);
-						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, mobs_draw[0]);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}
 					(*x)--;
 				}			
 				break;
 			case key_UP :
 				if(!case_valide((*x), (*y)+1, plateau))				
-				{	if(bonus_tab[7]==0)
+				{	if(bonus_tab[6]==0)
 						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_square(*x, *y, color_WHITE);
-						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, mobs_draw[0]);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}
 					(*y)++;
 				}				
@@ -406,12 +407,12 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 			case key_DOWN :
 				if(!case_valide((*x), (*y)-1, plateau))				
 				{	
-					if(bonus_tab[7]==0)
+					if(bonus_tab[6]==0)
 						draw_square(*x, *y, color_BLUE);
 											
 					else
-					{	draw_square(*x, *y, color_WHITE);
-						draw_square(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
+					{	draw_square(*x, *y, mobs_draw[0]);
+						afficher_point(*x, *y,  mobs_draw[plateau[*x-1][*y-1]->id]);
 					}
 					(*y)--;
 				}				
@@ -435,16 +436,19 @@ void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, 
 	draw_square(x_curseur, y_curseur, color_LIGHTGREEN);
 	update_graphics();
 	deplacement_curseur(&x_curseur, &y_curseur, plateau_de_jeu, bonus_tab, color_LIGHTGREEN);
+
 	if(plateau_de_jeu[x_curseur-1][y_curseur-1]->id!=0)
 		destroy_mob(*plateau_de_jeu[x_curseur-1][y_curseur-1], species[plateau_de_jeu[x_curseur-1][y_curseur-1]->id]);
 	Mob * newMob = create_mob(pecheur->id_proie);
 	newMob->id=pecheur->id_proie;
 	newMob->x = x_curseur-1;
 	newMob->y = y_curseur-1;
+
 	//création d'un supermob
 	newMob->satiete=100;
 	newMob->dernier_repas=WORLD_TIME;
 	newMob->derniere_reproduction=WORLD_TIME;
+
 	printf("nv reserves  %d\n", pecheur->nv_reserves);
 	printf("taille %d\n", pecheur->id_proie);	
 	pecheur->reserves=pecheur->reserves-taille[pecheur->id_proie];
@@ -461,13 +465,15 @@ void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, 
 void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int bonus_tab[], int * mort_pecheur, Liste * species[])
 {	int stop=0;
 	int a;	
+	if (pecheur->xp >= 10000)
+		bonus_tab[7]=1;	
 	//Le pecheur est tombé dans l'eau
 	if(!case_valide(pecheur->x, pecheur->y, plateau_de_jeu))		
 	{	
 		if(plouf_hard_version(pecheur, plateau_de_jeu, species))
 		{	clear_screen();
 			plouf_soft_version(pecheur);
-			draw_grid(plateau_de_jeu, bonus_tab[7]);
+			draw_grid(plateau_de_jeu, bonus_tab[6]);
 			stop=get_key();				
 			update_graphics(); 		
 									
@@ -477,15 +483,15 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 				
 	}	
 	//Le pêcheur effectue un tour de jeu normal	
-	else
-	{	capitaliser_bonus(pecheur, bonus_tab);
+	else if (!bonus_tab[7])
+	{	/*capitaliser_bonus(pecheur, bonus_tab);
 		pecheur->bridge=0;				
 		//clear_screen();
-		draw_grid(plateau_de_jeu, bonus_tab[7]);
+		draw_grid(plateau_de_jeu, bonus_tab[6]);
 		afficher_point(pecheur->x, pecheur->y, color_RED);
-		appliquer_bonus(pecheur, bonus_tab);
-		printf("pont construit %d\n", pecheur->bridge);				
-		afficher_munitions(pecheur);
+		appliquer_bonus(pecheur, bonus_tab);*/
+		//printf("pont construit %d\n", pecheur->bridge);				
+		//afficher_munitions(pecheur);
 		deplacement_pecheur(pecheur, color_RED, plateau_de_jeu);
 		//possibilité de pêcher 		
 		a=choix_action(1);
@@ -495,12 +501,12 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 			if(bonus_tab[5]!=0)					
 			{	
 				a=choix_action(3);
-				set_drawing_color(color_WHITE);
+				set_drawing_color(color_BACKGROUND);
 				draw_string(M1, M2/2, "Choisissez votre materiel de peche? (c)anne a peche (f)ilet\n");
 			}
 			else
 			{	a='c';	
-				set_drawing_color(color_WHITE);
+				set_drawing_color(color_BACKGROUND);
 				draw_string(M1, M2/2, "Voulez-vous pecher? (o)ui (n)on\n");	
 			}
 			que_la_peche_commence(plateau_de_jeu, pecheur, species, a, bonus_tab[4]);
@@ -520,6 +526,8 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 		}
 	
 					
-	}	
+	}
+	//capitaliser_bonus(pecheur, bonus_tab);
+		
 }
 

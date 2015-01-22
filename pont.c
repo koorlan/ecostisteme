@@ -36,11 +36,11 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 		{	case key_RIGHT:						
 				if(case_valide_pont(*x_pont+1, *y_pont, x_pecheur, y_pecheur, plateau))
 				{	
-					if(bonus_tab[7]==1)
-					{	draw_square(*x_pont, *y_pont, color_WHITE);
+					if(bonus_tab[6])
+					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}					
 					else
-						draw_square(*x_pont, *y_pont, color_BLUE);
+						draw_square(*x_pont, *y_pont,color_BLUE);
 									
 					(*x_pont)++;
 				}				
@@ -48,8 +48,8 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 		
 			case key_LEFT : 
 				if(case_valide_pont(*x_pont-1, *y_pont, x_pecheur, y_pecheur, plateau))
-				{	if(bonus_tab[7]==1)
-					{	draw_square(*x_pont, *y_pont, color_WHITE);
+				{	if(bonus_tab[6])
+					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
 					else
 					{	
@@ -61,8 +61,8 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 				break;
 			case key_UP :
 				if(case_valide_pont(*x_pont, *y_pont+1, x_pecheur, y_pecheur, plateau))				
-				{	if(bonus_tab[7]==1)
-					{	draw_square(*x_pont, *y_pont, color_WHITE);
+				{	if(bonus_tab[6])
+					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
 					else
 						draw_square(*x_pont, *y_pont, color_BLUE);
@@ -72,8 +72,8 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 				break;
 			case key_DOWN :
 				if(case_valide_pont(*x_pont, *y_pont-1, x_pecheur, y_pecheur, plateau))				
-				{	if(bonus_tab[7]==1)
-					{	draw_square(*x_pont, *y_pont, color_WHITE);
+				{	if(bonus_tab[6])
+					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
 						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
 					else
 						draw_square(*x_pont, *y_pont, color_BLUE);
@@ -97,7 +97,7 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * 
 {	int x_pont=0, y_pont=0;
 	int stop;	
 	Mob pont ;
-	set_drawing_color(color_WHITE);
+	set_drawing_color(color_BACKGROUND);
 	draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
 	spawn_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
 	draw_square(x_pont, y_pont, mobs_draw[11]);
