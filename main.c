@@ -13,13 +13,13 @@ int main(int argc, char const *argv[])
 {
 	start_graphics();
 	FILE *fPtr;
-	fPtr=fopen("records.csv","w");
+	fPtr=fopen("records.csv","w+");
 	FILE *gnuplot = popen("gnuplot -persistent", "w");
 	if (fPtr == NULL)
 	    printf("Error in opening file\n");
 	
 	//Variable d'arrêt de la simulation 
-	int stop=key_F1;
+	
 	srand (time (NULL));
    	Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU];
 
@@ -97,7 +97,7 @@ int main(int argc, char const *argv[])
    	fprintf(fPtr,"%s","WORLD_TIME");
 
 	//Génération des mobs sur le plateau de jeu..........................................................................	
-	for (int i = 1; i <= NB_SPECIES; ++i)
+	for ( i = 1; i <= NB_SPECIES; ++i)
 	{
 		spawn_list_animal_random(plateau_de_jeu, species[i]);
 		printf("Il y a %d individus de l'espece %d \n", nombre_elts_liste(species[i]), i);
@@ -175,7 +175,7 @@ int main(int argc, char const *argv[])
 void menu(Liste * species[], fisher pecheur, int bonus_tab[]){
 	set_drawing_color(color_WHITE);
 	//draw_line(0,(WINDOW_WIDTH-M3)+M1+20,WINDOW_WIDTH,(WINDOW_WIDTH-M3)+M1);
-	int i,j = 0 ;
+	int i = 0 ;
 	int x_menu = WINDOW_WIDTH-M3+M1+20;
 	int y_menu = WINDOW_HEIGHT ; // x et y nous servirons de curseur pour se deplacer dans la fentre du menu afin de realiser l'affichage correctement et compréhensible
 	draw_line(x_menu,0,x_menu,y_menu);

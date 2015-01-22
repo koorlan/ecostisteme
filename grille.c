@@ -8,9 +8,9 @@ void init_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU])
 {
 	int i=0;
 	int j=0;
-	for (int i = 0; i < TAILLE_PLATEAU ; i++)
+	for (i = 0; i < TAILLE_PLATEAU ; i++)
 	{
-		for (int j = 0; j < TAILLE_PLATEAU ; j++)
+		for (j = 0; j < TAILLE_PLATEAU ; j++)
 		{	
 			plateau[i][j] = create_mob(0); //Mob d'id=0 -> espece vide
 			plateau[i][j]->x = i ;
@@ -26,15 +26,14 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 {
 	int i=0;
 	int j=0;
-	int a;
 	if(mode!=0)
 		{//update_graphics();
 		set_drawing_color(mobs_draw[0]); 
 		affiche_grille(); 
 	}
-	for (int i = 0; i < TAILLE_PLATEAU; ++i)
+	for (i = 0; i < TAILLE_PLATEAU; ++i)
 	{
-		for (int j = 0; j < TAILLE_PLATEAU; ++j)
+		for (j = 0; j < TAILLE_PLATEAU; ++j)
 		{	/*if(plateau[i][j]->id==11)
 				draw_square(i+1, j+1, mobs_draw[11]);*/
 
@@ -110,30 +109,7 @@ void spawn_island(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
 	nb_island--;
 	}
 
-/*	for (int i = 0; i < TAILLE_PLATEAU; i+=3)
-	{
-		radius = 3;
-		
-		for (int j = -radius; j <= radius	; ++j)
-		{
-		for (int k = -radius; k <= radius; ++k)
-			{
-			if(k*k+j*j <= radius*radius ) {
-			/*plateau[i+j][k] = create_mob(12);
-			plateau[i+j][k]->x = i+j;
-			plateau[i+j][k]->y = k; */
-
-/*			plateau[j][i+k] = create_mob(12);
-			plateau[j][i+k]->x = j;
-			plateau[j][i+k]->y = i+k; 
-
-			}
-			
-			}
-		}  */
-
-
-	}
+}
 
 
 /* Reçoit une liste de Mobs déjà générés et leur attribue une place sur la Map */
@@ -141,7 +117,6 @@ void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],List
 {
     int i = 0;
     int j = 0;
-    int tailleliste = nombre_elts_liste(listeMob);
 	    while(listeMob->nxt != NULL) {
 		do {
 		i = rand_a_b(0,TAILLE_PLATEAU);

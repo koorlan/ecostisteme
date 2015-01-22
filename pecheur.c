@@ -195,7 +195,8 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 		update_graphics();
 	}
 	else if(type_materiel=='f')
-	{	int filet[3][3]={0};
+	{	
+		int filet[3][3] = {0} ;
 		printf("peche au filet\n");
 		spawn_filet(pecheur->x, pecheur->y, filet, plateau_de_jeu);
 		draw_filet(pecheur->x, pecheur->y, filet);

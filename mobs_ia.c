@@ -270,8 +270,12 @@ int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU],
 	}
 
 
-	plateau_de_jeu[(cases_libre[randomPick%8])->x][(cases_libre[randomPick%8])->y]->id=(*mob).id;          
-	plateau_de_jeu[(*mob).x][(*mob).y]=create_mob(0);
+    
+
+
+	plateau_de_jeu[(cases_libre[randomPick%8])->x][(cases_libre[randomPick%8])->y]->id=(*mob).id; 
+	
+	plateau_de_jeu[(*mob).x][(*mob).y] = create_mob(0);
 	plateau_de_jeu[(*mob).x][(*mob).y]->x = (*mob).x ;
 	plateau_de_jeu[(*mob).x][(*mob).y]->y = (*mob).y ;
 	mob->x=cases_libre[randomPick%8]->x;
