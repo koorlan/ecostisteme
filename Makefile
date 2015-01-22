@@ -1,5 +1,5 @@
 HEADER_FILES = main.h mob.h grille.h liste.h eco.h libgraphique.h mobs_ia.h pecheur.h pont.h canne.h filet.h bonus.h
-CC = gcc -std=c99 -g -o
+CC = gcc -std=c99 -g -D _BSD_SOURCE -o
 LIB = -lglut -lGLU -lGL -lm
 
 prog: main.o mob.o grille.o liste.o eco.o libgraphique.o mobs_ia.o pecheur.o pont.o canne.o filet.o bonus.o $(HEADER_FILES)

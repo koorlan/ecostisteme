@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
 	start_graphics();
 	FILE *fPtr;
 	fPtr=fopen("records.csv","w");
-
+	FILE *gnuplot = popen("gnuplot -persistent", "w");
 	if (fPtr == NULL)
 	    printf("Error in opening file\n");
 	
@@ -114,6 +114,8 @@ int main(int argc, char const *argv[])
 	do
 	{	printf("WORLD_TIME : %d\n", WORLD_TIME);
 		fprintf(fPtr,"\n%d", WORLD_TIME);
+		fprintf(gnuplot, "%s \n", " load 'draw_graph.gnuplot'");
+		fflush(gnuplot);
 		/***Jeu du pêcheur***/
 		menu(species,pecheur,bonus_tab);
 		//Jeu du pêcheur tous les 10 tours d'écosystème
@@ -151,7 +153,7 @@ int main(int argc, char const *argv[])
 				
 				draw_grid(plateau_de_jeu, bonus_tab[7]);
 				
-					
+				fflush(fPtr);	
 				
 				WORLD_TIME++;
 				//stop=get_key();	
