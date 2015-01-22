@@ -151,6 +151,8 @@ void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],List
 
 		listeMob->mob.x = i;	
 		listeMob->mob.y = j;
+		plateau[i][j]->x = i;
+		plateau[i][j]->y = j;
 		//free(plateau[i][j]);
 		//printf("Spaw: ID : %d " liste->mob.id);
 		plateau[i][j] = &(listeMob->mob);
