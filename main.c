@@ -60,7 +60,8 @@ int main(int argc, char const *argv[])
 	int bonus_tab2[8]={0};
 
 //cheat	
-	pecheur.xp =9999;
+	pecheur.xp =0;
+	pecheur.reserves=300;
 	bonus_tab[6]=1;
 	bonus_tab2[6]=0;
 
@@ -139,12 +140,10 @@ int main(int argc, char const *argv[])
 		}
 		//Jeu du pêcheur tous les 10 tours d'écosystème...............................................................
 		if(WORLD_TIME % 10 == 0 && mode_joueur!=0)
-		{	
+		{	printf("dans main nv res %d\n", pecheur.nv_reserves);
 			menu(species,&pecheur,bonus_tab);
 			update_graphics();
-			printf("bonus : %d\n", bonus_tab[7]);
 			jeu_du_pecheur(&pecheur, plateau_de_jeu, bonus_tab, &mort_pecheur, species);
-			printf("bonus apres jeu pech %d\n", bonus_tab[7]);
 			if(mode_joueur==2){
 				menu(species,&pecheur2,bonus_tab2);	
 				jeu_du_pecheur(&pecheur2, plateau_de_jeu, bonus_tab2, &mort_pecheur2, species);	
@@ -213,7 +212,9 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[]){
 	set_drawing_color(color_BACKGROUND);
 	draw_rectangle_full(x_menu,y_menu-450, WINDOW_WIDTH, y_menu-540);
 	capitaliser_bonus(pecheur, bonus_tab);
-	pecheur->bridge=0;				
+
+	pecheur->bridge=0;
+				
 	//clear_screen();
 	//draw_grid(plateau_de_jeu, bonus_tab[6]);
 
@@ -336,6 +337,8 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[]){
 	draw_line(x_menu,y_menu,WINDOW_WIDTH,y_menu);
 	y_menu -= 12+5;
 	draw_printf(x_menu, y_menu, "Actions : ");
+	set_drawing_color(color_BACKGROUND);
+	draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH, 0); //clear previous type
 
 	//afficher_bonus
 	//draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH,y_menu+12);

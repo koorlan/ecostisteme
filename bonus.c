@@ -59,7 +59,7 @@ void afficher_bonus(int n)
 			set_font(font_HELVETICA_18);
 			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+15, M2+183, "1er pont");
+			draw_printf(WINDOW_WIDTH-M3+M1+20+2, M2+183, "1er pont");
 			set_font(font_HELVETICA_18);
 			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+160, "+50 XP");
 			break;
@@ -123,6 +123,8 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 		bonus_tab[0]=2;
 		afficher_bonus(0);
 	}
+	printf("bonus 1 (pont) vaut %d\npehcuer->bridge vaut %d\n", bonus_tab[1], pecheur->bridge);
+	
 	/*1er pont*/
 	if(bonus_tab[1]==1)
 	{	pecheur->xp=pecheur->xp+50;
@@ -165,7 +167,7 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 
 /*Capitalise bonus des joueurs*/
 void capitaliser_bonus(fisher * pecheur, int bonus_tab[])
-{	printf("bonus tab 0 vaut %d\n", bonus_tab[0]);	
+{	printf("dans bonus nv res %d\n", pecheur->nv_reserves);
 	/*bonus premier poisson*/
 	if(first_fish(pecheur->nv_reserves, bonus_tab[0]))
 		bonus_tab[0]=1;

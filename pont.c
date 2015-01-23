@@ -97,8 +97,8 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * 
 {	int x_pont=0, y_pont=0;
 	int stop;	
 	Mob pont ;
-	set_drawing_color(color_BACKGROUND);
-	draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
+	//set_drawing_color(color_BACKGROUND);
+	//draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
 	spawn_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
 	draw_square(x_pont, y_pont, mobs_draw[11]);
 	place_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau, bonus_tab, mobs_draw[11]);

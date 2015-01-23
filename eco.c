@@ -39,7 +39,7 @@ void draw_square(int x, int y, couleurs coul)
 
 }
 
-
+//useless
 void espece_consideree(int i, couleurs coul)
 {	switch (i)
 	{case 1 :
