@@ -2,7 +2,7 @@
 
 
 /*Affiche un menu à droite du plateau de jeu*/
-void menu(Liste * species[],fisher *pecheur, int bonus_tab[]);
+void menu(Liste * species[],fisher *pecheur, int bonus_tab[], Mob *plateau[][TAILLE_PLATEAU]);
 
 /*Ecran de saisie du mon des joueurs*/
 void saisi_nom_screen(fisher *pecheur);
@@ -19,7 +19,8 @@ int main(int argc, char const *argv[])
 	start_graphics();
 	FILE *fPtr;
 	fPtr=fopen("records.csv","w+");
-	FILE *gnuplot = popen("gnuplot -persistent", "w");
+	FILE *gnuplot = popen("gnuplot", "w");	
+	//FILE *gnuplot = popen("gnuplot -persistent", "w");
 	FILE *fscore;
 	
 	if (fPtr == NULL)
@@ -60,11 +61,12 @@ int main(int argc, char const *argv[])
 	int bonus_tab2[8]={0};
 
 //cheat	
+
 	pecheur.reserves = 5000;
 	//pecheur.xp =9999;
 	bonus_tab[6]=1;
 	bonus_tab2[6]=0;
-
+	bonus_tab[5]=1;
 
 	//choix du mode de jeu : 0 pour le mode ecosysteme seul, 1 pour le mode 1 joueur, 2 pour le mode 2 joueurs
 	int mode_joueur=start_screen();
@@ -131,22 +133,23 @@ int main(int argc, char const *argv[])
 
 
 		/***Jeu du pêcheur***/
+
 		if(!mode_joueur) {
-			menu(species,&pecheur,bonus_tab);
+			menu(species,&pecheur,bonus_tab, plateau_de_jeu);
 			fprintf(gnuplot, "%s \n", " load 'draw_graph.gnuplot'");
 			fflush(gnuplot);
+
 		}
 
 		//Jeu du pêcheur tous les 10 tours d'écosystème...............................................................
 		if(WORLD_TIME % 10 == 0 && mode_joueur!=0)
-		{	
-			menu(species,&pecheur,bonus_tab);
+		{	printf("dans main nv res %d\n", pecheur.nv_reserves);
+			menu(species,&pecheur,bonus_tab, plateau_de_jeu);
 			update_graphics();
-			printf("bonus : %d\n", bonus_tab[7]);
 			jeu_du_pecheur(&pecheur, plateau_de_jeu, bonus_tab, &mort_pecheur, species);
-			printf("bonus apres jeu pech %d\n", bonus_tab[7]);
 			if(mode_joueur==2){
-				menu(species,&pecheur2,bonus_tab2);	
+				menu(species,&pecheur2,bonus_tab2, plateau_de_jeu);	
+				update_graphics();				
 				jeu_du_pecheur(&pecheur2, plateau_de_jeu, bonus_tab2, &mort_pecheur2, species);	
 				update_graphics();
 			}
@@ -202,7 +205,7 @@ int main(int argc, char const *argv[])
 }			
 
 
-void menu(Liste * species[], fisher *pecheur, int bonus_tab[]){
+void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TAILLE_PLATEAU]){
 	set_drawing_color(color_WHITE);
 	//draw_line(0,(WINDOW_WIDTH-M3)+M1+20,WINDOW_WIDTH,(WINDOW_WIDTH-M3)+M1);
 	int i = 0 ;
@@ -212,8 +215,10 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[]){
 	//Application des bonus 
 	set_drawing_color(color_BACKGROUND);
 	draw_rectangle_full(x_menu,y_menu-450, WINDOW_WIDTH, y_menu-540);
-	capitaliser_bonus(pecheur, bonus_tab);
-	pecheur->bridge=0;				
+	capitaliser_bonus(pecheur, bonus_tab, plateau);
+
+	pecheur->bridge=0;
+				
 	//clear_screen();
 	//draw_grid(plateau_de_jeu, bonus_tab[6]);
 
@@ -336,7 +341,9 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[]){
 	draw_line(x_menu,y_menu,WINDOW_WIDTH,y_menu);
 	y_menu -= 12+5;
 	draw_printf(x_menu, y_menu, "Actions : ");
-
+	set_drawing_color(color_BACKGROUND);
+	draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH, 0); //clear previous type
+	printf("y_menu %d\n", y_menu);
 	//afficher_bonus
 	//draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH,y_menu+12);
 

@@ -39,10 +39,10 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 		{	case key_RIGHT:						
 				if(case_valide(p->x+1, p->y, plateau)||p->allo==1)
 				{	//Si le pêcheur était sur le pont 
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12 || p->allo==1))
 						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 					//Si le pecheur était sur le rivage						
-					else
+					else 
 						afficher_point(p->x,p->y,color_BACKGROUND);				
 					(p->x)++;
 				}				
@@ -52,7 +52,9 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 				if(case_valide(p->x-1, p->y, plateau)||p->allo==1)
 				{	
 					//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU)&& (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))					
+
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12 || p->allo==1))					
+
 						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);
@@ -62,7 +64,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 			case key_UP :
 				if(case_valide(p->x, p->y+1, plateau)||p->allo==1)				
 				{	//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12 || p->allo==1))
 						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 
 					else
@@ -73,7 +75,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 			case key_DOWN :
 				if(case_valide(p->x, p->y-1, plateau)||p->allo==1)				
 				{	//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12 || p->allo==1))
 						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);
@@ -120,7 +122,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 /*** 2 -> le pecheur veut-il construire le pont?	***/
 /*** 3 -> avec quel materiel le pecheur veut-il pecher? ***/
 /**********************************************************/
-
+/*
 int choix_action(int n)
 {	int a=0;
 	set_font(font_HELVETICA_12);
@@ -148,33 +150,316 @@ int choix_action(int n)
 	while(a!='o' && a!='n' && a!='f' && a!='c')
 		a=get_key();
 	return a;
-}
-		
+}*/
 
 
-/*Affichage des réserves du pêcheur*/
-void afficher_munitions (fisher * pecheur)
-{	set_drawing_color(color_WHITE);	
-	set_font(font_HELVETICA_12);
-	if(pecheur->nv_reserves!=0)
-	{	draw_printf(M1+200, WINDOW_HEIGHT-M2+20, "Vos derniers exploits a la peche a la ligne vous rapportent %d munitions", pecheur->nv_reserves);
-		pecheur->nv_reserves=0;
-	}
-		
-	draw_printf(M1-30, WINDOW_HEIGHT-M2+20, "RESERVES DISPONIBLES : %d\n", pecheur->reserves);
-	//pecheur->nv_reserves=0; 
+//Actions possibles : peche et consulter aide		
+int affichage_1()
+{	int k=20;
+	int current=1;
+	int select=0;
+
+	set_font(font_HELVETICA_12);	
+	set_drawing_color(color_LIGHTRED);	
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");
+	set_drawing_color(color_WHITE);		
+	//k+=20;
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-k, "Aide");
 	update_graphics();
+
+	while(select!=key_ENTER){
+		select=get_key();
+		set_drawing_color(color_WHITE);
+		switch (select)	
+		{	case key_DOWN:
+					
+					if (current==1)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");	
+						set_drawing_color(color_LIGHTRED); 
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Aide");
+						current ++;
+					}
+					break;	
+			case key_UP:	
+					if (current==2)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Aide");
+						set_drawing_color(color_LIGHTRED);		
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");
+						current--;
+					}
+					break;
+			case key_ENTER :
+					break;
+			default :		
+					set_drawing_color(color_LIGHTGREEN);	
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-80, "Utilisez les fleches puis");
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-100, "ENTREE pour selectionner");
+					break;
+				
+			}
+			update_graphics();
+		}
+
+	
+	return current;
 }
 
+//Actions possibles : peche, construire pont, consulter aide
+int affichage_2()
+{	int current=1;
+	int select=0;
+	int k=20;
 
+	set_font(font_HELVETICA_12);
+	set_drawing_color(color_LIGHTRED);	
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");
+	set_drawing_color(color_WHITE);		
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-k, "Construire le pont");
+	k+=20;
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-k, "Aide");
+	update_graphics();
+		
+	
+	while(select!=key_ENTER){
+		select=get_key();
+		switch (select)	
+		{	set_drawing_color(color_WHITE);
+			case key_DOWN:
+					if (current==1)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");	
+						set_drawing_color(color_LIGHTRED); 
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");
+						current ++;
+					}	
+					else if (current==2)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");	
+						set_drawing_color(color_LIGHTRED);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-40, "Aide");	
+						current ++;
+					}
+					break;	
+				case key_UP:	
+					set_drawing_color(color_WHITE);
+					if (current==3)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-40, "Aide");	
+						set_drawing_color(color_LIGHTRED);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");
+						current --;
+					}
+					else if (current==2)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");
+						set_drawing_color(color_LIGHTRED);		
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");
+						current--;
+					}
+					break;
+				case key_ENTER:
+					break;
+				default :
+							
+					set_drawing_color(color_LIGHTGREEN);	
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-80, "Utilisez les fleches puis");
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-100, "ENTREE pour selectionner");
+					break;
+				
+			}
+			update_graphics();
+		}
+
+	
+	return current;
+}
+
+//Actions possibles : pecher, construire pont, relacher poisson, aide	
+int affichage_3()
+{	int current=1;
+	int select=0;
+	int k=20;
+
+	set_font(font_HELVETICA_12);	
+	set_drawing_color(color_LIGHTRED);	
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");
+	set_drawing_color(color_WHITE);		
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-k, "Construire le pont");
+	k+=20;
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-k, "Relacher un poisson");
+	k+=20;
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-k, "Aide");
+	update_graphics();
+		
+	while(select!=key_ENTER){
+		select=get_key();
+		set_drawing_color(color_WHITE);	
+		switch (select)	
+		{	case key_DOWN:
+					if (current==1)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");	
+						set_drawing_color(color_LIGHTRED); 
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");
+						current ++;
+					}	
+					else if (current==2)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");	
+						set_drawing_color(color_LIGHTRED);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-40, "Relacher un poisson");
+						current ++;
+					}
+				
+					else if (current==3)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-40, "Relacher un poisson");
+						set_drawing_color(color_LIGHTRED);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-60, "Aide");
+						current ++;
+					}
+					break;	
+				case key_UP:	
+					if (current==4)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-60, "Aide");	
+						set_drawing_color(color_LIGHTRED); 
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-40, "Relacher un poisson");
+						current --;
+					}
+					else if (current==3)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-40, "Relacher un poisson");
+						set_drawing_color(color_LIGHTRED);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");
+						current --;
+					}
+					else if (current==2)
+					{	set_drawing_color(color_WHITE);	
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Construire le pont");
+						set_drawing_color(color_LIGHTRED);		
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Pecher");
+						current--;
+					}
+					break;
+				case key_ENTER:	
+					break;
+				default :			
+					set_drawing_color(color_LIGHTGREEN);	
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-80, "Utilisez les fleches puis");
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-100, "ENTREE pour selectionner");
+					break;
+				
+			}
+			update_graphics();
+		}
+
+	
+	return current;
+}
+
+int affichage_4()
+{	int k=20;
+	int current=1;
+	int select=0;
+
+	set_font(font_HELVETICA_12);	
+	set_drawing_color(color_LIGHTRED);	
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Canne a peche");
+	set_drawing_color(color_WHITE);		
+	//k+=20;
+	draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-k, "Filet");
+	update_graphics();
+
+	while(select!=key_ENTER){
+		select=get_key();
+		set_drawing_color(color_WHITE);
+		switch (select)	
+		{	case key_DOWN:
+					
+					if (current==1)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Canne a peche");	
+						set_drawing_color(color_LIGHTRED); 
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Filet");
+						current ++;
+					}
+					break;	
+			case key_UP:	
+					if (current==2)
+					{	set_drawing_color(color_WHITE);
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-20, "Filet");
+						set_drawing_color(color_LIGHTRED);		
+						draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90, "Canne a peche");
+						current--;
+					}
+					break;
+			case key_ENTER :
+					break;
+			default :		
+					set_drawing_color(color_LIGHTGREEN);	
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-80, "Utilisez les fleches puis");
+					draw_string(WINDOW_WIDTH-M3+M1+20+2, M2+90-100, "ENTREE pour selectionner");
+					break;
+				
+			}
+			update_graphics();
+		}
+
+	
+	return current;
+}
+
+int choix_action(int n, fisher * pecheur)
+{	
+	int current=1;
+	
+	if(n==1)	
+	{	if(pecheur->reserves==0)
+		{	current=affichage_1();
+			if(current==2)
+				return 'a'; //aide 
+		}	
+		else if(pecheur->nv_reserves==0)	
+		{	current=affichage_2();
+			if (current==2)	
+				return 'b'; //pont (bridge)
+			else if (current==3)
+				return 'a'; //aide 
+		}		
+		else
+		{	current=affichage_3();
+			if(current==3)
+				return 'r'; //relacher poisson
+			if(current==4)
+				return 'a'; //aide
+		}
+		if(current==2)
+			return 'b'; //construction du pont
+		return'c'; //pêche à la canne 
+	}
+	if(n==2)
+	{	set_drawing_color(color_BACKGROUND);
+		draw_rectangle_full(WINDOW_WIDTH-M3+M1+22,131,WINDOW_WIDTH, 0);
+		current=affichage_4();
+		if(current==2)
+			return 'f';
+		return 'c';
+	}		
+
+}
+		
 
 /*Gestion des fonctions relatives à la pêche*/
 void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel, int bonus) 
 {
 	int x_canne=0, y_canne=0;
-	int peche;	
+	int peche;
+	pecheur->nv_reserves=0;	
 	set_drawing_color(color_WHITE);
-	draw_string(M1, M2/2, "Appuyez sur entree pour pecher\n");
+	//draw_string(M1, M2/2, "Appuyez sur entree pour pecher\n");
 	if(type_materiel=='c')
 	{	spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne, plateau_de_jeu);
 		printf("%d, %d\n", x_canne, y_canne);
@@ -197,6 +482,7 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 	else if(type_materiel=='f')
 	{	
 		int filet[3][3] = {0} ;
+				
 		printf("peche au filet\n");
 		spawn_filet(pecheur->x, pecheur->y, filet, plateau_de_jeu);
 		draw_filet(pecheur->x, pecheur->y, filet);
@@ -237,7 +523,7 @@ void plouf_soft_version(fisher *pecheur)
 	pecheur->y=0;	
 	set_font(font_HELVETICA_12);
 	draw_printf(M1+150, WINDOW_HEIGHT-M2+20, "Vous etes tombe a l'eau au tour precedent, vos munitions/bonus sont perdus");
-	afficher_munitions(pecheur); 
+	//afficher_munitions(pecheur); 
 	update_graphics();
 
 }
@@ -249,7 +535,7 @@ int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste *
 	char * nom;
 	set_drawing_color(color_BACKGROUND);
 	draw_printf(M1+200, WINDOW_HEIGHT-M2+20, "Vos derniers exploits a la peche a la ligne vous rapportent %d munitions", pecheur->nv_reserves);
-	draw_printf(M1-30, WINDOW_HEIGHT-M2+20, "RESERVES DISPONIBLES : %d\n", pecheur->reserves);
+	//draw_printf(M1-30, WINDOW_HEIGHT-M2+20, "RESERVES DISPONIBLES : %d\n", pecheur->reserves);
 	set_drawing_color(color_LIGHTRED);	
 	set_font(font_HELVETICA_18);	
 	draw_printf(M1, WINDOW_HEIGHT-M2+20, "Vous etes tombe a l'eau, sortez de l'eau");
@@ -313,50 +599,6 @@ int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste *
 	update_graphics();
 	
 }
-
-//void clear_datas(fisher pecheur)
-	
-
-/*
-void final_screen (int a)
-{	set_drawing_color(color_BLACK);	
-	set_font(font_HELVETICA_18);
-	char * nom;
-	int stop;	
-	switch (a)
-	{		case 6 :
-			{	nom="pyranha";
-				break;
-			}
-			case 7 :
-			{	nom="requin";
-				break;
-			}
-			case 8 :
-			{	nom="orque";
-				break;
-			}
-			default :	
-			{	nom="inattendu";
-				break;
-			}
-			
-	}
-		draw_printf(WINDOW_WIDTH/2-250, WINDOW_HEIGHT/2+40, "Vous venez de vous faire manger par une espece de type %s\n", nom);
-		draw_printf(WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2, "Voulez-vous continuer ?\n");
-		set_font(font_HELVETICA_18);			
-		set_drawing_color(color_LIGHTRED);
-		draw_printf(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2-40, "(O)");
-		set_drawing_color(color_BLACK);
-		draw_printf(WINDOW_WIDTH/2-22, WINDOW_HEIGHT/2-40, "ui / ");
-		set_drawing_color(color_LIGHTRED);
-		draw_printf(WINDOW_WIDTH/2+5, WINDOW_HEIGHT/2-40, "(N)"); 
-		set_drawing_color(color_BLACK);
-		draw_printf(WINDOW_WIDTH/2+31, WINDOW_HEIGHT/2-40, "on");
-		update_graphics();		
-		stop=get_key();	
-		stop=get_key();
-}*/
 
 void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul)
 {	int a=0;	
@@ -426,7 +668,7 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 	}
 	
 	update_graphics();
-
+	
 }
 
 void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int bonus_tab[])
@@ -456,7 +698,7 @@ void relacher_poisson(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, 
 	plateau_de_jeu[x_curseur-1][y_curseur-1] = newMob;
 	pecheur->id_proie=0;
 	pecheur->ecolo++;
-	//pecheur->nv_reserves=0;	
+	pecheur->nv_reserves=0;	
 
 }
 
@@ -484,49 +726,41 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 	}	
 	//Le pêcheur effectue un tour de jeu normal	
 	else if (!bonus_tab[7])
-	{	/*capitaliser_bonus(pecheur, bonus_tab);
-		pecheur->bridge=0;				
-		//clear_screen();
-		draw_grid(plateau_de_jeu, bonus_tab[6]);
-		afficher_point(pecheur->x, pecheur->y, color_RED);
-		appliquer_bonus(pecheur, bonus_tab);*/
-		//printf("pont construit %d\n", pecheur->bridge);				
-		//afficher_munitions(pecheur);
+	{	
 		deplacement_pecheur(pecheur, color_RED, plateau_de_jeu);
-		//possibilité de pêcher 		
-		a=choix_action(1);
-		if(a=='o')
-		{	//choix du materiel de peche (canne ou filet)
-			//si le filet n'est pas débloqué, la canne à pêche est choisie par défaut 						
-			if(bonus_tab[5]!=0)					
-			{	
-				a=choix_action(3);
-				set_drawing_color(color_BACKGROUND);
-				draw_string(M1, M2/2, "Choisissez votre materiel de peche? (c)anne a peche (f)ilet\n");
-			}
-			else
-			{	a='c';	
-				set_drawing_color(color_BACKGROUND);
-				draw_string(M1, M2/2, "Voulez-vous pecher? (o)ui (n)on\n");	
-			}
+//	
+
+	/***début action pecheur***/
+		 		
+		a=choix_action(1, pecheur);
+		if(a=='c') //peche
+		{		
+			if(bonus_tab[5]) //filet
+				a=choix_action(2, pecheur);
 			que_la_peche_commence(plateau_de_jeu, pecheur, species, a, bonus_tab[4]);
-		}	
-		else if(pecheur->reserves!=0)
-		{	//possibilité de construire le pont	
-			a=choix_action(2);
-			if(a=='o')
-				construire_pont(plateau_de_jeu, pecheur, species, bonus_tab);			
-					
-			//possibilité de rejeter un poisson dans l'eau 
-			else if(pecheur->id_proie!=0)
-			{	a=choix_action(4);		
-				if(a=='o')
-					relacher_poisson(plateau_de_jeu, pecheur, species, bonus_tab);
-			}				
+
 		}
+		else if(a=='b') //pont
+		{	
+			pecheur->nv_reserves=0;			
+			construire_pont(plateau_de_jeu, pecheur, species, bonus_tab);			
+		}			
+		else if (a=='a') //aide 
+		{	
+			//afficher_aide();
+
+		}	
+		else if (a=='r') //relacher poisson
+		{
+			relacher_poisson(plateau_de_jeu, pecheur, species, bonus_tab);
+			pecheur->nv_reserves=0;
+		}
+		/***fin ici***/
+
+	}
 	
 					
-	}
+	
 	//capitaliser_bonus(pecheur, bonus_tab);
 		
 }

@@ -57,24 +57,24 @@ Liste * destroy_mob (Mob mob, Liste * list_of_specific_species )
 {      
 	if(list_of_specific_species->nxt == NULL)
         	return list_of_specific_species;
-    if(list_of_specific_species->mob.x == mob.x && list_of_specific_species->mob.y == mob.y)
+    	if(list_of_specific_species->mob.x == mob.x && list_of_specific_species->mob.y == mob.y)
 	{
-       	Liste * tmp=malloc(sizeof(Liste));
+       		Liste * tmp=malloc(sizeof(Liste));
 		tmp=list_of_specific_species->nxt;
  //       	Liste * clean=malloc(sizeof(Liste));
 //		clean=list_of_specific_species;
 		//if(tmp==NULL/*||clean==NULL*/)
 		//	exit(EXIT_FAILURE);
 
-		free(list_of_specific_species);
+		//free(list_of_specific_species);
 
 		//libération mémoire 		
 	//free(clean);
 //		clean=NULL;
-       	return tmp;
+       		return tmp;
     	} 
-    list_of_specific_species->nxt = destroy_mob (mob,list_of_specific_species->nxt);
-    return list_of_specific_species;
+    	list_of_specific_species->nxt = destroy_mob (mob,list_of_specific_species->nxt);
+    	return list_of_specific_species;
     	    
 
 }

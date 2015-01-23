@@ -39,8 +39,8 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 
 			//mode aveugle
 			if(mode==0)
-			{	if(plateau[i][j]->id==11)
-					draw_square(i+1, j+1, mobs_draw[11]);
+			{	if((plateau[i][j]->id==11)||(plateau[i][j]->id==12))
+					draw_square(i+1, j+1, mobs_draw[plateau[i][j]->id]);
 				else
 				{	
 					draw_square(i+1,j+1, (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8));

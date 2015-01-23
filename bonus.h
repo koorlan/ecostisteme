@@ -20,7 +20,7 @@ int fish(int nv_reserves, int bonus);
 
 int bridge(int bridge, int bonus);
 
-int island(fisher * pecheur);
+int island(fisher * pecheur, Mob * plateau[][TAILLE_PLATEAU]);
 
 int vision(fisher *pecheur, int bonus);
 
@@ -30,6 +30,6 @@ void afficher_bonus(int n);
 
 void appliquer_bonus(fisher * pecheur, int bonus_tab[]);
 
-void capitaliser_bonus(fisher * pecheur, int bonus_tab[]);
+void capitaliser_bonus(fisher * pecheur, int bonus_tab[], Mob * plateau[][TAILLE_PLATEAU]);
 
 #endif
