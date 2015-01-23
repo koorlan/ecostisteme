@@ -28,28 +28,26 @@ int case_valide_pont(int x_pont, int y_pont, int x_pecheur, int y_pecheur, Mob *
 }
 
 //Selection par le joueur de la position du pont
-void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul)
+int place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul)
 
 {		
 	int indice = 0;
 	Mob * cases_libre[8] = { NULL } ;
-	int i,j,randomPick;
-	randomPick = 0;
-	for(j= -1; j<=1; j++)
-	{	for(i=-1; i<=1; i++)
-		{	
-        	if( (((x_pecheur+i>0) && (y_pecheur+j>0))&&((x_pecheur+i<=TAILLE_PLATEAU) && (y_pecheur+j<=TAILLE_PLATEAU))) ){ //case hors champ	
-            	if( plateau[x_pecheur+i-1][y_pecheur+j-1]->id < 10){
-						cases_libre[indice] = plateau[x_pecheur+i-1][y_pecheur+j-1];
+	int run_cell_in_order[2][8] ={ {-1,0,1,1,1,0,-1,-1},
+								   {-1,-1,-1,0,1,1,1,0} };												
+	int i;
+	for(i= 0; i<8; i++)
+	{
+        	if( (((x_pecheur+run_cell_in_order[0][i]>0) && (y_pecheur+run_cell_in_order[1][i]>0))&&((x_pecheur+run_cell_in_order[0][i]<=TAILLE_PLATEAU) && (y_pecheur+run_cell_in_order[1][i]<=TAILLE_PLATEAU))) ){ //case hors champ	
+            	if( plateau[x_pecheur+run_cell_in_order[0][i]-1][y_pecheur+run_cell_in_order[1][i]-1]->id < 10){
+						cases_libre[indice] = plateau[x_pecheur+run_cell_in_order[0][i]-1][y_pecheur+run_cell_in_order[1][i]-1];
 						indice++;
 					}
 			}
-		}
 	}
 	
 	if (indice == 0)
-		return;
-	printf("Xpecheur = %d - %d",x_pecheur,y_pecheur);
+		return 0;
 	int curseur = 0;
 	int pont=0;
 	while(pont!=key_ENTER)
@@ -87,7 +85,8 @@ void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * p
 		update_graphics();
 		pont=get_key();		
 	}
-	printf("J'ai placer mon pont en %d %d\n",*x_pont,*y_pont );
+	
+	return 1;
 }
 
 
@@ -96,12 +95,7 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * 
 {	int x_pont=0, y_pont=0;
 	int stop;	
 	Mob pont ;
-	//set_drawing_color(color_BACKGROUND);
-	//draw_string(M1, M2/2, "Voulez-vous construire le pont? (o)ui (n)on\n");
-	spawn_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau);
-	draw_square(x_pont, y_pont, mobs_draw[11]);
-
-	place_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau, bonus_tab, mobs_draw[11]);
+	if (place_pont(pecheur->x, pecheur->y, &x_pont, &y_pont, plateau, bonus_tab, mobs_draw[11]) ){
 	update_graphics();
 	
 	//On détruit l'éspèce présente dans la case ou le pont a été construit	
@@ -116,6 +110,7 @@ void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * 
 	plateau[x_pont][y_pont]->dernier_repas=0;
 	plateau[x_pont][y_pont]->derniere_reproduction=0;
 	pecheur->reserves--;
-	pecheur->bridge++;	
+	pecheur->bridge++;
+	}	
 }
 
