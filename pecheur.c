@@ -52,7 +52,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 				if(case_valide(p->x-1, p->y, plateau)||p->allo==1)
 				{	
 					//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
-					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && plateau[p->x-1][p->y-1]->id==11)					
+					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU)&& (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))					
 						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);
@@ -74,7 +74,7 @@ void deplacement_pecheur(fisher *p, couleurs coul, Mob * plateau[][TAILLE_PLATEA
 				if(case_valide(p->x, p->y-1, plateau)||p->allo==1)				
 				{	//if(p->x>=1 && p->y>=1 && plateau[p->x-1][p->y-1]->id==11)
 					if((p->x>=1 && p->x<=TAILLE_PLATEAU) && (p->y>=1 && p->y<=TAILLE_PLATEAU) && (plateau[p->x-1][p->y-1]->id==11 || plateau[p->x-1][p->y-1]->id==12))
-						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id==11]);
+						afficher_point(p->x,p->y,mobs_draw[plateau[p->x-1][p->y-1]->id]);
 					else
 						afficher_point(p->x,p->y,color_BACKGROUND);
 					(p->y)--;

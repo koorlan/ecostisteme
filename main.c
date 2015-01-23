@@ -60,7 +60,8 @@ int main(int argc, char const *argv[])
 	int bonus_tab2[8]={0};
 
 //cheat	
-	pecheur.xp =9999;
+	pecheur.reserves = 5000;
+	//pecheur.xp =9999;
 	bonus_tab[6]=1;
 	bonus_tab2[6]=0;
 
@@ -96,8 +97,6 @@ int main(int argc, char const *argv[])
 		}
 	}
 
-	
-
 
 
 	/***Initialisation des espèces***/
@@ -117,26 +116,27 @@ int main(int argc, char const *argv[])
 		printf("Il y a %d individus de l'espece %d \n", nombre_elts_liste(species[i]), i);
 		fprintf(fPtr,",%d",i);
 	}
+
 	draw_grid(plateau_de_jeu, bonus_tab[6]);
 	update_graphics(); 
 	Mob * ptr=malloc(sizeof(Mob));
 	Liste * elt=malloc(sizeof(Liste));
 	WORLD_TIME=0;
-	
-
 
 	do
 	{	printf("WORLD_TIME : %d\n", WORLD_TIME);
 		fprintf(fPtr,"\n%d", WORLD_TIME);
-		fprintf(gnuplot, "%s \n", " load 'draw_graph.gnuplot'");
-		fflush(gnuplot);
+		
 
 
 
 		/***Jeu du pêcheur***/
-		if(!mode_joueur)
-		{	menu(species,&pecheur,bonus_tab);
+		if(!mode_joueur) {
+			menu(species,&pecheur,bonus_tab);
+			fprintf(gnuplot, "%s \n", " load 'draw_graph.gnuplot'");
+			fflush(gnuplot);
 		}
+
 		//Jeu du pêcheur tous les 10 tours d'écosystème...............................................................
 		if(WORLD_TIME % 10 == 0 && mode_joueur!=0)
 		{	
