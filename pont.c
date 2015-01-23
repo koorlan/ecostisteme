@@ -27,70 +27,70 @@ int case_valide_pont(int x_pont, int y_pont, int x_pecheur, int y_pecheur, Mob *
 		
 }
 
-
-/*Selection par le joueur de la position du pont*/
+//Selection par le joueur de la position du pont
 void place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul)
-{	int pont=0;
-	while(pont!=key_ENTER)
-	{	switch (pont)
-		{	case key_RIGHT:						
-				if(case_valide_pont(*x_pont+1, *y_pont, x_pecheur, y_pecheur, plateau))
-				{	
-					if(bonus_tab[6])
-					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
-						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}					
-					else
-						draw_square(*x_pont, *y_pont,color_BLUE);
-									
-					(*x_pont)++;
-				}				
-				break;
-		
-			case key_LEFT : 
-				if(case_valide_pont(*x_pont-1, *y_pont, x_pecheur, y_pecheur, plateau))
-				{	if(bonus_tab[6])
-					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
-						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
-					else
-					{	
-						draw_square(*x_pont, *y_pont, color_BLUE);
-					}
-					
-					(*x_pont)--;
-				}			
-				break;
-			case key_UP :
-				if(case_valide_pont(*x_pont, *y_pont+1, x_pecheur, y_pecheur, plateau))				
-				{	if(bonus_tab[6])
-					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
-						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
-					else
-						draw_square(*x_pont, *y_pont, color_BLUE);
-					
-					(*y_pont)++;
-				}				
-				break;
-			case key_DOWN :
-				if(case_valide_pont(*x_pont, *y_pont-1, x_pecheur, y_pecheur, plateau))				
-				{	if(bonus_tab[6])
-					{	draw_square(*x_pont, *y_pont, mobs_draw[0]);
-						afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);					}
-					else
-						draw_square(*x_pont, *y_pont, color_BLUE);
-				
-					(*y_pont)--;
-				}				
-				break;
-			default :
-				break;
-		}
-		draw_square(*x_pont, *y_pont, mobs_draw[11]); 
-		update_graphics();
-		pont=get_key();		
-	}
+{              
+            int indice = 0;
+            Mob * cases_libre[8] = { NULL } ;
+            int i,j,randomPick;
+            randomPick = 0;
+            for(j= -1; j<=1; j++)
+            {       for(i=-1; i<=1; i++)
+                    {      
+                    if( (((x_pecheur+i>0) && (y_pecheur+j>0))&&((x_pecheur+i<TAILLE_PLATEAU) && (y_pecheur+j<TAILLE_PLATEAU))) ){ //case hors champ
+                    if( plateau[x_pecheur+i-1][y_pecheur+j-1]->id < 10){
+                                                    cases_libre[indice] = plateau[x_pecheur+i][y_pecheur+j];
+                                                    indice++;
+                                            }
+                            }
+                    }
+            }
+           
+            if (indice == 0)
+                    return;
+     
+            for (int i = 0; i < indice; ++i)
+            {
+                    printf("case %d - %d\n", cases_libre[i]->x,cases_libre[i]->y);
+            }
+            int curseur = 0;
+            int pont=0;
+            while(pont!=key_ENTER)
+            {      
+                    switch (pont)
+                    {       case key_RIGHT:                                                                        
+                                            curseur++;
+                                            if(bonus_tab[6]==0)
+                                                    draw_square(*x_pont, *y_pont, (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8) );
+                                                                                           
+                                            else{
+                                                    draw_square(*x_pont, *y_pont, mobs_draw[0]);
+                                                    afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);
+                                            }      
+                                    break;
+                            case key_LEFT :
+                                            curseur--;
+                                            if(bonus_tab[6]==0)
+                                                    draw_square(*x_pont, *y_pont, (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8) );
+                                                                                           
+                                            else{
+                                                    draw_square(*x_pont, *y_pont, mobs_draw[0]);
+                                                    afficher_point(*x_pont, *y_pont,  mobs_draw[plateau[*x_pont-1][*y_pont-1]->id]);
+                                            }      
+     
+                                    break;         
+                            default :
+                                    break;
+                    }
+                    *x_pont = cases_libre[curseur%indice]->x;
+                    *y_pont = cases_libre[curseur%indice]->y;
+                   
+     
+                    draw_square(*x_pont, *y_pont, mobs_draw[11]);
+                    update_graphics();
+                    pont=get_key();        
+            }
 }
-
-
 
 /*Gestion des fonctions relatives à la construction du pont*/
 void construire_pont(Mob * plateau[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int bonus_tab[])

@@ -27,8 +27,8 @@ int bridge(int bridge, int bonus)
 }
 
 /*Bonus découverte de l'île*/
-int island(fisher * pecheur)
-{	return (pecheur->x==34 && pecheur->y==34);
+int island(fisher * pecheur, Mob * plateau[][TAILLE_PLATEAU])
+{	return (((pecheur->x>=1 && pecheur->x<=TAILLE_PLATEAU) && (pecheur->y>=1 && pecheur->y<=TAILLE_PLATEAU))&&(plateau[pecheur->x-1][pecheur->y-1]->id==12));
 }
 
 /*Bonus 300 xp*/ 
@@ -88,14 +88,14 @@ void afficher_bonus(int n)
 			draw_printf(WINDOW_WIDTH-M3+M1+20, M2+160, "+50 XP");
 			break;
 	
-		case 5 : //Affichage a fix !
+		case 5 : 
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+100, M2+200, "BONUS");
+			draw_printf(WINDOW_WIDTH-M3+M1+120, M2+200, "BONUS");
 			set_font(font_HELVETICA_12);
-			draw_printf(WINDOW_WIDTH-M1+104, M2+183, "ile deserte");
+			draw_printf(WINDOW_WIDTH-M3+M1+125, M2+183, "ile deserte");
+			draw_printf(WINDOW_WIDTH-M3+M1+140, M2+170, "FILET");
 			set_font(font_HELVETICA_18);
-			draw_printf(WINDOW_WIDTH-M1+113, M2+160, "Filet");
-			draw_printf(WINDOW_WIDTH-M3+M1+102, M2+145, "+200 XP");
+			draw_printf(WINDOW_WIDTH-M3+M1+120, M2+150, "+200 XP");
 			break;
 		case 6 : 
 			set_font(font_HELVETICA_18);
@@ -166,7 +166,7 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 }
 
 /*Capitalise bonus des joueurs*/
-void capitaliser_bonus(fisher * pecheur, int bonus_tab[])
+void capitaliser_bonus(fisher * pecheur, int bonus_tab[], Mob * plateau[][TAILLE_PLATEAU])
 {	printf("dans bonus nv res %d\n", pecheur->nv_reserves);
 	/*bonus premier poisson*/
 	if(first_fish(pecheur->nv_reserves, bonus_tab[0]))
@@ -189,7 +189,7 @@ void capitaliser_bonus(fisher * pecheur, int bonus_tab[])
 		bonus_tab[4]=1;
 	
 	/*bonus île, débloque filet*/
-	if(island(pecheur))
+	if(island(pecheur, plateau))
 		bonus_tab[5]=1;
 
 	/*bonus vision*/
