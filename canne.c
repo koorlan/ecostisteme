@@ -30,7 +30,7 @@ void draw_canne(int x_pecheur, int y_pecheur, int x_canne, int y_canne, couleurs
 }	
 
 /*Déplacement de la canne à pêche*/
-int place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob * plateau[][TAILLE_PLATEAU])
+int place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob * plateau[][TAILLE_PLATEAU],int bonus_tab[])
 {	
 	int indice = 0;
 	Mob * cases_libre[8] = { NULL } ;
@@ -56,15 +56,20 @@ int place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne
 		switch (peche)
 		{	case key_RIGHT:										
 					curseur++;
-					draw_canne(x_pecheur, y_pecheur, *x_canne+1, *y_canne+1, color_WHITE);	
 				break;
 			case key_LEFT : 
 					curseur--;
-					draw_canne(x_pecheur, y_pecheur, *x_canne+1, *y_canne+1, color_WHITE);
 				break;		
 			default :
 				break;
 		}
+		//**On affiche ce qu'il y avait avant la canne**
+		draw_grid(plateau, bonus_tab[6]);
+		afficher_point(x_pecheur,y_pecheur,color_RED);
+		
+		
+
+		afficher_point(*x_canne+1, *y_canne+1,  mobs_draw[plateau[*x_canne][*y_canne]->id]);
 		*x_canne = cases_libre[abs(curseur%indice)]->x;
 		*y_canne = cases_libre[abs(curseur%indice)]->y;
 		

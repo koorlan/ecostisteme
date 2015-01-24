@@ -30,7 +30,7 @@ int choix_action(int n, fisher * pecheur);
 
 void afficher_munitions(fisher * pecheur);
 
-void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel, int bonus);
+void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel, int bonus_tab[]);
 
 void plouf_soft_version(fisher *pecheur);
 

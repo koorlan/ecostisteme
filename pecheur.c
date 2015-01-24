@@ -453,7 +453,7 @@ int choix_action(int n, fisher * pecheur)
 		
 
 /*Gestion des fonctions relatives à la pêche*/
-void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel, int bonus) 
+void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pecheur, Liste * species[], int type_materiel, int bonus_tab[]) 
 {
 	int x_canne=0, y_canne=0;
 	int peche;
@@ -465,9 +465,9 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 		//printf("%d, %d\n", x_canne, y_canne);
 		//draw_canne((pecheur->x), (pecheur->y), x_canne, y_canne, color_BLACK);	
 		update_graphics();		
-		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne,plateau_de_jeu);	
+		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne,plateau_de_jeu,bonus_tab);	
 		printf("Ma canne est en %d - %d \n",x_canne,y_canne );
-		if(eat_mat[10][plateau_de_jeu[x_canne][y_canne]->id]==1||(plateau_de_jeu[x_canne][y_canne]->id==5 && bonus==2))
+		if(eat_mat[10][plateau_de_jeu[x_canne][y_canne]->id]==1||(plateau_de_jeu[x_canne][y_canne]->id==5 && bonus_tab[4]==2))
 		{	pecheur->id_proie=plateau_de_jeu[x_canne][y_canne]->id;
 			pecheur->reserves = pecheur->reserves + taille[plateau_de_jeu[x_canne][y_canne]->id];		
 			pecheur->nv_reserves=taille[plateau_de_jeu[x_canne][y_canne]->id];
@@ -738,7 +738,7 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 		{		
 			if(bonus_tab[5]) //filet
 				a=choix_action(2, pecheur);
-			que_la_peche_commence(plateau_de_jeu, pecheur, species, a, bonus_tab[4]);
+			que_la_peche_commence(plateau_de_jeu, pecheur, species, a, bonus_tab);
 
 		}
 		else if(a=='b') //pont
