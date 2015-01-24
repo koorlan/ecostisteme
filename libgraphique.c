@@ -318,9 +318,10 @@ void start_graphics() {
     GRAPHIC = 1;
   } else {
     fprintf(stderr, "! start_graphics : Une fenetre graphique est deja active.\n");
-  }
+  } 
 }
 
+	
 /**
  * Actualise l'affichage
  */
@@ -615,3 +616,7 @@ void demo_afficher_caracteres(int x, int y) {
   draw_string(x,y-15,"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
   draw_string(x+75,y-30,"1234567890");
 }
+
+
+
+

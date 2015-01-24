@@ -72,16 +72,6 @@ static const int gestation[]={0, 1, 2, 3, 2, 0, 1, 1, 2, 10, 0, 0, 0};
 static const int frequence_reproduction[]={10000, 0, 3, 3, 2, 10000, 1, 10, 2, 25, 10000, 10000, 10000};
 
 
-/*
-static const int duree_survie[]={10000, 10000, 5, 6, 1, 10000, 3, 25, 100, 100, 10000, 10000};
-static const int taille[]={-1, 2, 1, 2, 3, 10000, 2, 4, 4, 5, 3, 2};
-static const int taille_du_bide[]={0, 0, 4, 3, 4, 5, 4, 8, 4, 60, 0, 0};
-static const int saut_max[]={0, 0, 1, 2, 2, 0, 3, 2, 2, 2, 1, 0};
-static const int metabolisme[]={0, 0, 1, 1, 1, 0, 1, 2, 2, 2, 0, 0};
-static const int gestation[]={0, 2, 2, 2, 2, 0, 1, 2, 2, 10, 0, 0};
-static const int frequence_reproduction[]={10000, 0, 1, 8, 51, 10000, 35, 4, 2, 25, 10000, 10000};*/
-
-
 
 static const char *mobs_name[20] = {"Vide","Plancton","Corail","Bar","Thon","Pollution","Pyranha","Requin","Orque","Baleine","Pecheur","Pont","Ile"};
 
@@ -114,20 +104,6 @@ static const int eat_mat[13][13]={{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 								  {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 
 								  {0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0}, 
 								  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
-/* Initialisation de la matrice de prédation 
-	eat_mat[0][]={0}; //espece vide ne mange rien
-	eat_mat[1]={0}; // plancton ne mange rien 
-	eat_mat[2]={1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // corail
-	eat_mat[3]={1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}; // bar
- 	eat_mat[4]={1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //thon
-	eat_mat[5]={1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //pollution
-	eat_mat[6]={1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0}; //pyranha
-	eat_mat[7]={1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0}; //requin
-	eat_mat[8]={1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0}; //orque 
-	eat_mat[9]={1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}; //baleine 
-	eat_mat[10]={0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0}; //pêcheur
-	eat_mat[11]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //pont */ 
 
 
 int rand_a_b(int a, int b);

@@ -1,5 +1,5 @@
 #include "eco.h"
-#include "main.h" 
+
 
 /**********************************************************************/
 /*** 		NB, à propos des systèmes de coordonnées            ***/
@@ -98,9 +98,6 @@ int start_screen ()
 	draw_printf(WINDOW_WIDTH/2-280, WINDOW_HEIGHT/2, "Ecosysteme seul");
 	set_drawing_color(color_WHITE);
 	draw_printf(WINDOW_WIDTH/2-105, WINDOW_HEIGHT/2, "Mode 1 joueur");
-	//set_drawing_color(color_LIGHTRED);
-	//draw_printf(WINDOW_WIDTH/2+5, WINDOW_HEIGHT/2-40, "(N)"); 
-	//set_drawing_color(color_BLACK);
 	draw_printf(WINDOW_WIDTH/2+55, WINDOW_HEIGHT/2, "Mode 2 joueurs");
 	update_graphics();
 	while(select!=key_ENTER){
@@ -152,6 +149,103 @@ int start_screen ()
 	}
 	return current-1;
 }
+void titre()
+{	set_font(font_HELVETICA_18);
+	set_drawing_color(mobs_draw[0]);
+}
+
+void sous_titre()
+{	set_font(font_HELVETICA_18);
+	set_drawing_color(mobs_draw[12]);
+}
+
+void texte()
+{	set_drawing_color(color_WHITE);
+	set_font(font_HELVETICA_12);
+}
+
+void aide()
+{	int stop;
+	set_drawing_color(color_BACKGROUND);
+	draw_rectangle_full(0,0,WINDOW_WIDTH-M3+M1+18,WINDOW_HEIGHT);
+
+
+	titre();	
+	draw_printf(280, 650, "Besoin d'un peu d'aide ?");
+	sous_titre();	
+	draw_printf(20, 610, "Deplacement hors de l'eau");	
+	texte();	
+	draw_printf(20, 590, "Le deplacement s'effectue avec les fleches (H, B, G, D). Pour finir le deplacement appuyez sur ENTREE. Vous pouvez vous");
+	draw_printf(20, 570, "deplacer autour du lac, sur le pont et sur l'ile.");
+	sous_titre();	
+	draw_printf(20, 530, "Deplacement dans l'eau");
+	texte();
+	draw_printf(20, 510, "Lorsque vous tombez dans l'eau il faut rejoindre le rivage, le pont ou l'ile. Vous perdrez toutes vos reserves. Attention, si vous");
+	draw_printf(20, 490, "croisez un predateur vous mourrez.");
+	sous_titre();
+	draw_printf(20, 450, "Actions possibles");
+	texte();
+	draw_printf(20, 430, "Apres le deplacement, l'onglet 'actions disponibles' du menu vous indique ce que vous pouvez faire (peche, construction du");
+	draw_printf(20, 410, "pont...). Utilisez les fleches (H, B) pour naviguer entre les differents choix puis tapez ENTREE pour valider."); 
+	sous_titre();	
+	draw_printf(20, 370, "Experience et bonus");
+	texte();
+	draw_printf(20, 350, "Au cours de la partie vous devrez capitaliser de l'experience, vous la gagnerez en debloquant les bonus suivants :");
+	draw_printf(50, 330, "- Bonus 1er poisson peche / Bonus 1er pont construit : 50 XP chacun");
+	draw_printf(50, 310, "- Bonus poisson peche / Bonus pont construit : 25 XP chacun");
+	draw_printf(50, 290, "- Bonus ile deserte : 200 XP attribues si vous atteignez l'ile");
+	draw_printf(20, 270, "Il existe aussi des bonus qui rapportent d'autres avantages que des points d'experience :");
+	draw_printf(50, 250, "- Bonus vision : la carte se decouvre pour chaque joueur ayant au moins 300 XP");
+	draw_printf(50, 230, "- Bonus ile deserte : debloque un filet de peche");	
+	draw_printf(50, 210, "- Bonus ecolo : relachez 3 poissons dans l'eau pour pouvoir pecher la pollution. Celle-ci vous rapportera 10 munitions.");
+	sous_titre();
+	draw_printf(20, 170, "Victoire");
+	texte();
+	draw_printf(20, 150, "En mode 2 joueurs, le gagnant est celui qui atteint 10 000 XP en premier. En mode 1 joueur, il faut atteindre 10 000 XP le plus");
+	draw_printf(20, 130, "vite possible pour entrer dans le classement des 3 meilleurs scores. Votre score final correspondra au nombre de tours qu'il");
+	draw_printf(20, 110, "vous aura fallu pour terminer la partie. Les scores les plus faibles sont donc les meilleurs!");
+	sous_titre();
+	draw_printf(20, 70, "Quitter cette page");
+	texte();
+	draw_printf(20, 50, "Il suffit d'appuyer sur la touche q."); 
+	update_graphics();
+	while(stop!='q')	
+		stop=get_key();	
+	
+	
+}
+
+int troc(fisher * pecheur)	
+{	int go=0;
+	int gain =0;
+	srand(time(0));
+	set_drawing_color(color_BACKGROUND);
+	draw_rectangle_full(0,0,WINDOW_WIDTH-M3+M1+18,WINDOW_HEIGHT);
+	sous_titre();
+	draw_printf(250, 650, "Bienvenue au troc de l'ile !");
+	texte();
+	draw_printf(20, 610, "C'est ici que pirates et nauffrages echangent leurs marchandises. En plein rush vers la victoire peut-etre aurez vous besoin de");
+	draw_printf(20, 590,"troquer vos propres reserves de poisson contre de precieux points d'experience.");
+	draw_printf(20, 570, "Si la chance est avec vous, cela pourrait vous rapporter gros. Cependant prenez garde, il vous est impossible de discerner les");
+	draw_printf(20, 550,"filous des honnetes gens parmi les acheteurs. Et des vendeurs novices tels que vous ne peuvent se permettre de refuser une"); 
+	draw_printf(20, 530, "offre. Donc une seule regle s'applique: si vous choisisssez de leguer vos reserves cela est irreversible, et SANS"); 
+	draw_printf(20, 510, "GARANTIE ...");
+	draw_printf(20, 470, "Vous etes sur le point de troquer 8 reserves, appuyez sur ENTREE pour commencer");
+	update_graphics();	
+	while(go!=key_ENTER)
+		go=get_key();
+	set_drawing_color(color_BACKGROUND);
+	draw_printf(20, 470, "Vous etes sur le point de troquer 8 reserves, appuyez sur ENTREE pour commencer");
+	gain = rand()%(450-1)+1;
+	sous_titre();
+	draw_printf(245, 400, "Ce troc vous a rapporté %d XP", gain);
+	texte();
+	draw_printf(265, 380, "Appuyez sur une touche pour quitter");
+	update_graphics();
+	go=get_key();
+	return gain;
+}
+
 
 int final_screen(FILE *fscore, char name [8])
 {	int select=0;

@@ -23,7 +23,7 @@ void spawn_pont(int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * pl
 
 /*Atteste de la validité d'une case lors du déplacement du pont*/
 int case_valide_pont(int x_pont, int y_pont, int x_pecheur, int y_pecheur, Mob * plateau[][TAILLE_PLATEAU])
-{	return (case_valide_peche(x_pont, y_pont, x_pecheur, y_pecheur,plateau) && (plateau[x_pont-1][y_pont-1]->id != 11));
+{	return (case_valide_peche(x_pont, y_pont, x_pecheur, y_pecheur,plateau) && (plateau[x_pont-1][y_pont-1]->id != 11) && (plateau[x_pont-1][y_pont-1]->id!=12));
 		
 }
 

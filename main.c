@@ -15,64 +15,63 @@ int rand_a_b(int a, int b)
 
 
 int main(int argc, char const *argv[])
-{
-	start_graphics();
-	FILE *fPtr;
-	fPtr=fopen("records.csv","w+");
-	FILE *gnuplot = popen("gnuplot", "w");	
-	//FILE *gnuplot = popen("gnuplot -persistent", "w");
-	FILE *fscore;
+{	
+	start_graphics(); //initialisation de la fenêtre graphique
 	
+	//initialisation des descripteurs de fichiers (acquisition écolution de l'ecosysteme + scores)
+	FILE *fPtr;	
+	FILE *gnuplot = popen("gnuplot", "w");
+	FILE *fscore;
+	fPtr=fopen("records.csv","w+");
 	if (fPtr == NULL)
 	    printf("Error in opening file\n");
-	
-	//Variable d'arrêt de la simulation 
-	
+
 	srand (time (NULL));
+
    	Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU];
-
-  	
-	// Compteur pour gérer les listes d'especes
-  	int i = 0; 
 	
-
+  	int i = 0; // Compteur pour gérer les listes d'especes
+	
 	/***Initialisation du pêcheur***/
-	//Variables de déplacement du pêcheur
+	
+	fisher pecheur;
+	fisher pecheur2;
+
+	//Variables de déplacement du (des) pêcheur(s)	
 	int x=0;
 	int y=0;
 
 	int x2=TAILLE_PLATEAU+1;
 	int y2=TAILLE_PLATEAU+1;
-
-	fisher pecheur;
-	fisher pecheur2;
 	
 	int mort_pecheur=0;
 	int mort_pecheur2=0;
 
-	//initialisation du pecheur 
+	//initialisation du (des) pecheur(s) 
 	init_fisher(&pecheur, x, y, 1);
-	init_fisher(&pecheur2, x2, y2, 2);
+	init_fisher(&pecheur2, x2, y2, 2);	
 	
-			
+	/*troc(&pecheur);
+	update_graphics();
+	x=get_key();*/	
 
 	//initialisation de la table des bonus 	
 	int bonus_tab[8]={0};
 	int bonus_tab2[8]={0};
 
 //cheat	
-
-	pecheur.reserves = 5000;
+	pecheur.reserves = 5000; // reserves illimitees 
 	//pecheur.xp =9999;
-	bonus_tab[6]=1;
+	bonus_tab[6]=1; //vision
 	bonus_tab2[6]=0;  
-	bonus_tab[5]=1;
+	bonus_tab[5]=1; //filet débloqué
 
 	//choix du mode de jeu : 0 pour le mode ecosysteme seul, 1 pour le mode 1 joueur, 2 pour le mode 2 joueurs
 	int mode_joueur=start_screen();
 	clear_screen();
 	switch (mode_joueur){
-		case 0:	bonus_tab[6]=1;
+		case 0:	bonus_tab[6]=1;				//ecosysteme seul
+			pecheur.nom_joueur[0]='\0';
 				break;
 		case 1: saisi_nom_screen(&pecheur);		//mode 1 joueur
 				break;
@@ -87,8 +86,8 @@ int main(int argc, char const *argv[])
 
 	init_grid(plateau_de_jeu);
 
-	//à faire entrer dans le switch	
-	if(mode_joueur)
+	
+	if(mode_joueur)		//génération de l'île 
 	{	spawn_island(plateau_de_jeu);
 		fscore=NULL;
 		fscore = fopen("scores.txt", "r+");
@@ -104,9 +103,6 @@ int main(int argc, char const *argv[])
 	/***Initialisation des espèces***/
 	//Génération des listes de mobs......................................................................................
    		
-		
-		/*Ordre de creation            Espece vide - Plancton -   Corail -   Bar -  Thon - Pollution
-   		Correspondance des couleurs    WHITE -       LIGHTGREEN - LIGHTRED - CYAN - BLUE - RED    */
 	Liste * species[] = {NULL, init_mobs(1,5), init_mobs(2, 3), init_mobs(3,6), init_mobs(4, 3), init_mobs(5, 2), init_mobs(6, 4), init_mobs(7, 5), init_mobs(8, 2), init_mobs(9, 2)};
 
    	fprintf(fPtr,"%s","WORLD_TIME");
@@ -129,12 +125,9 @@ int main(int argc, char const *argv[])
 	{	printf("WORLD_TIME : %d\n", WORLD_TIME);
 		fprintf(fPtr,"\n%d", WORLD_TIME);
 		
-
-
-
 		/***Jeu du pêcheur***/
-
-		if(!mode_joueur) {
+		if(!mode_joueur) 
+		{
 			menu(species,&pecheur,bonus_tab, plateau_de_jeu);
 			fprintf(gnuplot, "%s \n", " load 'draw_graph.gnuplot'");
 			fflush(gnuplot);
@@ -143,10 +136,10 @@ int main(int argc, char const *argv[])
 
 		//Jeu du pêcheur tous les 10 tours d'écosystème...............................................................
 		if(WORLD_TIME % 10 == 0 && mode_joueur!=0)
-		{	printf("dans main nv res %d\n", pecheur.nv_reserves);
-			menu(species,&pecheur,bonus_tab, plateau_de_jeu);
+		{	
+			menu(species,&pecheur,bonus_tab, plateau_de_jeu);	//affichage du menu
 			update_graphics();
-			jeu_du_pecheur(&pecheur, plateau_de_jeu, bonus_tab, &mort_pecheur, species);
+			jeu_du_pecheur(&pecheur, plateau_de_jeu, bonus_tab, &mort_pecheur, species);	//jeu du pecheur 1
 			if(mode_joueur==2){
 				menu(species,&pecheur2,bonus_tab2, plateau_de_jeu);	
 				update_graphics();				
@@ -154,17 +147,11 @@ int main(int argc, char const *argv[])
 				update_graphics();
 			}
 		} 	
-		
-		if(!mort_pecheur&&!mort_pecheur2)
-		{
-		
-
-
 
 		/***Jeu de l'IA***/	
-					
+		if(!mort_pecheur&&!mort_pecheur2)
+		{	
 			draw_grid(plateau_de_jeu, bonus_tab[6]);
-				
 			for (int i = 1; i <= NB_SPECIES; ++i)
 			{
 				elt=species[i];
@@ -176,28 +163,24 @@ int main(int argc, char const *argv[])
 				}	
 				fprintf(fPtr,",%d",(nombre_elts_liste(species[i])*100)/(TAILLE_PLATEAU * TAILLE_PLATEAU) ) ;
 			}	
-				
 			draw_grid(plateau_de_jeu, bonus_tab[6]);
-				
 			fflush(fPtr);	
-				
 			WORLD_TIME++;
-					
 		}
 	
 			
 	}while( WORLD_TIME <= 1000 && !mort_pecheur && pecheur.xp<10000 && pecheur2.xp<10000);
 	
 	if(bonus_tab[7])
-		final_screen(fscore, pecheur.nom_joueur);
+		final_screen(fscore, pecheur.nom_joueur);	//joueur 1 a gagné
 		
 	else if(bonus_tab2[7])
-		final_screen(fscore, pecheur2.nom_joueur);
+		final_screen(fscore, pecheur2.nom_joueur);	//joueur 2 a gagné
 		
 	//Fermeture de la fenetre graphique	
 	stop_graphics();
 
-	//Fermeture du fichier d'acquisition des données
+	//Fermeture des fichiers d'acquisition de données / scores
 	fclose(fPtr);
 	fclose(fscore);
 	
@@ -205,24 +188,21 @@ int main(int argc, char const *argv[])
 }			
 
 
-void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TAILLE_PLATEAU]){
+//gestion de l'affichage d'un menu informatif 
+void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TAILLE_PLATEAU])
+{
 	set_drawing_color(color_WHITE);
-	//draw_line(0,(WINDOW_WIDTH-M3)+M1+20,WINDOW_WIDTH,(WINDOW_WIDTH-M3)+M1);
 	int i = 0 ;
 	int x_menu = WINDOW_WIDTH-M3+M1+20;
-	int y_menu = WINDOW_HEIGHT ; // x et y nous serviront de curseur pour se deplacer dans la fentre du menu afin de realiser l'affichage correctement et compréhensible
-
-	//Application des bonus 
+	int y_menu = WINDOW_HEIGHT ; // x et y serviront de curseurs pour se deplacer dans la fenêtre du menu 
+	
+	//refresh 
 	set_drawing_color(color_BACKGROUND);
 	draw_rectangle_full(x_menu,y_menu-450, WINDOW_WIDTH, y_menu-540);
+	
+	//mise à jour des bonus des joueurs 
 	capitaliser_bonus(pecheur, bonus_tab, plateau);
-
 	pecheur->bridge=0;
-				
-	//clear_screen();
-	//draw_grid(plateau_de_jeu, bonus_tab[6]);
-
-	//ajouter if(mode) pour afficher point sinon pecheur visiblle mode écosystème
 	afficher_point(pecheur->x, pecheur->y, color_RED);
 	appliquer_bonus(pecheur, bonus_tab);
 
@@ -266,14 +246,14 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TA
 	}
 	set_drawing_color(color_WHITE);
 
-	//**Information Joueur
+	//**Informations Joueur
 	draw_line(x_menu,y_menu,WINDOW_WIDTH,y_menu);
 	y_menu -= 12+5;
 	draw_printf(x_menu, y_menu, "Informations sur le joueur ");
 	y_menu -= 12+5;
-	//***Nom
+	//***Nom, réserves, xp
 	set_drawing_color(color_BACKGROUND);
-	draw_rectangle_full(x_menu,y_menu+12+5,WINDOW_WIDTH,y_menu-((12+5)*4));   //On va surement dessiner une grosse surface sur tout les info du joeur qu'on blittera de color_background
+	draw_rectangle_full(x_menu,y_menu+12+5,WINDOW_WIDTH,y_menu-((12+5)*4)); 
 	
 	set_drawing_color(color_LIGHTRED);
 	draw_printf(x_menu, y_menu, "%s joue !",pecheur->nom_joueur);
@@ -284,7 +264,7 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TA
 	draw_printf(x_menu, y_menu, "Xp : %d ",pecheur->xp);
 	y_menu -= 12+5;
 	
-	
+	//**Compétences 
 	if (bonus_tab[4]){
 		set_drawing_color(color_LIGHTGREEN);
 		draw_printf(x_menu, y_menu, "Bravo l'ecolo !");
@@ -324,16 +304,6 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TA
 	y_menu -= 12+5;
 	draw_printf(x_menu, y_menu, "Evenement : ");
 	y_menu -= 100;
-	/*for (i = 0; i < 50; ++i)
-	{
-		for (int j = 0; j < 100; ++j)
-		{
-			if (tab_pop[i][j] != 0)
-			{
-				set_pixel(x_menu+i,y_menu+j,color_WHITE);
-			}
-		}
-	}*/
 	
 	set_drawing_color(color_WHITE);
 
@@ -342,32 +312,32 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TA
 	y_menu -= 12+5;
 	draw_printf(x_menu, y_menu, "Actions : ");
 	set_drawing_color(color_BACKGROUND);
-	draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH, 0); //clear previous type
-	printf("y_menu %d\n", y_menu);
-	//afficher_bonus
-	//draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH,y_menu+12);
+	draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH, 0); //refresh
+
 
 }
 
+//Saisie au clavier du nom du (des) joueur(s) au début de la partie
 void saisi_nom_screen(fisher *pecheur){
 	clear_screen();
 	set_font(font_HELVETICA_18);
 	set_drawing_color(color_WHITE);
 	int x_menu = 10;
 	int y_menu = WINDOW_HEIGHT-18-10 ;
-	int pas = 12; //pas de decalage entre afficahge des lettres.
+	int pas = 12; //pas de decalage entre affichage des lettres.
 	draw_printf(x_menu, y_menu, "Bonjour pecheur %d , entrez donc votre nom et entrez dans la legende : ",pecheur->id);
 	update_graphics();
 	y_menu -= 25;
 	int c = 0;  //Pour eviter de traverser au cas ou.
 	unsigned int i = 0;
 	while(c!=key_ENTER){
-		c=get_key();
-		//reste le cas des touches novalide a traiter de <32 et >126 ne sont pas valide a la saisi.
+		c=get_key(); // lecture au clavier lettre par lettre
+
+		//reste le cas des touches non valides à traiter, <32 et >126 ne sont pas valide à la saisie
 		if (i >= 8)
 				draw_printf(10, 10, "Taille max_nom = 9"); 
 
-		if(c == 8){		 // Cas du backspace
+		if(c == 8){		 //cas du backspace
 			set_drawing_color(color_BACKGROUND);
 			draw_rectangle_full(x_menu,y_menu,x_menu-pas,y_menu+18); 
 			set_drawing_color(color_WHITE);
@@ -381,13 +351,13 @@ void saisi_nom_screen(fisher *pecheur){
 			}
 			update_graphics();
 		}  
-		else if(i <= 8 ) {
-
- 		draw_printf(x_menu, y_menu, "%c",c);
-		x_menu += pas;
-		pecheur->nom_joueur[i] = (char) c;
-		i++;
-		update_graphics();
+		else if(i <= 8 ) 
+		{
+			draw_printf(x_menu, y_menu, "%c",c); //affichage à l'écran lettre par lettre
+			x_menu += pas;
+			pecheur->nom_joueur[i] = (char) c;
+			i++;
+			update_graphics();
 		}
 	}
 	for (c = i; c <= 9; ++c)

@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "libgraphique.h"
+#include "main.h" 
 
 #define M1 20	//gauche
 #define M2 20	//bas
@@ -28,6 +29,16 @@ void draw_square(int x, int y, couleurs coul);
 void espece_consideree(int i, couleurs coul);
 
 int start_screen(); 
+
+void titre();
+
+void sous_titre();
+
+void texte();
+
+void aide();
+
+int troc(fisher* pecheur);
 
 int final_screen(FILE * fscore, char name[8]);
 

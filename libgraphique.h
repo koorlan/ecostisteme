@@ -258,9 +258,4 @@ void demo_afficher_figures(int x, int y);
 void demo_afficher_caracteres(int x, int y);
 
 
-
-
-
-
-
 #endif

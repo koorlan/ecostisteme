@@ -27,8 +27,8 @@ int bridge(int bridge, int bonus)
 }
 
 /*Bonus découverte de l'île*/
-int island(fisher * pecheur, Mob * plateau[][TAILLE_PLATEAU])
-{	return (((pecheur->x>=1 && pecheur->x<=TAILLE_PLATEAU) && (pecheur->y>=1 && pecheur->y<=TAILLE_PLATEAU))&&(plateau[pecheur->x-1][pecheur->y-1]->id==12));
+int island(fisher * pecheur, Mob * plateau[][TAILLE_PLATEAU], int bonus)
+{	return (((pecheur->x>=1 && pecheur->x<=TAILLE_PLATEAU) && (pecheur->y>=1 && pecheur->y<=TAILLE_PLATEAU))&&(plateau[pecheur->x-1][pecheur->y-1]->id==12) && bonus==0);
 }
 
 /*Bonus 300 xp*/ 
@@ -107,14 +107,6 @@ void afficher_bonus(int n)
 
 }
 
-/*Affiche l'xp d'un joueur sur la fenêtre graphique
-void afficher_xp(fisher * pecheur)
-{	set_font(font_HELVETICA_18);
-	set_drawing_color(color_BLACK);
-	draw_printf(WINDOW_WIDTH/2-70, M2/2-5, "VOTRE XP : %d", pecheur->xp);
-}
-*/
-
 /*Applique les bonus des joueurs*/
 void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 {	/*1er poisson*/	
@@ -189,7 +181,7 @@ void capitaliser_bonus(fisher * pecheur, int bonus_tab[], Mob * plateau[][TAILLE
 		bonus_tab[4]=1;
 	
 	/*bonus île, débloque filet*/
-	if(island(pecheur, plateau))
+	if(island(pecheur, plateau, bonus_tab[5]))
 		bonus_tab[5]=1;
 
 	/*bonus vision*/

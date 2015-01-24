@@ -23,15 +23,11 @@ void draw_filet(int x_pecheur, int y_pecheur, int filet[][3])
 	for(i=0;i<3;i++)
 	{	for(j=0;j<3;j++)
 		{	if(filet[i][j]==1)
-				{	//case x_pecheur+i-1 y_pecheur+j-1
-					//set_drawing_color(color_LIGHTGREEN);
-					draw_square(x_pecheur+i-1, y_pecheur+j-1, color_BACKGROUND);
+				{	draw_square(x_pecheur+i-1, y_pecheur+j-1, color_BACKGROUND);
 						
 				}
 		}
 	}					
 								
-				
-//		draw_line(M1+(x_pecheur-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_pecheur-0.5)*(WINDOW_HEIGHT-2*M2)/(N), M1+(x_canne-0.5)*(WINDOW_WIDTH-2*M1)/(N), M2+(y_canne-0.5)*(WINDOW_HEIGHT-2*M2)/(N));
 }	
 

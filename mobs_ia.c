@@ -17,7 +17,9 @@ void destroy_list (Liste ** l)
 	
 }
 
-void free_list (Liste *l){
+/*libère une liste*/
+void free_list (Liste *l)
+{
 	Liste *tmp;
 
    while (l != NULL)
@@ -26,32 +28,9 @@ void free_list (Liste *l){
        l = l->nxt;
        free(tmp);
     }
-
-
-
 }
-
-/*void destroy_list (Liste ** l)
-{	Liste * elt =malloc(sizeof(Liste));
-	if(elt==NULL)	
-		exit(EXIT_FAILURE);	
-	if(*l==NULL)	
-	{	printf("\nDans la fonction defiler : LISTE VIDE, PAS D'ELEMENT A DEFILER\n");
-		return;
-	}	
-	elt=(*l);
-	while((*l)->nxt!=NULL)
-	{	elt=realloc((*l), sizeof(Liste));
-		(*l)=(*l)->nxt;
-		free(elt);
 		
-	}	
-
-
-	
-}*/	
-	
-
+/*Retire un mob de sa liste*/
 Liste * destroy_mob (Mob mob, Liste * list_of_specific_species )
 
 {      
@@ -61,16 +40,7 @@ Liste * destroy_mob (Mob mob, Liste * list_of_specific_species )
 	{
        		Liste * tmp=malloc(sizeof(Liste));
 		tmp=list_of_specific_species->nxt;
- //       	Liste * clean=malloc(sizeof(Liste));
-//		clean=list_of_specific_species;
-		//if(tmp==NULL/*||clean==NULL*/)
-		//	exit(EXIT_FAILURE);
-
-		//free(list_of_specific_species);
-
-		//libération mémoire 		
-	//free(clean);
-//		clean=NULL;
+		free(list_of_specific_species);
        		return tmp;
     	} 
     	list_of_specific_species->nxt = destroy_mob (mob,list_of_specific_species->nxt);
@@ -281,8 +251,7 @@ int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU],
 	mob->x=cases_libre[randomPick%8]->x;
 	mob->y=cases_libre[randomPick%8]->y;
 	mob_saut_max--;
-	//usleep(500);
-	//draw_grid(plateau_de_jeu, 1);
+	
 	} while (mob_saut_max >0);
 	
 	return 1;      
