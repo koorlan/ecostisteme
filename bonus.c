@@ -115,7 +115,7 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 		bonus_tab[0]=2;
 		afficher_bonus(0);
 	}
-	printf("bonus 1 (pont) vaut %d\npehcuer->bridge vaut %d\n", bonus_tab[1], pecheur->bridge);
+	
 	
 	/*1er pont*/
 	if(bonus_tab[1]==1)
@@ -159,7 +159,7 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 
 /*Capitalise bonus des joueurs*/
 void capitaliser_bonus(fisher * pecheur, int bonus_tab[], Mob * plateau[][TAILLE_PLATEAU])
-{	printf("dans bonus nv res %d\n", pecheur->nv_reserves);
+{	
 	/*bonus premier poisson*/
 	if(first_fish(pecheur->nv_reserves, bonus_tab[0]))
 		bonus_tab[0]=1;

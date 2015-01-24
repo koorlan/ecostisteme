@@ -171,18 +171,22 @@ int main(int argc, char const *argv[])
 			
 	}while( WORLD_TIME <= 1000 && !mort_pecheur && pecheur.xp<10000 && pecheur2.xp<10000);
 	
+	
+
 	if(bonus_tab[7])
 		final_screen(fscore, pecheur.nom_joueur);	//joueur 1 a gagné
 		
 	else if(bonus_tab2[7])
 		final_screen(fscore, pecheur2.nom_joueur);	//joueur 2 a gagné
 		
-	//Fermeture de la fenetre graphique	
-	stop_graphics();
-
 	//Fermeture des fichiers d'acquisition de données / scores
-	fclose(fPtr);
-	fclose(fscore);
+	if(fPtr!=NULL)
+		fclose(fPtr);
+	if(mode_joueur && fscore!=NULL)
+		fclose(fscore);
+	
+	//Fermeture de la fenetre graphique
+	stop_graphics();
 	
 	return 0;
 }			
