@@ -33,8 +33,8 @@ int place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * pl
 {		
 	int indice = 0;
 	Mob * cases_libre[8] = { NULL } ;
-	int run_cell_in_order[2][8] ={ {-1,0,1,1,1,0,-1,-1},
-								   {-1,-1,-1,0,1,1,1,0} };												
+	int run_cell_in_order[2][8] ={ {-1,-1,0,1,1,1,0,-1},
+								   {0,1,1,1,0,-1,-1,-1} };	//remplissage en sens horaire										
 	int i;
 	for(i= 0; i<8; i++)
 	{
@@ -81,7 +81,7 @@ int place_pont (int x_pecheur, int y_pecheur, int *x_pont, int *y_pont, Mob * pl
 		*y_pont = cases_libre[abs(curseur%indice)]->y;
 		
 
-		draw_square(*x_pont+1, *y_pont+1, mobs_draw[11]); 
+		draw_square(*x_pont+1, *y_pont+1, coul); 
 		update_graphics();
 		pont=get_key();		
 	}

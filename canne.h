@@ -16,6 +16,6 @@ void spawn_canne(int x, int y, int *x_c, int *y_c, Mob * plateau[][TAILLE_PLATEA
 
 void draw_canne(int x_pecheur, int y_pecheur, int x_canne, int y_canne, couleurs coul);
 
-void place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob * plateau[][TAILLE_PLATEAU]);
+int place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob * plateau[][TAILLE_PLATEAU]);
 
 #endif 

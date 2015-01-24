@@ -30,40 +30,49 @@ void draw_canne(int x_pecheur, int y_pecheur, int x_canne, int y_canne, couleurs
 }	
 
 /*Déplacement de la canne à pêche*/
-void place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob * plateau[][TAILLE_PLATEAU])
-{	int peche=0;
+int place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne, Mob * plateau[][TAILLE_PLATEAU])
+{	
+	int indice = 0;
+	Mob * cases_libre[8] = { NULL } ;
+	int run_cell_in_order[2][8] ={ {-1,-1,0,1,1,1,0,-1},
+								   {0,1,1,1,0,-1,-1,-1} };	//remplissage en sens horaire										
+	int i;
+	for(i= 0; i<8; i++)
+	{
+        	if( (((x_pecheur+run_cell_in_order[0][i]>0) && (y_pecheur+run_cell_in_order[1][i]>0))&&((x_pecheur+run_cell_in_order[0][i]<=TAILLE_PLATEAU) && (y_pecheur+run_cell_in_order[1][i]<=TAILLE_PLATEAU))) ){ //case hors champ	
+            	if( plateau[x_pecheur+run_cell_in_order[0][i]-1][y_pecheur+run_cell_in_order[1][i]-1]->id < 10){
+						cases_libre[indice] = plateau[x_pecheur+run_cell_in_order[0][i]-1][y_pecheur+run_cell_in_order[1][i]-1];
+						indice++;
+					}
+			}
+	}
+	
+	if (indice == 0)
+		return 0;
+	int curseur = 0;
+	int peche;
 	while(peche!=key_ENTER)
-	{	switch (peche)
-		{	case key_RIGHT:						
-				if(case_valide_peche(*x_canne+1, *y_canne, x_pecheur, y_pecheur,plateau))
-				{	draw_canne(x_pecheur, y_pecheur, *x_canne, *y_canne, color_WHITE);				
-					(*x_canne)++;
-				}				
+	{	
+		switch (peche)
+		{	case key_RIGHT:										
+					curseur++;
+					draw_canne(x_pecheur, y_pecheur, *x_canne+1, *y_canne+1, color_WHITE);	
 				break;
-		
 			case key_LEFT : 
-				if(case_valide_peche(*x_canne-1, *y_canne, x_pecheur, y_pecheur, plateau))
-				{	draw_canne(x_pecheur, y_pecheur, *x_canne, *y_canne, color_WHITE);
-					(*x_canne)--;
-				}			
-				break;
-			case key_UP :
-				if(case_valide_peche(*x_canne, *y_canne+1, x_pecheur, y_pecheur, plateau))				
-				{	draw_canne(x_pecheur, y_pecheur, *x_canne, *y_canne, color_WHITE);
-					(*y_canne)++;
-				}				
-				break;
-			case key_DOWN :
-				if(case_valide_peche(*x_canne, *y_canne-1, x_pecheur, y_pecheur, plateau))				
-				{	draw_canne(x_pecheur, y_pecheur, *x_canne, *y_canne, color_WHITE);
-					(*y_canne)--;
-				}				
-				break;
+					curseur--;
+					draw_canne(x_pecheur, y_pecheur, *x_canne+1, *y_canne+1, color_WHITE);
+				break;		
 			default :
 				break;
 		}
-		draw_canne(x_pecheur, y_pecheur, *x_canne, *y_canne, color_BLACK); 
+		*x_canne = cases_libre[abs(curseur%indice)]->x;
+		*y_canne = cases_libre[abs(curseur%indice)]->y;
+		
+
+		draw_canne(x_pecheur, y_pecheur, *x_canne+1, *y_canne+1, color_BLACK); 
 		update_graphics();
 		peche=get_key();		
 	}
+	
+	return 1;
 }

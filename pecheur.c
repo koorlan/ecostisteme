@@ -461,19 +461,20 @@ void que_la_peche_commence (Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pec
 	set_drawing_color(color_WHITE);
 	//draw_string(M1, M2/2, "Appuyez sur entree pour pecher\n");
 	if(type_materiel=='c')
-	{	spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne, plateau_de_jeu);
-		printf("%d, %d\n", x_canne, y_canne);
-		draw_canne((pecheur->x), (pecheur->y), x_canne, y_canne, color_BLACK);	
+	{	//spawn_canne(pecheur->x, pecheur->y, &x_canne, &y_canne, plateau_de_jeu);
+		//printf("%d, %d\n", x_canne, y_canne);
+		//draw_canne((pecheur->x), (pecheur->y), x_canne, y_canne, color_BLACK);	
 		update_graphics();		
 		place_canne_a_peche((pecheur->x), (pecheur->y), &x_canne, &y_canne,plateau_de_jeu);	
-		if(eat_mat[10][plateau_de_jeu[x_canne-1][y_canne-1]->id]==1||(plateau_de_jeu[x_canne-1][y_canne-1]->id==5 && bonus==2))
-		{	pecheur->id_proie=plateau_de_jeu[x_canne-1][y_canne-1]->id;
-			pecheur->reserves = pecheur->reserves + taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];		
-			pecheur->nv_reserves=taille[plateau_de_jeu[x_canne-1][y_canne-1]->id];
-			destroy_mob(*plateau_de_jeu[x_canne-1][y_canne-1], species[plateau_de_jeu[x_canne-1][y_canne-1]->id]);
-			plateau_de_jeu[x_canne-1][y_canne-1]=create_mob(0);
-			plateau_de_jeu[x_canne-1][y_canne-1]->x= x_canne-1;
-			plateau_de_jeu[x_canne-1][y_canne-1]->y= y_canne-1;
+		printf("Ma canne est en %d - %d \n",x_canne,y_canne );
+		if(eat_mat[10][plateau_de_jeu[x_canne][y_canne]->id]==1||(plateau_de_jeu[x_canne][y_canne]->id==5 && bonus==2))
+		{	pecheur->id_proie=plateau_de_jeu[x_canne][y_canne]->id;
+			pecheur->reserves = pecheur->reserves + taille[plateau_de_jeu[x_canne][y_canne]->id];		
+			pecheur->nv_reserves=taille[plateau_de_jeu[x_canne][y_canne]->id];
+			destroy_mob(*plateau_de_jeu[x_canne][y_canne], species[plateau_de_jeu[x_canne][y_canne]->id]);
+			plateau_de_jeu[x_canne][y_canne]=create_mob(0);
+			plateau_de_jeu[x_canne][y_canne]->x= x_canne;
+			plateau_de_jeu[x_canne][y_canne]->y= y_canne;
 
 		}
 			printf("Les munitions du pêcheur sont : %d\nQtté pechees au der tour : %d\n", pecheur->reserves, pecheur->nv_reserves); 
