@@ -65,7 +65,7 @@ int main(int argc, char const *argv[])
 	pecheur.reserves = 5000;
 	//pecheur.xp =9999;
 	bonus_tab[6]=1;
-	bonus_tab2[6]=0;
+	bonus_tab2[6]=0;  
 	bonus_tab[5]=1;
 
 	//choix du mode de jeu : 0 pour le mode ecosysteme seul, 1 pour le mode 1 joueur, 2 pour le mode 2 joueurs

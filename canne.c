@@ -66,10 +66,8 @@ int place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne
 		//**On affiche ce qu'il y avait avant la canne**
 		draw_grid(plateau, bonus_tab[6]);
 		afficher_point(x_pecheur,y_pecheur,color_RED);
-		
-		
-
-		afficher_point(*x_canne+1, *y_canne+1,  mobs_draw[plateau[*x_canne][*y_canne]->id]);
+		if (bonus_tab[6])
+			afficher_point(*x_canne+1, *y_canne+1,  mobs_draw[plateau[*x_canne][*y_canne]->id]);
 		*x_canne = cases_libre[abs(curseur%indice)]->x;
 		*y_canne = cases_libre[abs(curseur%indice)]->y;
 		

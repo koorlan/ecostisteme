@@ -611,7 +611,7 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 		{	case key_RIGHT:						
 				if(!case_valide((*x)+1, *y, plateau))
 				{	if(bonus_tab[6]==0)
-						draw_square(*x, *y, color_BLUE);
+						draw_square(*x, *y,  (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8));
 											
 					else
 					{	draw_square(*x, *y, mobs_draw[0]);
@@ -626,7 +626,7 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 				if(!case_valide((*x)-1, (*y), plateau))
 				{	
 					if(bonus_tab[6]==0)
-						draw_square(*x, *y, color_BLUE);
+						draw_square(*x, *y,  (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8));
 											
 					else
 					{	draw_square(*x, *y, mobs_draw[0]);
@@ -638,7 +638,7 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 			case key_UP :
 				if(!case_valide((*x), (*y)+1, plateau))				
 				{	if(bonus_tab[6]==0)
-						draw_square(*x, *y, color_BLUE);
+						draw_square(*x, *y,  (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8));
 											
 					else
 					{	draw_square(*x, *y, mobs_draw[0]);
@@ -651,7 +651,7 @@ void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int 
 				if(!case_valide((*x), (*y)-1, plateau))				
 				{	
 					if(bonus_tab[6]==0)
-						draw_square(*x, *y, color_BLUE);
+						draw_square(*x, *y,  (rand_a_b(30,47)<<24)+(rand_a_b(27,72)<<16)+(rand_a_b(139,206)<<8));
 											
 					else
 					{	draw_square(*x, *y, mobs_draw[0]);
@@ -728,6 +728,8 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 	//Le pêcheur effectue un tour de jeu normal	
 	else if (!bonus_tab[7])
 	{	
+		draw_grid(plateau_de_jeu, bonus_tab[6]);
+		update_graphics(),
 		deplacement_pecheur(pecheur, color_RED, plateau_de_jeu);
 //	
 
