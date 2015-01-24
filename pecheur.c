@@ -728,7 +728,9 @@ void jeu_du_pecheur(fisher *pecheur, Mob * plateau_de_jeu[][TAILLE_PLATEAU], int
 	//Le pêcheur effectue un tour de jeu normal	
 	else if (!bonus_tab[7])
 	{	
+
 		draw_grid(plateau_de_jeu, bonus_tab[6]);
+		afficher_point(pecheur->x,pecheur->y,color_RED);
 		update_graphics(),
 		deplacement_pecheur(pecheur, color_RED, plateau_de_jeu);
 //	
