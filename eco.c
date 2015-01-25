@@ -249,69 +249,111 @@ int troc(fisher * pecheur)
 
 int final_screen(FILE *fscore, char name [8])
 {	int select=0;
-	int current=1;
 	int score[3]={0};
 	int i=0, k=0;
-	int res=WORLD_TIME/10;
-
+	int res=(WORLD_TIME/10);
+	char * name0;
+	char * name1;
+	char * name2;
+	name0=calloc(8, sizeof(char));
+	name1=calloc(8, sizeof(char));
+	name2=calloc(8, sizeof(char));
+	
 	clear_screen();
+
 	set_background_color(color_BACKGROUND);
 	set_drawing_color(color_WHITE);
 	set_font(font_HELVETICA_18);
 	set_drawing_color(color_WHITE);
-
-	fscanf(fscore, "%d %d %d", &score[0], &score[1], &score[2]);
- 	fseek(fscore, 0, SEEK_SET);
+	fseek(fscore, 0, SEEK_SET);
 	
-	    	
-	draw_printf(WINDOW_WIDTH/2-150, WINDOW_HEIGHT/2+40, "Le gagnant est :");
+	//Lecture des 3 meilleurs scores dans le fichier "scores.txt"
+	fscanf(fscore, "%d %d %d\n", &score[0], &score[1], &score[2]);
+	
+	//Lecture des noms des 3 meilleurs joueurs
+	fscanf(fscore, "%s\n", name0);
+	fscanf(fscore, "%s\n", name1);
+	fscanf(fscore, "%s\n", name2);
+
+	fseek(fscore, 0, SEEK_SET);
+	
+	
+	
 	//Affichage du nom du gagnant
+	set_drawing_color(mobs_draw[0]); 	
+	draw_printf(WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2+50, "Le gagnant est :");
+	set_drawing_color(color_WHITE);
 	while(name[i]!='\0')
-	{	draw_printf(WINDOW_WIDTH/2+5+k, WINDOW_HEIGHT/2+40, "%c", name[i]);
-		if(name[i]=='l'||name[i]=='r'||name[i]=='i')
-			k+=8;
+	{	draw_printf(WINDOW_WIDTH/2+40+k, WINDOW_HEIGHT/2+50, "%c", name[i]);
+		if(name[i]=='l'||name[i]=='r'||name[i]=='i'||name[i]=='t')
+			k+=6;
+		else if(name[i]=='m' ||name[i]=='w')
+			k+=15;
 		else
 			k+=12;
 		i++;
 	}
-
-	//draw_printf(WINDOW_WIDTH/2-130, WINDOW_HEIGHT/2+20, "Le gagnant est :");
+	
 	set_font(font_HELVETICA_12);
-	draw_printf(WINDOW_WIDTH/2-170, WINDOW_HEIGHT/2-60, "Appuyez sur la touche ENTREE pour quitter\n");
+	draw_printf(WINDOW_WIDTH/2-135, WINDOW_HEIGHT/8+70, "Appuyez sur la touche ENTREE pour quitter\n");
 	set_font(font_HELVETICA_18);
+
+	//Affichage du score du gagnant
 	set_drawing_color(mobs_draw[0]);
-	draw_printf(WINDOW_WIDTH/2-120, WINDOW_HEIGHT/2-10, "Votre score : %d", res);			
-	//if(score==0 || res<=score)
-	//{	
-		//draw_printf(WINDOW_WIDTH/2-180, WINDOW_HEIGHT/2-40, "Les 3 meilleurs scores sont ");
-		//fseek(fscore, 0, SEEK_SET);
-		//fprintf(fscore, "%d", res);	
-	//}	
+	draw_printf(WINDOW_WIDTH/2-145, WINDOW_HEIGHT/2+20, "Votre score : ", res);	
+	set_drawing_color(color_WHITE);
+	draw_printf(WINDOW_WIDTH/2-20, WINDOW_HEIGHT/2+20, "%d tours pour gagner", res);
+	set_drawing_color(mobs_draw[0]);
+	
+	//enregistrement du score du joueur s'il fait partie des 3 meilleurs scores 
 	if(res<=score[0])
-	{
-		fprintf(fscore, "%d %d %d", res, score[0], score[1]);
-		score[2]=score[1];
-		score[1]=score[0];
-		score[0]=res;
+	{	
+		fprintf(fscore, "%d %d %d\n", res, score[0], score[1]);
+		fprintf(fscore, "%s\n%s\n%s\n", name, name0, name1);
+		fseek(fscore, 0, SEEK_SET);		
+		fscanf(fscore, "%d %d %d\n", &score[0], &score[1], &score[2]);
+		fscanf(fscore, "%s\n%s\n%s\n", name0, name1, name2);		
+	
 	}	
 	else if(res<=score[1])
 	{	
-		fprintf(fscore, "%d %d %d", score[0], res, score[1]);
-		score[2]=score[1];
-		score[1]=res;	
+		fprintf(fscore, "%d %d %d\n", score[0], res, score[1]);
+		fprintf(fscore, "%s\n%s\n%s\n",name0, name, name1);
+		fseek(fscore, 0, SEEK_SET);		
+		fscanf(fscore, "%d %d %d\n", &score[0], &score[1], &score[2]);
+		fscanf(fscore, "%s\n%s\n%s\n", name0, name1, name2);	
+			
 	}
 
 	else if(res<=score[2])
 	{
-		fprintf(fscore, "%d %d %d", score[0], score[1], res);
-		score[2]=res;
-	}	
+		fprintf(fscore, "%d %d %d\n", score[0], score[1], res);
+		fprintf(fscore, "%s\n%s\n%s\n",name0, name1, name);
+		fseek(fscore, 0, SEEK_SET);		
+		fscanf(fscore, "%d %d %d\n", &score[0], &score[1], &score[2]);
+		fscanf(fscore, "%s\n%s\n%s\n", name0, name1, name2);	
+	}
 	
-	draw_printf(WINDOW_WIDTH/2-190, WINDOW_HEIGHT/2-40, "Les 3 meilleurs scores sont [%d] [%d] [%d]", score[0], score[1], score[2]);
-	//else if((WORLD_TIME/10)>score)
-	//	draw_printf(WINDOW_WIDTH/2-180, WINDOW_HEIGHT/2-40, "Le meilleur score enregistre est : %d", score);
-		
+	/***Tableau des 3 meilleurs scores enregistrés***/	
+	draw_printf(WINDOW_WIDTH/4, WINDOW_HEIGHT/2-40, "3 meilleurs scores");	
+	//vertical
+	draw_line(WINDOW_WIDTH/4, WINDOW_HEIGHT/4, WINDOW_WIDTH/4, (7*WINDOW_HEIGHT)/16);
+	draw_line((3*WINDOW_WIDTH)/4, WINDOW_HEIGHT/4, (3*WINDOW_WIDTH)/4, (7*WINDOW_HEIGHT)/16);
+
+	//horizontal 
+	draw_line(WINDOW_WIDTH/4, WINDOW_HEIGHT/4, (3*WINDOW_WIDTH)/4, WINDOW_HEIGHT/4);
+	draw_line(WINDOW_WIDTH/4, (5*WINDOW_HEIGHT)/16, (3*WINDOW_WIDTH)/4, (5*WINDOW_HEIGHT)/16);
+	draw_line(WINDOW_WIDTH/4, (3*WINDOW_HEIGHT)/8, (3*WINDOW_WIDTH)/4, (3*WINDOW_HEIGHT)/8);
+	draw_line(WINDOW_WIDTH/4, (7*WINDOW_HEIGHT)/16, (3*WINDOW_WIDTH)/4, (7*WINDOW_HEIGHT)/16);
 	
+	//remplissage du tableau
+	set_drawing_color(color_WHITE);
+	draw_printf(WINDOW_WIDTH/4+10, (3*WINDOW_HEIGHT)/8+((7*WINDOW_HEIGHT)/16-(3*WINDOW_HEIGHT)/8)/4, "joueur %s", name0);
+	draw_printf(WINDOW_WIDTH/4+390, (3*WINDOW_HEIGHT)/8+((7*WINDOW_HEIGHT)/16-(3*WINDOW_HEIGHT)/8)/4, "score %d", score[0]);
+	draw_printf(WINDOW_WIDTH/4+10, (5*WINDOW_HEIGHT)/16+((3*WINDOW_HEIGHT)/8-(5*WINDOW_HEIGHT)/16)/4, "joueur %s", name1); 
+	draw_printf(WINDOW_WIDTH/4+390, (5*WINDOW_HEIGHT)/16+((3*WINDOW_HEIGHT)/8-(5*WINDOW_HEIGHT)/16)/4, "score %d", score[1]);
+	draw_printf(WINDOW_WIDTH/4+10, (WINDOW_HEIGHT)/4+((5*WINDOW_HEIGHT)/16-(WINDOW_HEIGHT)/4)/4, "joueur %s", name2);
+	draw_printf(WINDOW_WIDTH/4+390, (WINDOW_HEIGHT)/4+((5*WINDOW_HEIGHT)/16-(WINDOW_HEIGHT)/4)/4, "score %d", score[2]);
 	update_graphics();
 	
 	while(select!=key_ENTER)

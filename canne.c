@@ -34,8 +34,8 @@ int place_canne_a_peche(int x_pecheur, int y_pecheur, int *x_canne, int *y_canne
 {	
 	int indice = 0;
 	Mob * cases_libre[8] = { NULL } ;
-	int run_cell_in_order[2][8] ={ {-1,-1,0,1,1,1,0,-1},
-								   {0,1,1,1,0,-1,-1,-1} };	//remplissage en sens horaire										
+	int run_cell_in_order[2][8] =	{ {-1,-1,0,1,1,1,0,-1},
+				     	{0,1,1,1,0,-1,-1,-1} };	//remplissage en sens horaire										
 	int i;
 	for(i= 0; i<8; i++)
 	{

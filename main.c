@@ -16,7 +16,7 @@ int rand_a_b(int a, int b)
 
 int main(int argc, char const *argv[])
 {	
-	start_graphics(); //initialisation de la fenêtre graphique
+	start_graphics(); //ouverture de la fenêtre graphique
 	
 	//initialisation des descripteurs de fichiers (acquisition écolution de l'ecosysteme + scores)
 	FILE *fPtr;	
@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
 	    printf("Error in opening file\n");
 
 	srand (time (NULL));
-
+	
    	Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU];
 	
   	int i = 0; // Compteur pour gérer les listes d'especes
@@ -61,10 +61,10 @@ int main(int argc, char const *argv[])
 
 //cheat	
 	pecheur.reserves = 5000; // reserves illimitees 
-	//pecheur.xp =9999;
+	pecheur.xp =9999;
 	bonus_tab[6]=1; //vision
 	bonus_tab2[6]=0;  
-	bonus_tab[5]=1; //filet débloqué
+	//bonus_tab[5]=1; //filet débloqué
 
 	//choix du mode de jeu : 0 pour le mode ecosysteme seul, 1 pour le mode 1 joueur, 2 pour le mode 2 joueurs
 	int mode_joueur=start_screen();
