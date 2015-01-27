@@ -13,9 +13,8 @@
 /**********************************************************************/
 
 
-
-void affiche_grille()
 /*affichage d'une grille n*n cases*/
+void affiche_grille()
 {	int i;
 	
 	for(i=0;i<=N;i++)
@@ -25,12 +24,15 @@ void affiche_grille()
 	update_graphics();	
 }
 
+
+/*Affichage d'un individu sur la grille en fonction de son espèce*/
 void afficher_point(int x, int y, couleurs coul)
-/*affichage d'un individu sur la grille en fonction de son espèce*/
 {	set_drawing_color(coul);
 	draw_circle_full(M1+(x-0.5)*(WINDOW_WIDTH-M3)/(N), M2+(y-0.5)*(WINDOW_HEIGHT-2*M4)/(N), 4.5);
 }
 
+
+/*Affichage d'un élément de forme carrée sur la grille de jeu (pont, ile, curseur)*/
 void draw_square(int x, int y, couleurs coul)
 {		
 	set_drawing_color(coul);
@@ -39,7 +41,7 @@ void draw_square(int x, int y, couleurs coul)
 
 }
 
-//useless
+//Cette fonction n'est plus utilisée
 void espece_consideree(int i, couleurs coul)
 {	switch (i)
 	{case 1 :
@@ -84,6 +86,7 @@ void espece_consideree(int i, couleurs coul)
 }
 
 
+/*Ecran d'acceuil -> choix du mode de jeu*/
 int start_screen ()
 {	int select=0;
 	int current=1;	
@@ -149,6 +152,8 @@ int start_screen ()
 	}
 	return current-1;
 }
+
+/******Petite charte graphique***********/
 void titre()
 {	set_font(font_HELVETICA_18);
 	set_drawing_color(mobs_draw[0]);
@@ -163,7 +168,10 @@ void texte()
 {	set_drawing_color(color_WHITE);
 	set_font(font_HELVETICA_12);
 }
+/*****************************************/
 
+
+/*Affichage de la page d'aide*/
 void aide()
 {	int stop;
 	set_drawing_color(color_BACKGROUND);
@@ -181,12 +189,12 @@ void aide()
 	draw_printf(20, 530, "Deplacement dans l'eau");
 	texte();
 	draw_printf(20, 510, "Lorsque vous tombez dans l'eau il faut rejoindre le rivage, le pont ou l'ile. Vous perdrez toutes vos reserves. Attention, si vous");
-	draw_printf(20, 490, "croisez un predateur vous mourrez.");
+	draw_printf(20, 490, "croisez un predateur vous mourrez et 50 points d'experience vous seront retires.");
 	sous_titre();
 	draw_printf(20, 450, "Actions possibles");
 	texte();
-	draw_printf(20, 430, "Apres le deplacement, l'onglet 'actions disponibles' du menu vous indique ce que vous pouvez faire (peche, construction du");
-	draw_printf(20, 410, "pont...). Utilisez les fleches (H, B) pour naviguer entre les differents choix puis tapez ENTREE pour valider."); 
+	draw_printf(20, 430, "Apres le deplacement, l'onglet 'Actions' du menu vous indique ce que vous pouvez faire (peche, construction du pont, etc...).");
+	draw_printf(20, 410, "Utilisez les fleches (H, B) pour naviguer entre les differents choix puis tapez sur ENTREE pour valider."); 
 	sous_titre();	
 	draw_printf(20, 370, "Experience et bonus");
 	texte();
@@ -196,7 +204,7 @@ void aide()
 	draw_printf(50, 290, "- Bonus ile deserte : 200 XP attribues si vous atteignez l'ile");
 	draw_printf(20, 270, "Il existe aussi des bonus qui rapportent d'autres avantages que des points d'experience :");
 	draw_printf(50, 250, "- Bonus vision : la carte se decouvre pour chaque joueur ayant au moins 300 XP");
-	draw_printf(50, 230, "- Bonus ile deserte : debloque un filet de peche");	
+	draw_printf(50, 230, "- Bonus ile deserte : debloque un filet de peche. Aussi vous pourrez troquer vos reserves contre des points d'experience.");	
 	draw_printf(50, 210, "- Bonus ecolo : relachez 3 poissons dans l'eau pour pouvoir pecher la pollution. Celle-ci vous rapportera 10 munitions.");
 	sous_titre();
 	draw_printf(20, 170, "Victoire");
@@ -215,6 +223,7 @@ void aide()
 	
 }
 
+/*Page du troc de l'île*/
 int troc(fisher * pecheur)	
 {	int go=0;
 	int gain =0;
@@ -246,7 +255,7 @@ int troc(fisher * pecheur)
 	return gain;
 }
 
-
+/*Ecran final : nom et score du gagnant + 3 meilleurs score*/
 int final_screen(FILE *fscore, char name [8])
 {	int select=0;
 	int score[3]={0};
@@ -281,18 +290,9 @@ int final_screen(FILE *fscore, char name [8])
 	
 	//Affichage du nom du gagnant
 	set_drawing_color(mobs_draw[0]); 	
-	draw_printf(WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2+50, "Le gagnant est :");
+	draw_printf(WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2+50, "Le gagnant est : ");
 	set_drawing_color(color_WHITE);
-	while(name[i]!='\0')
-	{	draw_printf(WINDOW_WIDTH/2+40+k, WINDOW_HEIGHT/2+50, "%c", name[i]);
-		if(name[i]=='l'||name[i]=='r'||name[i]=='i'||name[i]=='t')
-			k+=6;
-		else if(name[i]=='m' ||name[i]=='w')
-			k+=15;
-		else
-			k+=12;
-		i++;
-	}
+	draw_printf(WINDOW_WIDTH/2+38, WINDOW_HEIGHT/2+50,"%s", name);
 	
 	set_font(font_HELVETICA_12);
 	draw_printf(WINDOW_WIDTH/2-135, WINDOW_HEIGHT/8+70, "Appuyez sur la touche ENTREE pour quitter\n");
@@ -302,7 +302,7 @@ int final_screen(FILE *fscore, char name [8])
 	set_drawing_color(mobs_draw[0]);
 	draw_printf(WINDOW_WIDTH/2-145, WINDOW_HEIGHT/2+20, "Votre score : ", res);	
 	set_drawing_color(color_WHITE);
-	draw_printf(WINDOW_WIDTH/2-20, WINDOW_HEIGHT/2+20, "%d tours pour gagner", res);
+	draw_printf(WINDOW_WIDTH/2-35, WINDOW_HEIGHT/2+20, "%d tours pour gagner", res);
 	set_drawing_color(mobs_draw[0]);
 	
 	//enregistrement du score du joueur s'il fait partie des 3 meilleurs scores 

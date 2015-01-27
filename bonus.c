@@ -154,7 +154,6 @@ void appliquer_bonus(fisher * pecheur, int bonus_tab[])
 	{	afficher_bonus(6);
 		bonus_tab[6]=2;
 	}
-	//afficher_xp(pecheur);
 }
 
 /*Capitalise bonus des joueurs*/

@@ -49,7 +49,7 @@ Liste * destroy_mob (Mob mob, Liste * list_of_specific_species )
 
 }
 
-/* Retourne 1 si un mob survit */
+/* Retourne 1 si un mob survit, 0 sinon*/
 int survie(Mob * mob, Liste * species[NB_SPECIES])
 {
 	if(mob->satiete <= 0 && (WORLD_TIME-mob->dernier_repas)>duree_survie[mob->id]) 
@@ -114,7 +114,7 @@ int reproduction(Mob * mob, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste
 }
 
 
-/*Retourne 1 si un mob effectue prédation */
+/*Retourne 1 si un mob effectue prédation, 0 sinon */
 int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES])
 {	
 
@@ -205,6 +205,7 @@ int predation(Mob *mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Li
 
 }
 
+/*Retourne 1 si un mob se déplace, 0 sinon */
 int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES] ){
 	int mob_saut_max = saut_max[mob->id];
 	
@@ -257,11 +258,14 @@ int deplacement(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU],
 	return 1;      
 }
 
+
+/* Applique la règle pour la satiete*/
 void tour(Mob * mob){
 	mob->satiete = max(mob->satiete - metabolisme[mob->id] , 0 );
 	
 }
 
+/*Coordonne les différentes fonctions relatives au jeu des mobs */
 void ia_mob(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Liste * species[NB_SPECIES] ){
 	if(!survie(mob, species))
 	{	
@@ -280,17 +284,17 @@ void ia_mob(Mob * mob, Mob * plateau_de_jeu[TAILLE_PLATEAU][TAILLE_PLATEAU], Lis
 			return;
 		}
 		else if (predation(mob, plateau_de_jeu, species))
-			{	//L'individu a mangé
+		{	//L'individu a mangé
 				tour(mob);
 				return;										
 			} else if (deplacement(mob, plateau_de_jeu, species)) {
 				tour(mob);
 				return;
-			}
+		}
 
-	//Il n'a rien pu faire
-	tour(mob);
-	return;
+		//Il n'a rien pu faire
+		tour(mob);
+		return;
 	}
 }
 

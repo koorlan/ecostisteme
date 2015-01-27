@@ -1,6 +1,6 @@
 #include "main.h"
 
-/* Retourne un pointeur sur Mob avec en fonction de l'espèce voule (id) avec ses variables caracrtéristiques initiales*/
+/* Retourne un pointeur sur Mob avec en fonction de l'espèce voulue (id) avec ses variables caracrtéristiques initiales*/
 Mob * create_mob(int id_mob)
 	
 {
@@ -12,7 +12,7 @@ Mob * create_mob(int id_mob)
 	return mob;
 }
 
-/* Affichage des caractèristiques d'un Mob*/
+/* Affichage des caractèristiques d'un Mob (ne sert plus)*/
 void print_mob_spec(Mob  mob){
 
  	printf("ID : %d\n", mob.id );

@@ -55,16 +55,17 @@ int main(int argc, char const *argv[])
 	update_graphics();
 	x=get_key();*/	
 
-	//initialisation de la table des bonus 	
+	//initialisation de la table des bonus (voir dans bonus.c)
 	int bonus_tab[8]={0};
 	int bonus_tab2[8]={0};
 
-//cheat	
-	pecheur.reserves = 5000; // reserves illimitees 
-	pecheur.xp =9999;
-	bonus_tab[6]=1; //vision
-	bonus_tab2[6]=0;  
-	//bonus_tab[5]=1; //filet débloqué
+/****Pour tester le jeu en mode triche : 
+	pecheur.reserves = 5000; 	// reserves illimitees 
+	pecheur.xp =9999;		//tester la fin du jeu
+	bonus_tab[6]=1; 		//vision pour le joueur 1
+	bonus_tab2[6]=1;		//vision pour le joueur 2  
+	bonus_tab[5]=1; 		//filet débloqué
+/****Attention, si vous combinez cheat xp + cheat filet le jeu s'arrete immédiatement (xp > 10 000)*/
 
 	//choix du mode de jeu : 0 pour le mode ecosysteme seul, 1 pour le mode 1 joueur, 2 pour le mode 2 joueurs
 	int mode_joueur=start_screen();
@@ -111,7 +112,6 @@ int main(int argc, char const *argv[])
 	for ( i = 1; i <= NB_SPECIES; ++i)
 	{
 		spawn_list_animal_random(plateau_de_jeu, species[i]);
-		printf("Il y a %d individus de l'espece %d \n", nombre_elts_liste(species[i]), i);
 		fprintf(fPtr,",%d",i);
 	}
 
@@ -122,8 +122,7 @@ int main(int argc, char const *argv[])
 	WORLD_TIME=0;
 
 	do
-	{	printf("WORLD_TIME : %d\n", WORLD_TIME);
-		fprintf(fPtr,"\n%d", WORLD_TIME);
+	{	fprintf(fPtr,"\n%d", WORLD_TIME);
 		
 		/***Jeu du pêcheur***/
 		if(!mode_joueur) 
@@ -147,7 +146,7 @@ int main(int argc, char const *argv[])
 				update_graphics();
 			}
 		} 	
-
+		
 		/***Jeu de l'IA***/	
 		if(!mort_pecheur&&!mort_pecheur2)
 		{	
@@ -295,10 +294,14 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TA
 	draw_rectangle_full(x_menu,y_menu,WINDOW_WIDTH,y_menu+12); //clear previous type
 	for (i = 1; i <= NB_SPECIES; ++i)
 	{
-		if (eat_mat[10][i]){
+		if (eat_mat[10][i] && nombre_elts_liste(species[i])!=0){
 			set_drawing_color(mobs_draw[i]);
 			draw_circle_full(x_menu+((i-1)*12),y_menu+6, 4.5);
 		}
+	}
+	if(bonus_tab[4]==2 && nombre_elts_liste(species[4]))		
+	{	set_drawing_color(mobs_draw[5]);
+		draw_circle_full(x_menu+((5-1)*12), y_menu+6, 4.5);
 	}
 	y_menu -= 12+5;
 	set_drawing_color(color_WHITE);
@@ -329,7 +332,7 @@ void saisi_nom_screen(fisher *pecheur){
 	int x_menu = 10;
 	int y_menu = WINDOW_HEIGHT-18-10 ;
 	int pas = 12; //pas de decalage entre affichage des lettres.
-	draw_printf(x_menu, y_menu, "Bonjour pecheur %d , entrez donc votre nom et entrez dans la legende : ",pecheur->id);
+	draw_printf(x_menu, y_menu, "Bonjour pecheur %d , saisissez donc votre nom et entrez dans la legende : ",pecheur->id);
 	update_graphics();
 	y_menu -= 25;
 	int c = 0;  //Pour eviter de traverser au cas ou.
@@ -337,12 +340,23 @@ void saisi_nom_screen(fisher *pecheur){
 	while(c!=key_ENTER){
 		c=get_key(); // lecture au clavier lettre par lettre
 
-		//reste le cas des touches non valides à traiter, <32 et >126 ne sont pas valide à la saisie
+		//reste le cas des touches non valides à traiter, <32 et >126 ne sont pas valides à la saisie
 		if (i >= 8)
 				draw_printf(10, 10, "Taille max_nom = 9"); 
 
 		if(c == 8){		 //cas du backspace
 			set_drawing_color(color_BACKGROUND);
+			if(i>0 && (pecheur->nom_joueur[i-1]=='l'||pecheur->nom_joueur[i-1]=='r'||pecheur->nom_joueur[i-1]=='i'||pecheur->nom_joueur[i-1]=='t' || pecheur->nom_joueur[i-1]=='j'))
+			{	pas=7;
+			}
+			else if(i>0 && (pecheur->nom_joueur[i-1]=='m' ||pecheur->nom_joueur[i-1]=='w'))
+			{	pas=15;
+				
+			}
+			else
+			{	pas=12;	
+				
+			}			
 			draw_rectangle_full(x_menu,y_menu,x_menu-pas,y_menu+18); 
 			set_drawing_color(color_WHITE);
 			if (i<=0){
@@ -358,7 +372,18 @@ void saisi_nom_screen(fisher *pecheur){
 		else if(i <= 8 ) 
 		{
 			draw_printf(x_menu, y_menu, "%c",c); //affichage à l'écran lettre par lettre
-			x_menu += pas;
+			if(c=='l'||c=='r'||c=='i'||c=='t'||c=='j')
+			{	pas=7;
+				x_menu+=7;
+			}
+			else if(c=='m' ||c=='w')
+			{	pas=15;
+				x_menu+=15;
+			}
+			else
+			{	pas=12;	
+				x_menu+=12;
+			}
 			pecheur->nom_joueur[i] = (char) c;
 			i++;
 			update_graphics();

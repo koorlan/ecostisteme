@@ -34,9 +34,7 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 	for (i = 0; i < TAILLE_PLATEAU; ++i)
 	{
 		for (j = 0; j < TAILLE_PLATEAU; ++j)
-		{	/*if(plateau[i][j]->id==11)
-				draw_square(i+1, j+1, mobs_draw[11]);*/
-
+		{	
 			//mode aveugle
 			if(mode==0)
 			{	if((plateau[i][j]->id==11)||(plateau[i][j]->id==12))
@@ -73,15 +71,12 @@ void draw_grid(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int mode)
 	return;
 }
 
+/*Affichage de l'île sur le plateau de jeu*/
 void spawn_island(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]){
 	int nb_island = 3;
 	int radius;
 	while(nb_island != 0){
 		radius = rand_a_b(2,8);
-	//int a = rand_a_b(TAILLE_PLATEAU /2  - 30,TAILLE_PLATEAU /2 + 30);
-	//int b = rand_a_b(TAILLE_PLATEAU /2 - 30,TAILLE_PLATEAU /2 + 30);
-	//int a = rand_a_b(radius,TAILLE_PLATEAU-radius);
-	//int b = rand_a_b(radius,TAILLE_PLATEAU-radius);
 	int a = rand_a_b(TAILLE_PLATEAU /2 - radius,TAILLE_PLATEAU /2 + radius);
 	int b = rand_a_b(TAILLE_PLATEAU /2 - radius,TAILLE_PLATEAU /2 + radius);
 
@@ -128,8 +123,6 @@ void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],List
 		listeMob->mob.y = j;
 		plateau[i][j]->x = i;
 		plateau[i][j]->y = j;
-		//free(plateau[i][j]);
-		//printf("Spaw: ID : %d " liste->mob.id);
 		plateau[i][j] = &(listeMob->mob);
 		plateau[i][j]->id = listeMob->mob.id;
     	listeMob = listeMob->nxt;
@@ -137,19 +130,18 @@ void spawn_list_animal_random(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],List
 	
 }
 
-
+/*Retourne 1 sur la case de coordonnées (a, b) est libre*/
 int isPlaceFree (Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], int a , int b)
 {
 	return (plateau[a][b]->id == 0);
 }
 
 
-
+/*Retourne une liste de cases disponibles adjacentes à un Mob*/
 Liste * free_neighboor_case_list(Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU], Mob * mob) 
 {
 	Liste * free_place_list = malloc(sizeof(Liste));
 	free_place_list->nxt = NULL;
-	//printf("Mon Mob est en %d %d \n", mob.x, mob.y );
 	for (int i = -1 ; i <= 1; ++i)
 	{
 		
