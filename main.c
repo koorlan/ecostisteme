@@ -134,7 +134,7 @@ int main(int argc, char const *argv[])
 		}
 
 		//Jeu du pêcheur tous les 10 tours d'écosystème...............................................................
-		if(WORLD_TIME % 10 == 0 && mode_joueur!=0)
+		if(WORLD_TIME % 2 == 0 && mode_joueur!=0)
 		{	
 			menu(species,&pecheur,bonus_tab, plateau_de_jeu);	//affichage du menu
 			update_graphics();

@@ -260,7 +260,7 @@ int final_screen(FILE *fscore, char name [8])
 {	int select=0;
 	int score[3]={0};
 	int i=0, k=0;
-	int res=(WORLD_TIME/10);
+	int res=(WORLD_TIME/2);
 	char * name0;
 	char * name1;
 	char * name2;
