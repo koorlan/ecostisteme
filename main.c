@@ -59,13 +59,13 @@ int main(int argc, char const *argv[])
 	int bonus_tab[8]={0};
 	int bonus_tab2[8]={0};
 
-/****Pour tester le jeu en mode triche : 
+// Pour tester le jeu en mode triche : 
 	pecheur.reserves = 5000; 	// reserves illimitees 
-	pecheur.xp =9999;		//tester la fin du jeu
+//	pecheur.xp =9999;		//tester la fin du jeu
 	bonus_tab[6]=1; 		//vision pour le joueur 1
-	bonus_tab2[6]=1;		//vision pour le joueur 2  
-	bonus_tab[5]=1; 		//filet débloqué
-/****Attention, si vous combinez cheat xp + cheat filet le jeu s'arrete immédiatement (xp > 10 000)*/
+//	bonus_tab2[6]=1;		//vision pour le joueur 2  
+//	bonus_tab[5]=1; 		//filet débloqué
+// Attention, si vous combinez cheat xp + cheat filet le jeu s'arrete immédiatement (xp > 10 000)*/
 
 	//choix du mode de jeu : 0 pour le mode ecosysteme seul, 1 pour le mode 1 joueur, 2 pour le mode 2 joueurs
 	int mode_joueur=start_screen();
@@ -139,9 +139,11 @@ int main(int argc, char const *argv[])
 			menu(species,&pecheur,bonus_tab, plateau_de_jeu);	//affichage du menu
 			update_graphics();
 			jeu_du_pecheur(&pecheur, plateau_de_jeu, bonus_tab, &mort_pecheur, species);	//jeu du pecheur 1
-			if(mode_joueur==2){
+			if(mode_joueur==2 && !mort_pecheur){
 				menu(species,&pecheur2,bonus_tab2, plateau_de_jeu);	
-				update_graphics();				
+				draw_grid(plateau_de_jeu, bonus_tab2[6]);
+				update_graphics();
+				draw_grid(plateau_de_jeu, bonus_tab2[6]);				
 				jeu_du_pecheur(&pecheur2, plateau_de_jeu, bonus_tab2, &mort_pecheur2, species);	
 				update_graphics();
 			}
@@ -168,7 +170,7 @@ int main(int argc, char const *argv[])
 		}
 	
 			
-	}while( WORLD_TIME <= 1000 && !mort_pecheur && pecheur.xp<10000 && pecheur2.xp<10000);
+	}while( WORLD_TIME <= 1000 && !mort_pecheur && !mort_pecheur2 && pecheur.xp<10000 && pecheur2.xp<10000);
 	
 	
 
