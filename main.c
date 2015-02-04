@@ -206,7 +206,7 @@ void menu(Liste * species[], fisher *pecheur, int bonus_tab[], Mob *plateau[][TA
 	//mise à jour des bonus des joueurs 
 	capitaliser_bonus(pecheur, bonus_tab, plateau);
 	pecheur->bridge=0;
-	afficher_point(pecheur->x, pecheur->y, color_RED);
+	afficher_point(pecheur->x, pecheur->y, mobs_draw[10]);
 	appliquer_bonus(pecheur, bonus_tab);
 
 	set_drawing_color(color_WHITE);

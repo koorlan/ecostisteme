@@ -77,7 +77,19 @@ static const int frequence_reproduction[]={10000, 0, 3, 3, 2, 10000, 1, 10, 2, 2
 static const char *mobs_name[20] = {"Vide","Plancton","Corail","Bar","Thon","Pollution","Pyranha","Requin","Orque","Baleine","Pecheur","Pont","Ile"};
 
 //Tableau des couleurs associées à chaque espèce (inidice du tab = id de l'espèce)
-static const couleurs mobs_draw[20]={(87<<24)+(113<<16)+(144<<8), (77<<24)+(255<<16)+(84<<8), (254<<24)+(84<<16)+(6<<8), (120<<24)+(192<<16)+(168<<8), (27<<24)+(234<<16)+(255<<8), color_LIGHTGRAY, color_BLACK, color_YELLOW, color_LIGHTMAGENTA, color_MAGENTA, color_RED, color_BROWN, (241<<24)+(184<<16)+(40<<8)};
+static const couleurs mobs_draw[20]={(87<<24)+(113<<16)+(144<<8),
+									 (77<<24)+(255<<16)+(84<<8), 
+									 (254<<24)+(84<<16)+(6<<8), 
+									 (120<<24)+(192<<16)+(168<<8),
+									  (27<<24)+(234<<16)+(255<<8),
+									   color_LIGHTGRAY,
+									    color_BLACK, 
+									   color_YELLOW,
+									    color_LIGHTMAGENTA,
+									     color_MAGENTA, 
+									    (255<<24)+(255<<16)+(255<<8),
+									  	color_BROWN, 
+									  (241<<24)+(184<<16)+(40<<8)};
 
 
 //Matrice de prédation 

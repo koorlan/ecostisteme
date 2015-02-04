@@ -18,7 +18,7 @@ void init_fisher (fisher * pecheur, int x, int y, int id);
 
 int case_valide(int x, int y, Mob * plateau[][TAILLE_PLATEAU]);
 
-void deplacement_pecheur(fisher * pecheur, couleurs coul, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU]);
+void deplacement_pecheur(fisher * pecheur, couleurs coul, Mob * plateau[TAILLE_PLATEAU][TAILLE_PLATEAU],int vision);
 
 int affichage_1();
 
@@ -34,7 +34,7 @@ void que_la_peche_commence(Mob * plateau_de_jeu[][TAILLE_PLATEAU], fisher * pech
 
 void plouf_soft_version(fisher *pecheur);
 
-int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[]);
+int plouf_hard_version(fisher *pecheur, Mob * plateau[][TAILLE_PLATEAU], Liste * species[],int vision);
 
 void deplacement_curseur(int * x, int * y, Mob * plateau[][TAILLE_PLATEAU], int bonus_tab[], couleurs coul);
 
