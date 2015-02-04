@@ -233,7 +233,7 @@ int troc(fisher * pecheur)
 	sous_titre();
 	draw_printf(250, 650, "Bienvenue au troc de l'ile !");
 	texte();
-	draw_printf(20, 610, "C'est ici que pirates et nauffrages echangent leurs marchandises. En plein rush vers la victoire peut-etre aurez vous besoin de");
+	draw_printf(20, 610, "C'est ici que pirates et naufrages echangent leurs marchandises. En plein rush vers la victoire peut-etre aurez vous besoin de");
 	draw_printf(20, 590,"troquer vos propres reserves de poisson contre de precieux points d'experience.");
 	draw_printf(20, 570, "Si la chance est avec vous, cela pourrait vous rapporter gros. Cependant prenez garde, il vous est impossible de discerner les");
 	draw_printf(20, 550,"filous des honnetes gens parmi les acheteurs. Et des vendeurs novices tels que vous ne peuvent se permettre de refuser une"); 
@@ -247,7 +247,7 @@ int troc(fisher * pecheur)
 	draw_printf(20, 470, "Vous etes sur le point de troquer 8 reserves, appuyez sur ENTREE pour commencer");
 	gain = rand()%(450-1)+1;
 	sous_titre();
-	draw_printf(245, 400, "Ce troc vous a rapporté %d XP", gain);
+	draw_printf(245, 400, "Ce troc vous a rapporte %d XP", gain);
 	texte();
 	draw_printf(265, 380, "Appuyez sur une touche pour quitter");
 	update_graphics();
